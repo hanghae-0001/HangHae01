@@ -6,12 +6,6 @@ on:
     types:
       - completed
 
-env:
-  AWS_REGION: ap-northeast-2
-  ECR_REGISTRY: 856195448505.dkr.ecr.ap-northeast-2.amazonaws.com
-  ECR_REPOSITORY: hanghae
-  IMAGE_TAG: latest
-
 jobs:
   publish:
     name: Publish image
