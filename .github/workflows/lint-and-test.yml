@@ -51,17 +51,27 @@ jobs:
         run: ./gradlew unitTest
       - name: Execute integration test
         run: ./gradlew integrationTest
-#      - name: Register test results as comments in PR
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          junit_files: "build/test-results/**/*.xml"
+#        TODO: Required 'Settings' > 'workflow permission' > 'Read and write permissions'
+      - name: Register test results as comments in PR
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: "build/test-results/**/*.xml"
       - name: If test fails, register a Check comment on the failed code line
         uses: mikepenz/action-junit-report@v3
         if: always()
         with:
           report_paths: build/test-results/**/*.xml
           token: ${{ secrets.GITHUB_TOKEN }}
+      - name: If build fails, notify as Slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Build Failure Notification
+          fields: repo, message, commit, author, action, eventName, ref, workflow, job, took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: ${{ failure() }}
 
   coverage:
     needs: test
