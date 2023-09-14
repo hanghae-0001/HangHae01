@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test
 
 @IntegrationTest
 class FooServiceIT {
-
     @Test
     fun tc1() {
         val sut = FooService()

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class FooService {
-
     val logger = KotlinLogging.logger {}
 
     fun foo1() {

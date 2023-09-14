@@ -79,7 +79,7 @@ tasks.register<Test>("integrationTest") {
 }
 
 tasks.getByName<JacocoReport>("jacocoTestReport") {
-    dependsOn("unitTestCoverage", "integrationTestCoverage")
+    dependsOn("unitTest", "integrationTest")
     reports {
         xml.required.set(true)
         html.required.set(true)
