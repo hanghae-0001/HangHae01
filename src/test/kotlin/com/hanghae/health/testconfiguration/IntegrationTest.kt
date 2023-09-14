@@ -1,4 +1,4 @@
-package com.hanghae.health.test_configuration
+package com.hanghae.health.testconfiguration
 
 import org.junit.jupiter.api.Tag
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
 @Tag("integration")
-//@Transactional
+// @Transactional
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc

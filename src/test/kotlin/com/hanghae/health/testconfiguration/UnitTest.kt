@@ -1,4 +1,4 @@
-package com.hanghae.health.test_configuration
+package com.hanghae.health.testconfiguration
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.test.context.ActiveProfiles
