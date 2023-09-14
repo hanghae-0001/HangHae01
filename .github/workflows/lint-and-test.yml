@@ -2,9 +2,9 @@ name: lint-and-test
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop, main ]
   pull_request:
-    branches: [ main ]
+    branches: [ develop, main ]
 
 jobs:
 
@@ -65,7 +65,7 @@ jobs:
 
   coverage:
     needs: test
-    name: Run coverage
+    name: Execute coverage
     runs-on: ubuntu-latest
 
     steps:
@@ -77,10 +77,19 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Execute jacoco coverage
-        uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
         with:
-          arguments: jacocoTestReport -x unitTest -x integrationTest
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Execute jacoco coverage
+        run: jacocoTestReport -x unitTest -x integrationTest
       - name: Register test coverage as a comment in PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
