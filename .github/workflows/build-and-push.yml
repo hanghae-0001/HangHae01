@@ -59,9 +59,10 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: hanghae
           IMAGE_TAG: latest
         run: |
-          docker build -t ${{ secrets.ECR_REGISTRY }}:$IMAGE_TAG .
-          docker push ${{ secrets.ECR_REGISTRY }}:$IMAGE_TAG
-          echo "image=${{ secrets.ECR_REGISTRY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
   
