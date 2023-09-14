@@ -10,6 +10,7 @@ on:
 
 jobs:
   publish:
+    if: github.event.pull_request.merged == true
     name: Publish image
     runs-on: ubuntu-latest
 
