@@ -10,7 +10,6 @@ class FooService {
     fun foo1() {
         logger.info { "executed code" }
         logger.info { "executed code" }
-        logger.info { "executed code" }
     }
 
     fun foo2() {
