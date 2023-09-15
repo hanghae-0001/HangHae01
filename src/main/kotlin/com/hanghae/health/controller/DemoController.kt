@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RestController
 @Slf4j
 @RequestMapping("/demo")
 @RestController
-class DemoController(){
+class DemoController() {
 
     @GetMapping
     fun getHealth(): String {
-        return "ok"
+        return "ok!"
     }
 }
