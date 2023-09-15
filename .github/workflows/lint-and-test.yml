@@ -51,12 +51,11 @@ jobs:
         run: ./gradlew unitTest
       - name: Execute integration test
         run: ./gradlew integrationTest
-#        TODO: Required 'Settings' > 'workflow permission' > 'Read and write permissions'
-#      - name: Register test results as comments in PR
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          junit_files: "build/test-results/**/*.xml"
+      - name: Register test results as comments in PR
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: "build/test-results/**/*.xml"
       - name: If test fails, register a Check comment on the failed code line
         uses: mikepenz/action-junit-report@v3
         if: always()
