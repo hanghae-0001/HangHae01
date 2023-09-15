@@ -53,12 +53,11 @@ jobs:
         run: ./gradlew unitTest
       - name: Execute integration test
         run: ./gradlew integrationTest
-#        TODO: Required 'Settings' > 'workflow permission' > 'Read and write permissions'
-#      - name: Register test results as comments in PR
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        if: always()
-#        with:
-#          junit_files: "build/test-results/**/*.xml"
+      - name: Register test results as comments in PR
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          junit_files: "build/test-results/**/*.xml"
       - name: If test fails, register a Check comment on the failed code line
         uses: mikepenz/action-junit-report@v3
         if: always()
@@ -74,16 +73,11 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: ${{ failure() }}
-      - name: Upload test results
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: test-results
-          path: build/test-results
 
   coverage:
     needs: test
     name: Execute coverage
+    continue-on-error: false
     runs-on: ubuntu-latest
 
     steps:
@@ -94,15 +88,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Download test results
-        continue-on-error: false
-        uses: actions/download-artifact@v3
-        with:
-          name: test-results
-          path: ${{ github.workspace }}/build/test-results
       - name: Execute jacoco coverage
-        run: ./gradlew jacocoTestReport -x unitTest -x integrationTest
+        run: ./gradlew jacocoTestReport
       - name: Register test coverage as a comment in PR
         id: jacoco
         uses: madrapps/jacoco-report@v1.6.1
