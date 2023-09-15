@@ -12,6 +12,6 @@ class DemoController() {
 
     @GetMapping
     fun getHealth(): String {
-        return "ok!"
+        return "ok"
     }
 }
