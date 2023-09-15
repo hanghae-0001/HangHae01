@@ -87,21 +87,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#      - name: Download test results
-#        continue-on-error: false
-#        env:
-#          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-#        run: |
-#          mkdir -p artifacts && cd artifacts
-#
-#          artifacts_url=${{ github.event.workflow_run.artifacts_url }}
-#
-#          gh api "$artifacts_url" -q '.artifacts[] | [.name, .archive_download_url] | @tsv' | while read artifact
-#          do
-#            IFS=$'\t' read name url <<< "$artifact"
-#            gh api $url > "$name.zip"
-#            unzip -d "$name" "$name.zip"
-#          done
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Download test results
         continue-on-error: false
         uses: actions/download-artifact@v3
