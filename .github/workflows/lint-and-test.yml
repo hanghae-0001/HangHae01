@@ -100,6 +100,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: test-results
+          path: build/test-results
       - name: Execute jacoco coverage
         run: ./gradlew jacocoTestReport -x unitTest -x integrationTest
       - name: Register test coverage as a comment in PR
