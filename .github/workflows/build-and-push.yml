@@ -91,6 +91,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: hanghae
+          service: hanghae-service
           cluster: hanghae
           wait-for-service-stability: true
