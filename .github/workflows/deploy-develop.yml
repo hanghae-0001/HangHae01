@@ -9,7 +9,7 @@ on:
 
 env:
   ECR_REGISTRY: 856195448505.dkr.ecr.ap-northeast-2.amazonaws.com
-  ECR_REPOSITORY: hanghae-develop
+  $ECR_REPOSITORY_DEVELOP: hanghae-develop
   AWS_REGION: ap-northeast-2
 
 jobs:
@@ -83,7 +83,7 @@ jobs:
           port: ${{ secrets.DEVELOP_SERVER_SSH_PORT }}
           script: |
             echo ${{ steps.build-image.outputs.image }}
-            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY_DEVELOP
             docker stop hanghae-app 
             docker rm hanghae-app
             docker run -d --name hanghae-app -p 9001:8080 ${{ steps.build-image.outputs.image }}
