@@ -9,7 +9,7 @@ on:
 
 env:
   ECR_REGISTRY: 856195448505.dkr.ecr.ap-northeast-2.amazonaws.com
-  $ECR_REPOSITORY_DEVELOP: hanghae-develop
+  ECR_REPOSITORY_DEVELOP: hanghae-develop
   AWS_REGION: ap-northeast-2
 
 jobs:
