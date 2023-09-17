@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:856195448505:task-definition/hanghae-task:1",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:856195448505:task-definition/hanghae-task:3",
     "containerDefinitions": [
         {
             "name": "hanghae",
@@ -7,9 +7,9 @@
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "hanghae-8080-tcp",
-                    "containerPort": 8080,
-                    "hostPort": 8080,
+                    "name": "hanghae-9001-tcp",
+                    "containerPort": 9001,
+                    "hostPort": 9001,
                     "protocol": "tcp",
                     "appProtocol": "http"
                 }
@@ -35,7 +35,7 @@
     "family": "hanghae-task",
     "executionRoleArn": "arn:aws:iam::856195448505:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 3,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -78,7 +78,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-09-15T09:51:31.242Z",
+    "registeredAt": "2023-09-17T02:52:41.156Z",
     "registeredBy": "arn:aws:iam::856195448505:user/simbomi06",
     "tags": []
 }
