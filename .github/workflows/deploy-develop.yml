@@ -8,7 +8,7 @@ on:
       - develop
 
 env:
-  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  ECR_REGISTRY: 856195448505.dkr.ecr.ap-northeast-2.amazonaws.comasdfasdf
   ECR_REPOSITORY: hanghae-develop
   AWS_REGION: ap-northeast-2
 
