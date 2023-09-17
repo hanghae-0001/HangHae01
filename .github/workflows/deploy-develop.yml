@@ -5,7 +5,12 @@ on:
     types:
       - closed
     branches:
-      - main
+      - develop
+
+env:
+  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  ECR_REPOSITORY: hanghae-develop
+  AWS_REGION: ap-northeast-2
 
 jobs:
   publish:
@@ -54,7 +59,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -63,33 +68,25 @@ jobs:
       - name: Push docker image to ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: hanghae
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-      
-      - name: Download Task Definition Template
-        run: |
-          aws ecs describe-task-definition \
-            --task-definition hanghae-task \
-            --query taskDefinition \
-            > task-definition.json
-      
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-definition.json
-          container-name: hanghae
-          image: ${{ steps.build-image.outputs.image }}
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY_DEVELOP:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY_DEVELOP:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY_DEVELOP:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      - name: Deploy
+        uses: appleboy/ssh-action@master
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: hanghae-service
-          cluster: hanghae
-          wait-for-service-stability: true
+          host: ${{ secrets.DEVELOP_SERVER_HOST }}
+          username: ${{ secrets.DEVELOP_SERVER_SSH_USERNAME }}
+          password: ${{ secrets.DEVELOP_SERVER_SSH_PASSWORD }}
+          port: ${{ secrets.DEVELOP_SERVER_SSH_PORT }}
+          script: |
+            echo ${{ steps.build-image.outputs.image }}
+            aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY
+            docker stop hanghae-app 
+            docker rm hanghae-app
+            docker run -d --name hanghae-app -p 9001:8080 ${{ steps.build-image.outputs.image }}
+            docker ps -a | grep hanghae-app
+            
+      
