@@ -1,19 +1,11 @@
 spring:
-  profiles:
-    active: "prod"
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://database-1.czxx7hbyzohy.ap-northeast-2.rds.amazonaws.com:3306/test?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
-    username: root
-    password: qwer1234!
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
-    open-in-view: true
+    open-in-view: false
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
