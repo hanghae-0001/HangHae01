@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test
 
 @UnitTest
 @DisplayName("Given: add()")
-class CartItemAddServiceTest {
+class CartItemRegisterServiceTest {
 
     @Nested
     @DisplayName("When: A, B 판매자의 상품의 재고가 각각 5개일 떄,")
-    internal inner class when_stock_size_is_5 {
+    internal inner class when_a_and_b_seller_product_stock_is_5 {
         @Test
         @DisplayName("Then: A 상품을 2개씩 2번 담으면, 4개로 합쳐서 담긴다.")
         fun tc1() {
