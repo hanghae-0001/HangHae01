@@ -1,0 +1,9 @@
+POST localhost:9001/product
+Content-Type: application/json
+
+{
+    "name": "JPA 책",
+    "category": "도서",
+    "price": 10000,
+    "count": 10
+}
