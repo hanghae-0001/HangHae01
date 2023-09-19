@@ -27,17 +27,17 @@ class OrderCreateServiceTest {
     internal inner class when_stock_size_is_1000 {
 
         @Test
-        @DisplayName("Then: 요청 300개가 3개씩 주문하면, 남는 재고는 100개이다.")
+        @DisplayName("Then: 요청 300개가 동시에 3개씩 주문하면, 남는 재고는 100개이다.")
         fun tc1() {
         }
 
         @Test
-        @DisplayName("Then: 요청 200개가 5개씩 주문하면, 남는 재고는 0개이다.")
+        @DisplayName("Then: 요청 200개가 동시에 5개씩 주문하면, 남는 재고는 0개이다.")
         fun tc2() {
         }
 
         @Test
-        @DisplayName("Then: 요청 300개가 4개씩 주문하면, 요청 50개는 OutOfStockException 발생한다.")
+        @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 OutOfStockException 발생한다.")
         fun tc3() {
         }
     }
@@ -53,6 +53,15 @@ class OrderCreateServiceTest {
         @Test
         @DisplayName("Then: 미리 등록된 주소가 없다면 NoAddressToDeleveryException 발생한다.")
         fun tc2() {
+        }
+    }
+
+    @Nested
+    @DisplayName("When: 주문요청 시 장바구니에 등록된 상품이 없다면,")
+    internal inner class when_cart_item_is_empty {
+        @Test
+        @DisplayName("Then: EmptyCartException 발생한다.")
+        fun tc1() {
         }
     }
 
