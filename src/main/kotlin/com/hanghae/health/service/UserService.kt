@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.repository.UserEntityRepository
+import com.hanghae.health.repository.UserEntityRepository
 import com.hanghae.health.domain.UserEntity
 import org.springframework.stereotype.Service
 
