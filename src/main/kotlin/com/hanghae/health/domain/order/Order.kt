@@ -16,6 +16,7 @@ class Order (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 ){
-
-
+    fun addProduct(product: Product) {
+        products.add(product)
+    }
 }
