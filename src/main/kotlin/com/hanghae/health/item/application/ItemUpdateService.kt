@@ -1,4 +1,3 @@
-package com.hanghae.health.item.application;
+package com.hanghae.health.item.application
 
-public class ItemUpdateService {
-}
+class ItemUpdateService

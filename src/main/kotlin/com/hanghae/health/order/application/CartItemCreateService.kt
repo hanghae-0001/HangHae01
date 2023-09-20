@@ -1,4 +1,3 @@
 package com.hanghae.health.order.application
 
-class CartItemCreateService {
-}
+class CartItemCreateService
