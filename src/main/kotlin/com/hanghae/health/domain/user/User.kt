@@ -1,5 +1,6 @@
-package com.hanghae.health.domain
+package com.hanghae.health.domain.user
 
+import com.hanghae.health.domain.order.Order
 import jakarta.persistence.*
 
 @Entity
@@ -12,6 +13,9 @@ data class User (
     val address: String,
 
     val userType: UserType,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val orders: MutableList<Order> = mutableListOf(),
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

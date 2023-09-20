@@ -1,7 +1,7 @@
 package com.hanghae.domain.user
 
-import com.hanghae.health.domain.User
-import com.hanghae.health.domain.UserType
+import com.hanghae.health.domain.user.User
+import com.hanghae.health.domain.user.UserType
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
