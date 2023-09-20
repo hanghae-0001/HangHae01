@@ -6,16 +6,15 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.assertThrows
-
 class UserTest {
 
     @Test
     @DisplayName("구매자를 생성한다.")
     fun createBuyer() {
-        //given & when
+        // given & when
         val user = User("name", "phone", "address", UserType.BUYER)
 
-        //then
+        // then
         assertThat(user.name).isEqualTo("name")
         assertThat(user.phone).isEqualTo("phone")
         assertThat(user.address).isEqualTo("address")
@@ -25,10 +24,10 @@ class UserTest {
     @Test
     @DisplayName("판매자를 생성한다.")
     fun createSeller() {
-        //given & when
+        // given & when
         val user = User("name", "phone", "address", UserType.SELLER)
 
-        //then
+        // then
         assertThat(user.name).isEqualTo("name")
         assertThat(user.phone).isEqualTo("phone")
         assertThat(user.address).isEqualTo("address")

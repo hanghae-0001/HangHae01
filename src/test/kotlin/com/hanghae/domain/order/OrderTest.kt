@@ -16,7 +16,7 @@ class OrderTest {
         order.addProduct(product)
         order.addProduct(product)
 
-        //then
+        // then
         Assertions.assertThat(order.products).hasSize(3)
     }
 }
