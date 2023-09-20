@@ -12,6 +12,15 @@ plugins {
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
 
+allOpen {
+    annotation("jakarta.persistence.Entity")
+}
+
+noArg {
+    annotation("jakarta.persistence.Entity")
+}
+
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
@@ -41,6 +50,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("com.h2database:h2")
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.withType<KotlinCompile> {

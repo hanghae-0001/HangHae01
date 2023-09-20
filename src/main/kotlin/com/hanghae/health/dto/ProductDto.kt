@@ -6,7 +6,7 @@ import lombok.Setter
 @Getter
 @Setter
 class ProductDto (
-    val productId: Long?,
+    val productId: Long? = null,
     val name: String,
     val category: String,
     val price: Int,
