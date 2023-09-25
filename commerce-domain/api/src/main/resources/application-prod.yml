@@ -2,4 +2,4 @@ spring:
 
   config:
     activate:
-      on-profile: develop
+      on-profile: prod

@@ -1,7 +1,7 @@
 rootProject.name = "HangHae01"
 
 include(
-    "commerce-domain",
+    "commerce-domain:api",
     "commerce-support:logging",
     "commerce-support:monitoring",
     "commerce-storage:db-main",
@@ -16,6 +16,7 @@ pluginManagement {
         eachPlugin {
             when (requested.id.id) {
                 "org.jetbrains.kotlin.jvm" -> useVersion(kotlinVersion)
+                "org.jetbrains.kotlin.kapt" -> useVersion(kotlinVersion)
                 "org.jetbrains.kotlin.plugin.jpa" -> useVersion(kotlinVersion)
                 "org.jetbrains.kotlin.plugin.spring" -> useVersion(kotlinVersion)
                 "org.springframework.boot" -> useVersion(springBootVersion)
