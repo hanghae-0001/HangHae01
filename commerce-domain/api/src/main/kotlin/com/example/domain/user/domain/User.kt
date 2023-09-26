@@ -1,4 +1,4 @@
-package com.example.domain.service
+package com.example.domain.user.domain
 
 class User(
     var id: Long? = null,

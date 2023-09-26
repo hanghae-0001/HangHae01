@@ -1,7 +1,7 @@
 package com.example.domain.data.domain
 
-import com.example.domain.service.User
-import com.example.domain.service.UserRepository
+import com.example.domain.user.domain.User
+import com.example.domain.user.domain.UserRepository
 import org.springframework.stereotype.Repository
 
 @Repository
