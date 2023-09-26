@@ -1,4 +1,4 @@
-package com.hanghae.health.service
+package com.example.domain.service
 
 import org.springframework.stereotype.Component
 

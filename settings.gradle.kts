@@ -4,7 +4,7 @@ include(
     "commerce-domain:api",
     "commerce-support:logging",
     "commerce-support:monitoring",
-    "commerce-storage:db-main",
+    "commerce-infra:db-main",
 )
 
 pluginManagement {
