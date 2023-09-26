@@ -1,4 +1,4 @@
-package com.sample.data.domain
+package com.example.domain.data.domain
 
 import com.example.domain.service.User
 import com.example.domain.service.UserRepository

@@ -1,4 +1,4 @@
-package com.sample.data.config
+package com.example.domain.data.config
 
 import jakarta.annotation.PostConstruct
 import org.springframework.boot.autoconfigure.domain.EntityScan
@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
-@EntityScan(basePackages = ["com.sample.data.domain"])
+@EntityScan(basePackages = ["com.example.domain.data"])
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = ["com.sample.data.domain"])
+@EnableJpaRepositories(basePackages = ["com.example.domain.data"])
 class JpaConfiguration {
 
     @PostConstruct

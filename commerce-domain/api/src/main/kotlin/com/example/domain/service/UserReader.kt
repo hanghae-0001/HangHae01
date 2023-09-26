@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 class UserReader(
     private val userRepository: UserRepository,
 ) {
+
     fun save(name: String) {
         userRepository.save(User(name = name))
     }

@@ -1,4 +1,4 @@
-package com.sample.data.domain
+package com.example.domain.data.domain
 
 import org.springframework.data.jpa.repository.JpaRepository
 

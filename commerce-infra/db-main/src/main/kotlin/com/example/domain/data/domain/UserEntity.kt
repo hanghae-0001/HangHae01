@@ -1,4 +1,4 @@
-package com.sample.data.domain
+package com.example.domain.data.domain
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
