@@ -10,8 +10,8 @@
     </appender>
 
     <logger name="org.springframework" level="WARN"/>
-    <logger name="com.example" level="DEBUG"/>
-
+    <logger name="com.hanghae" level="DEBUG"/>
+8
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

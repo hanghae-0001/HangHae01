@@ -1,7 +1,7 @@
 rootProject.name = "HangHae01"
 
 include(
-    "commerce-domain:api",
+    "commerce-api",
     "commerce-support:logging",
     "commerce-support:monitoring",
     "commerce-infra:db-main",
