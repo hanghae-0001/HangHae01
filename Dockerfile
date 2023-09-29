@@ -4,5 +4,5 @@ WORKDIR app
 
 ENV	ACTIVE_PROFILE prod
 
-COPY ./build/libs/HangHae01-0.0.1-SNAPSHOT.jar .
-CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} HangHae01-0.0.1-SNAPSHOT.jar
+COPY ./commerce-api/build/libs/commerce-api-0.0.1.jar .
+CMD java -jar -Dspring.profiles.active=${ACTIVE_PROFILE} commerce-api-0.0.1.jar
