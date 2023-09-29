@@ -58,7 +58,7 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         testImplementation("org.springframework.boot:spring-boot-starter-test")
         annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-//        kapt("org.springframework.boot:spring-boot-configuration-processor")
+        kapt("org.springframework.boot:spring-boot-configuration-processor")
     }
 
     tasks.withType<KotlinCompile> {
