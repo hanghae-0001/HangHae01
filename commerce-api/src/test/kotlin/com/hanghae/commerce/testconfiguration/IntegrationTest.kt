@@ -1,4 +1,4 @@
-package com.hanghae.health.testconfiguration
+package com.hanghae.commerce.testconfiguration
 
 import org.junit.jupiter.api.Tag
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
