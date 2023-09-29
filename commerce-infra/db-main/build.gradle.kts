@@ -5,7 +5,7 @@ allOpen {
 }
 
 dependencies {
-    compileOnly(project(":commerce-domain:api"))
+    compileOnly(project(":commerce-api"))
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
