@@ -86,7 +86,7 @@ jobs:
             aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin $ECR_REGISTRY/$ECR_REPOSITORY_DEVELOP
             docker stop hanghae-app 
             docker rm hanghae-app
-            docker run -d --name hanghae-app -p 9001:9001 -e ACTIVE_PROFILE=develop ${{ steps.build-image.outputs.image }}
+            docker run -d --name hanghae-app -p 9001:9001 -e ACTIVE_PROFILE=develop AC${{ steps.build-image.outputs.image }}
             docker ps -a | grep hanghae-app
             
       
