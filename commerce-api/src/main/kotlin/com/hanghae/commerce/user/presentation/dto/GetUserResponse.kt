@@ -1,28 +1,22 @@
-package com.hanghae.commerce.data.domain
+package com.hanghae.commerce.user.presentation.dto
 
 import com.hanghae.commerce.user.domain.User
-import jakarta.persistence.*
-import java.util.Optional
 
-@Entity
-@Table(name = "users")
-class UserEntity(
+data class GetUserResponse (
     val name: String,
     val age: Int,
     val email: String,
     val address: String,
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    val id: Long,
 ) {
     companion object {
-        fun toEntity(user: User): UserEntity {
-            return UserEntity(
+        fun of(user: User): GetUserResponse {
+            return GetUserResponse(
                 name = user.name,
                 age = user.age,
                 email = user.email,
                 address = user.address,
+                id = user.id!!,
             )
         }
     }
