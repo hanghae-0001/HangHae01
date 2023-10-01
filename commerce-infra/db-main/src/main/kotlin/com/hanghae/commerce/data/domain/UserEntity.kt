@@ -1,8 +1,8 @@
 package com.hanghae.commerce.data.domain
 
 import com.hanghae.commerce.user.domain.User
+import com.hanghae.commerce.user.domain.UserType
 import jakarta.persistence.*
-import java.util.Optional
 
 @Entity
 @Table(name = "users")
@@ -11,6 +11,8 @@ class UserEntity(
     val age: Int,
     val email: String,
     val address: String,
+    @Enumerated(EnumType.STRING)
+    val userType: UserType,
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,7 @@ class UserEntity(
                 age = user.age,
                 email = user.email,
                 address = user.address,
+                userType = user.userType,
             )
         }
     }

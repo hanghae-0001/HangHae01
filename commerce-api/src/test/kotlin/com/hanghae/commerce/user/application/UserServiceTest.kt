@@ -2,6 +2,7 @@ package com.hanghae.commerce.user.application
 
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import com.hanghae.commerce.user.domain.UserRepository
+import com.hanghae.commerce.user.domain.UserType
 import com.hanghae.commerce.user.presentation.dto.CreateUserRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.AfterEach
@@ -24,7 +25,7 @@ class UserServiceTest (
     @Test
     fun createUser() {
         //given
-        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul")
+        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)
 
         //when
         val result = userService.createUser(request)
@@ -36,7 +37,7 @@ class UserServiceTest (
     @Test
     fun getUserById() {
         //given
-        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul")
+        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)
         val createUser = userService.createUser(request)
 
         //when
@@ -48,5 +49,6 @@ class UserServiceTest (
         Assertions.assertThat(result.age).isEqualTo(request.age)
         Assertions.assertThat(result.email).isEqualTo(request.email)
         Assertions.assertThat(result.address).isEqualTo(request.address)
+        Assertions.assertThat(result.userType).isEqualTo(request.userType)
     }
 }

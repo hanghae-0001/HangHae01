@@ -10,7 +10,7 @@ class UserTest {
 
     @Test
     fun createUser() {
-        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul")
+        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)
 
         assertThat(user.name).isEqualTo("sangmin")
         assertThat(user.age).isEqualTo(20)
@@ -21,7 +21,7 @@ class UserTest {
     @Test
     fun createUserWithBlankName() {
         //then
-        Assertions.assertThatThrownBy { User.createUser(name = "", age = 20, email = "hanghae001@gmail.com", address = "seoul")}
+        Assertions.assertThatThrownBy { User.createUser(name = "", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)}
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("이름은 비어 있을 수 없습니다")
     }
@@ -29,7 +29,7 @@ class UserTest {
     @Test
     fun createUserWithBlankEmail() {
         //then
-        Assertions.assertThatThrownBy { User.createUser(name = "sangmin", age = 20, email = "", address = "seoul")}
+        Assertions.assertThatThrownBy { User.createUser(name = "sangmin", age = 20, email = "", address = "seoul", userType = UserType.CUSTOMER)}
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("이메일은 비어 있을 수 없습니다")
     }
@@ -37,7 +37,7 @@ class UserTest {
     @Test
     fun createUserWithBlankAddress() {
         //then
-        Assertions.assertThatThrownBy { User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "")}
+        Assertions.assertThatThrownBy { User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "", userType = UserType.CUSTOMER)}
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("주소는 비어 있을 수 없습니다")
     }

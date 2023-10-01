@@ -21,6 +21,7 @@ class UserService (
                 age = request.age,
                 email = request.email,
                 address = request.address,
+                userType = request.userType,
             ),
         )
 

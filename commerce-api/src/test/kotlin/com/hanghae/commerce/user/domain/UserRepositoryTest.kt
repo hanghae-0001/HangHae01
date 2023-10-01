@@ -20,7 +20,7 @@ class UserRepositoryTest (
     @Order(1)
     fun save() {
         //given
-        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul")
+        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", UserType.CUSTOMER)
 
         //when
         val userId = userRepository.save(user)
@@ -33,7 +33,7 @@ class UserRepositoryTest (
     @Order(2)
     fun read() {
         //given
-        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul")
+        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", UserType.CUSTOMER)
         val userId = userRepository.save(user)
 
         //when
@@ -44,5 +44,6 @@ class UserRepositoryTest (
         Assertions.assertThat(savedUser!!.age).isEqualTo(20)
         Assertions.assertThat(savedUser!!.email).isEqualTo("hanghae001@gmail.com")
         Assertions.assertThat(savedUser!!.address).isEqualTo("seoul")
+        Assertions.assertThat(savedUser!!.userType).isEqualTo(UserType.CUSTOMER)
     }
 }

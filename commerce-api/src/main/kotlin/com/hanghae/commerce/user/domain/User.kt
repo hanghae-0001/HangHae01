@@ -5,6 +5,7 @@ class User(
     val age: Int,
     val email: String,
     val address: String,
+    val userType: UserType,
     var id: Long? = null,
 ){
     init {
@@ -20,8 +21,8 @@ class User(
     }
 
     companion object {
-        fun createUser(name: String, age: Int, email: String, address: String): User {
-            return User(name, age, email, address)
+        fun createUser(name: String, age: Int, email: String, address: String, userType: UserType): User {
+            return User(name, age, email, address, userType)
         }
     }
 }

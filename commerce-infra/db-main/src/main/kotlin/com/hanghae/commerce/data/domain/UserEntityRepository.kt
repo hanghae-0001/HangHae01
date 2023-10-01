@@ -24,6 +24,7 @@ class UserEntityRepository(
                 email = it.email!!,
                 address = it.address!!,
                 age = it.age,
+                userType = it.userType,
             )
         }
     }
