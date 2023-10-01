@@ -1,0 +1,11 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: commerce
+
+  config:
+    import:
+      - logging.yml
+      - db-main.yml
