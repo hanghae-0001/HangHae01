@@ -10,9 +10,9 @@ class UserEntityRepository(
     private val jpaUserRepository: JpaUserRepository,
 ) : UserRepository {
 
-    override fun save(user: User): Long{
+    override fun save(user: User): Long {
         return jpaUserRepository.save(
-            UserEntity.toEntity(user)
+            UserEntity.toEntity(user),
         ).id!!
     }
 

@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/user")
-class UserController (
+class UserController(
     private val userService: UserService,
-){
+) {
 
     @PostMapping
-    fun createUser(@RequestBody createUserRequest: CreateUserRequest) : CreateUserResponse {
+    fun createUser(@RequestBody createUserRequest: CreateUserRequest): CreateUserResponse {
         return userService.createUser(createUserRequest)
     }
 

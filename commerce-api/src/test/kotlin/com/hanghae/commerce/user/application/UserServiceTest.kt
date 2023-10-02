@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 @IntegrationTest
-class UserServiceTest (
+class UserServiceTest(
     @Autowired
     private val userService: UserService,
     @Autowired
     private val userRepository: UserRepository,
-){
+) {
 
     @AfterEach
     fun tearDown() {
@@ -24,26 +24,39 @@ class UserServiceTest (
 
     @Test
     fun createUser() {
-        //given
-        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)
+        // given
+        val request = CreateUserRequest(
+            name = "sangmin",
+            age = 20,
+            email = "hanghae001@gmail.com",
+            address = "seoul",
+            userType = UserType.CUSTOMER,
+        )
 
-        //when
+        // when
         val result = userService.createUser(request)
 
-        //then
+        // then
         Assertions.assertThat(result.id).isNotNull
     }
 
     @Test
     fun getUserById() {
-        //given
-        val request = CreateUserRequest(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", userType = UserType.CUSTOMER)
+        // given
+        val request = CreateUserRequest(
+            name = "sangmin",
+            age = 20,
+            email = "hanghae001@gmail.com",
+            address = "seoul",
+            userType = UserType.CUSTOMER,
+        )
+
         val createUser = userService.createUser(request)
 
-        //when
+        // when
         val result = userService.getUserById(createUser.id)
 
-        //then
+        // then
         Assertions.assertThat(result.id).isEqualTo(createUser.id)
         Assertions.assertThat(result.name).isEqualTo(request.name)
         Assertions.assertThat(result.age).isEqualTo(request.age)

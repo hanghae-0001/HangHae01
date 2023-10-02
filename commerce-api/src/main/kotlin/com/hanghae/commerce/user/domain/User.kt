@@ -7,7 +7,7 @@ class User(
     val address: String,
     val userType: UserType,
     var id: Long? = null,
-){
+) {
     init {
         if (name.isBlank()) {
             throw IllegalArgumentException("이름은 비어 있을 수 없습니다")

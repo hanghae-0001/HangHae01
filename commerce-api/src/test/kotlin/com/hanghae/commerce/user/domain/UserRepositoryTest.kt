@@ -5,35 +5,45 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-
 @IntegrationTest
-class UserRepositoryTest (
+class UserRepositoryTest(
     @Autowired
     private val userRepository: UserRepository,
-){
-
+) {
     @Test
     fun save() {
-        //given
-        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", UserType.CUSTOMER)
+        // given
+        val user = User.createUser(
+            name = "sangmin",
+            age = 20,
+            email = "hanghae001@gmail.com",
+            address = "seoul",
+            UserType.CUSTOMER,
+        )
 
-        //when
+        // when
         val userId = userRepository.save(user)
 
-        //then
+        // then
         Assertions.assertThat(userId).isNotNull
     }
 
     @Test
     fun read() {
-        //given
-        val user = User.createUser(name = "sangmin", age = 20, email = "hanghae001@gmail.com", address = "seoul", UserType.CUSTOMER)
+        // given
+        val user = User.createUser(
+            name = "sangmin",
+            age = 20,
+            email = "hanghae001@gmail.com",
+            address = "seoul",
+            UserType.CUSTOMER,
+        )
         val userId = userRepository.save(user)
 
-        //when
+        // when
         val savedUser = userRepository.read(userId)
 
-        //then
+        // then
         Assertions.assertThat(savedUser!!.name).isEqualTo("sangmin")
         Assertions.assertThat(savedUser!!.age).isEqualTo(20)
         Assertions.assertThat(savedUser!!.email).isEqualTo("hanghae001@gmail.com")
