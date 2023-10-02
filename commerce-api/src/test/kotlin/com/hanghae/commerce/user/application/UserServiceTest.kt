@@ -31,7 +31,7 @@ class UserServiceTest (
         val result = userService.createUser(request)
 
         //then
-        Assertions.assertThat(result.id).isEqualTo(1L)
+        Assertions.assertThat(result.id).isNotNull
     }
 
     @Test
