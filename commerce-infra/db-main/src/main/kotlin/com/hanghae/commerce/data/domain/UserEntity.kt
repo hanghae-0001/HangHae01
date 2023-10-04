@@ -19,7 +19,7 @@ class UserEntity(
     var id: Long? = null,
 ) {
     companion object {
-        fun toEntity(user: User): UserEntity {
+        fun from(user: User): UserEntity {
             return UserEntity(
                 name = user.name,
                 age = user.age,

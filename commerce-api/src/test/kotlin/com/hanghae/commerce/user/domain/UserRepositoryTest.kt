@@ -13,7 +13,7 @@ class UserRepositoryTest(
     @Test
     fun save() {
         // given
-        val user = User.createUser(
+        val user = User.of(
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
@@ -31,7 +31,7 @@ class UserRepositoryTest(
     @Test
     fun read() {
         // given
-        val user = User.createUser(
+        val user = User.of(
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",

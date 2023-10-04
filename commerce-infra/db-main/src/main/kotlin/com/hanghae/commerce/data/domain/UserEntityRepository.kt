@@ -14,7 +14,7 @@ class UserEntityRepository(
     @Transactional
     override fun save(user: User): Long {
         return jpaUserRepository.save(
-            UserEntity.toEntity(user),
+            UserEntity.from(user),
         ).id!!
     }
 

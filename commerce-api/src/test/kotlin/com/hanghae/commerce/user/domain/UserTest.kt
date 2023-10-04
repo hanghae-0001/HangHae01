@@ -10,7 +10,7 @@ class UserTest {
 
     @Test
     fun createUser() {
-        val user = User.createUser(
+        val user = User.of(
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
@@ -28,7 +28,7 @@ class UserTest {
     fun createUserWithBlankName() {
         // then
         Assertions.assertThatThrownBy {
-            User.createUser(
+            User.of(
                 name = "",
                 age = 20,
                 email = "hanghae001@gmail.com",
@@ -44,7 +44,7 @@ class UserTest {
     fun createUserWithBlankEmail() {
         //then
         Assertions.assertThatThrownBy {
-            User.createUser(
+            User.of(
                 name = "sangmin",
                 age = 20,
                 email = "",
@@ -60,7 +60,7 @@ class UserTest {
     fun createUserWithBlankAddress() {
         // then
         Assertions.assertThatThrownBy {
-            User.createUser(
+            User.of(
                 name = "sangmin",
                 age = 20,
                 email = "hanghae001@gmail.com",

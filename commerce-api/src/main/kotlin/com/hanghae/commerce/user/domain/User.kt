@@ -21,7 +21,7 @@ class User(
     }
 
     companion object {
-        fun createUser(name: String, age: Int, email: String, address: String, userType: UserType): User {
+        fun of(name: String, age: Int, email: String, address: String, userType: UserType): User {
             return User(name, age, email, address, userType)
         }
     }

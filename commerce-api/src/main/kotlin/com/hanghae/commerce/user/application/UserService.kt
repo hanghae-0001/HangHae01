@@ -16,7 +16,7 @@ class UserService(
 
     fun createUser(request: CreateUserRequest): CreateUserResponse {
         val savedUserId = userWriter.save(
-            User.createUser(
+            User.of(
                 name = request.name,
                 age = request.age,
                 email = request.email,
