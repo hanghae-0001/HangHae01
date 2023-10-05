@@ -1,5 +1,5 @@
 package com.hanghae.commerce.user.presentation.dto
 
-data class CreateUserResponse(
+data class CreateSellerResponse(
     val id: Long,
 )
