@@ -1,4 +1,4 @@
-package com.hanghae.commerce.data.domain
+package com.hanghae.commerce.data.domain.user
 
 import com.hanghae.commerce.user.domain.User
 import com.hanghae.commerce.user.domain.UserType

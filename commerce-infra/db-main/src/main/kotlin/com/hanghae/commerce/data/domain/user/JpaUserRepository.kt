@@ -1,4 +1,4 @@
-package com.hanghae.commerce.data.domain
+package com.hanghae.commerce.data.domain.user
 
 import org.springframework.data.jpa.repository.JpaRepository
 
