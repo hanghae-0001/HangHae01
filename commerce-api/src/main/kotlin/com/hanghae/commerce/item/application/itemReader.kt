@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class itemReader(
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
 ) {
     fun read(idList: List<String>): List<Item> {
         return itemRepository.findByIdIn(idList)

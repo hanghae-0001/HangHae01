@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ItemWriter(
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
 ) {
     fun write(item: Item) {
         itemRepository.save(item)
