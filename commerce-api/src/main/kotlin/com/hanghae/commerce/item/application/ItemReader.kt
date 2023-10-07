@@ -5,7 +5,7 @@ import com.hanghae.commerce.item.domain.ItemRepository
 import org.springframework.stereotype.Component
 
 @Component
-class itemReader(
+class ItemReader(
     private val itemRepository: ItemRepository,
 ) {
     fun read(idList: List<String>): List<Item> {
