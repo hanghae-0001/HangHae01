@@ -3,5 +3,5 @@ spring:
   config:
     activate:
       on-profile: develop
-
-
+    import:
+      - logging.yml
