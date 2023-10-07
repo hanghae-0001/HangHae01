@@ -152,9 +152,10 @@ class OrderCreateServiceIT(
         return OrderCreateCommand(
             listOf(
                 OrderItem(
-                    itemId,
-                    price,
-                    quantityPerRequest,
+                    itemId = itemId,
+                    price = price,
+//                    orderId = null/,
+                    quantity = quantityPerRequest,
                 ),
             ),
         )

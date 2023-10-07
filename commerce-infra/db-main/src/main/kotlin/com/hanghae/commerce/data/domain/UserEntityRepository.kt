@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 
 @Repository
-class UserEntityRepository(
+internal class UserEntityRepository(
     private val jpaUserRepository: JpaUserRepository,
 ) : UserRepository {
 
