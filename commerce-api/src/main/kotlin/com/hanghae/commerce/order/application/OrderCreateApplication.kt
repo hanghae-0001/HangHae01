@@ -1,9 +1,11 @@
 package com.hanghae.commerce.order.application
 
+import com.hanghae.commerce.item.application.ItemReader
 import com.hanghae.commerce.order.domain.OrderCreateService
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderCreateApplication(
@@ -11,9 +13,9 @@ class OrderCreateApplication(
     private val itemReader: ItemReader,
 ) {
 
-    @Transactional
-    fun create(request: OrderCreateRequest): OrderCreateResponse {
-        val read = itemReader.read(request.orderItemList.map { it.itemId })
-        orderCreateService.create()
-    }
+//    @Transactional
+//    fun create(request: OrderCreateRequest): OrderCreateResponse {
+//        val read = itemReader.read(request.orderItemList.map { it.itemId })
+//        orderCreateService.create()
+//    }
 }
