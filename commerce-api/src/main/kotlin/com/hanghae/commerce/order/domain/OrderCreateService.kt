@@ -12,15 +12,18 @@ class OrderCreateService(
     private val orderWriter: OrderWriter,
     private val stockManager: StockManager,
 ) {
-    fun create(orderCreateCommand: OrderCreateCommand) {
+    fun create(orderCreateCommand: OrderCreateCommand): String {
         verifyStockRemains(orderCreateCommand.orderItemList)
 
         val order: Order = Order.from(orderCreateCommand)
 
-        orderWriter.write(order)
-//        publishOrderCreatedEvent(order)
+        val createdOrder = orderWriter.write(order)
+
+        // publishOrderCreatedEvent(createdOrder)
         // -> 알림
         // -> 결제 -> 배송
+
+        return createdOrder.id
     }
 
     private fun publishOrderCreatedEvent(order: Order) {

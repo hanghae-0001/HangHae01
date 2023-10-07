@@ -1,3 +1,5 @@
 package com.hanghae.commerce.order.presentaion.dto
 
-class OrderCreateResponse
+data class OrderCreateResponse(
+    val orderId: String,
+)

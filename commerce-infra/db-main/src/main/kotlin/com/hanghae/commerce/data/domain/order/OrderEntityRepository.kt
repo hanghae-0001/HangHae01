@@ -12,4 +12,8 @@ class OrderEntityRepository(
     override fun save(order: Order): Order {
         return jpaOrderRepository.save(order.toEntity()).toDomain()
     }
+
+    override fun deleteAll() {
+        jpaOrderRepository.deleteAll()
+    }
 }

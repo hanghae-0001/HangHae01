@@ -16,7 +16,7 @@ fun OrderEntity.toDomain(): Order {
 
 fun Order.toEntity(): OrderEntity {
     return OrderEntity(
-        tempId = this.id,
+        identifier = this.id,
         orderAmount = this.orderAmount,
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
@@ -38,7 +38,7 @@ fun OrderItemEntity.toDomain(): OrderItem {
 
 fun OrderItem.toEntity(): OrderItemEntity {
     return OrderItemEntity(
-        tempId = this.id,
+        identifier = this.id,
         itemId = this.itemId,
         quantity = this.quantity,
         name = this.name,

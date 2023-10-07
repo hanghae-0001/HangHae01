@@ -6,15 +6,20 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "order")
 class OrderEntity(
-    @Transient private val tempId: String,
+    @Transient
+    private val identifier: String,
 
-    @Column(nullable = false) val orderAmount: Int = 0,
+    @Column(nullable = false)
+    val orderAmount: Int = 0,
 
-    @Column(nullable = false) val discountAmount: Int = 0,
+    @Column(nullable = false)
+    val discountAmount: Int = 0,
 
-    @Column(nullable = false) val paymentAmount: Int = 0,
+    @Column(nullable = false)
+    val paymentAmount: Int = 0,
 
-    @Column(nullable = false) val deliveryFee: Int = 0,
+    @Column(nullable = false)
+    val deliveryFee: Int = 0,
 
     @OneToMany(
         mappedBy = "order",
@@ -22,11 +27,11 @@ class OrderEntity(
         cascade = [CascadeType.PERSIST, CascadeType.REMOVE],
         orphanRemoval = true,
     ) val orderItemList: List<OrderItemEntity> = listOf(),
-) : PrimaryKeyEntity(tempId) {
+) : PrimaryKeyEntity(identifier) {
     companion object {
         fun from(id: String): OrderEntity {
             return OrderEntity(
-                tempId = id,
+                identifier = id,
             )
         }
     }

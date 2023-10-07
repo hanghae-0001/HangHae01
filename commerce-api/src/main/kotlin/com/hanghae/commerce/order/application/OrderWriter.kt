@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component
 class OrderWriter(
     private val orderRepository: OrderRepository,
 ) {
-
-    fun write(order: Order) {
-        orderRepository.save(order)
+    fun write(order: Order): Order {
+        return orderRepository.save(order)
     }
 }
