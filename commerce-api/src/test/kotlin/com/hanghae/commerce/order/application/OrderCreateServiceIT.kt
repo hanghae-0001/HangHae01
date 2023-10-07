@@ -8,23 +8,18 @@ import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.*
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.Executors
 
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
 class OrderCreateServiceIT(
-    @Autowired
-    var itemWriter: ItemWriter,
+    @Autowired var itemWriter: ItemWriter,
 //    @Autowired
 //    var itemStockCountService: ItemStockCountService,
-    @Autowired
-    var sut: OrderCreateService,
+    @Autowired var sut: OrderCreateService,
 ) {
 
     @Nested
@@ -62,7 +57,7 @@ class OrderCreateServiceIT(
                     ),
                 )
 
-            // then
+                // then
             }.isInstanceOf(SoldOutException::class.java)
                 .hasMessage("주문한 상품량이 재고량보다 큽니다.")
         }
@@ -80,7 +75,7 @@ class OrderCreateServiceIT(
                     ),
                 )
 
-            // then
+                // then
             }.isInstanceOf(IllegalArgumentException::class.java)
                 .hasMessage("존재하지 않는 상품입니다.")
         }
@@ -104,7 +99,6 @@ class OrderCreateServiceIT(
         @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 OutOfStockException 발생한다.")
         fun tc3() {
         }
-
     }
 
     @Nested
@@ -152,9 +146,11 @@ class OrderCreateServiceIT(
         return OrderCreateCommand(
             listOf(
                 OrderItem(
+                    id = "velit",
                     itemId = itemId,
+                    orderId = null,
                     price = price,
-//                    orderId = null/,
+                    name = "Marta Stokes",
                     quantity = quantityPerRequest,
                 ),
             ),

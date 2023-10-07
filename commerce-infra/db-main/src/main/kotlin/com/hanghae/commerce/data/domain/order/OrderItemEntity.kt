@@ -7,7 +7,7 @@ import jakarta.persistence.*
 @Table(name = "order_item")
 class OrderItemEntity(
     @Transient
-    val id: String,
+    val tempId: String,
 
     @Column(nullable = false)
     val itemId: String,
@@ -25,4 +25,4 @@ class OrderItemEntity(
     @JoinColumn(name = "order_id", nullable = false)
     val order: OrderEntity? = null,
 
-) : PrimaryKeyEntity(id)
+) : PrimaryKeyEntity(tempId)

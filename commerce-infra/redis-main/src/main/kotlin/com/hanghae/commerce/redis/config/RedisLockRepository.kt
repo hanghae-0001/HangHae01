@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class RedisLockRepository(
-    private val redisTemplate: RedisTemplate<String, Any>
+    private val redisTemplate: RedisTemplate<String, Any>,
 ) : LockRepository {
 
     override fun lock(key: String, timeout: Long): Boolean {

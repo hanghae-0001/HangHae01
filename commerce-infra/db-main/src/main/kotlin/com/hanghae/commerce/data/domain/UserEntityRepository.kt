@@ -23,9 +23,9 @@ internal class UserEntityRepository(
         return jpaUserRepository.findByIdOrNull(id)?.let {
             User(
                 id = it.id!!,
-                name = it.name!!,
-                email = it.email!!,
-                address = it.address!!,
+                name = it.name,
+                email = it.email,
+                address = it.address,
                 age = it.age,
                 userType = it.userType,
             )

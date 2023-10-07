@@ -12,7 +12,6 @@ class OrderCreateService(
     private val orderWriter: OrderWriter,
     private val stockManager: StockManager,
 ) {
-
     fun create(orderCreateCommand: OrderCreateCommand) {
         verifyStockRemains(orderCreateCommand.orderItemList)
 
@@ -31,6 +30,4 @@ class OrderCreateService(
     private fun verifyStockRemains(orderLines: List<OrderItem>) {
         stockManager.verifyStockRemains(orderLines)
     }
-
-
 }

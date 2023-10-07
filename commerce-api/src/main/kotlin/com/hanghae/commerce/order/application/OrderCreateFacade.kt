@@ -8,14 +8,15 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class OrderCreateApplication(
+class OrderCreateFacade(
     private val orderCreateService: OrderCreateService,
     private val itemReader: ItemReader,
 ) {
 
-//    @Transactional
-//    fun create(request: OrderCreateRequest): OrderCreateResponse {
+    @Transactional
+    fun create(request: OrderCreateRequest): OrderCreateResponse {
 //        val read = itemReader.read(request.orderItemList.map { it.itemId })
 //        orderCreateService.create()
-//    }
+        TODO()
+    }
 }

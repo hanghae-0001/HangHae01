@@ -3,15 +3,14 @@ package com.hanghae.commerce.order.domain
 import com.hanghae.commerce.common.IdentifierConstants
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 
-class Order (
+class Order(
     val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
     val orderAmount: Int,
     val discountAmount: Int,
     val paymentAmount: Int,
     val deliveryFee: Int,
-    val orderItemList: List<OrderItem>
+    val orderItemList: List<OrderItem>,
 ) {
-
     companion object {
         fun from(orderCreateCommand: OrderCreateCommand): Order {
             val orderItemList = orderCreateCommand.orderItemList
@@ -37,7 +36,4 @@ class Order (
             return orderLines.sumOf { it.getAmount() }
         }
     }
-
-
-
 }
