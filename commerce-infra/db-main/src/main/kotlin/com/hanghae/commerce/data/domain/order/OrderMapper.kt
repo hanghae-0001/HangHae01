@@ -3,26 +3,26 @@ package com.hanghae.commerce.data.domain.order
 import com.hanghae.commerce.order.domain.Order
 import com.hanghae.commerce.order.domain.OrderItem
 
-fun OrderEntity.toDomain(): Order {
+fun OrderEntity.toDomain(orderItemList: List<OrderItem>): Order {
     return Order(
         id = this.id,
         orderAmount = this.orderAmount,
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
         deliveryFee = this.deliveryFee,
-        orderItemList = this.orderItemList.map { it.toDomain() },
+        orderItemList = orderItemList,
     )
 }
 
 fun Order.toEntity(): OrderEntity {
-    return OrderEntity(
+    val orderEntity = OrderEntity(
         identifier = this.id,
         orderAmount = this.orderAmount,
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
         deliveryFee = this.deliveryFee,
-        orderItemList = this.orderItemList.map { it.toEntity() },
     )
+    return orderEntity
 }
 
 fun OrderItemEntity.toDomain(): OrderItem {
@@ -31,18 +31,18 @@ fun OrderItemEntity.toDomain(): OrderItem {
         itemId = this.itemId,
         name = this.name,
         price = this.price,
-        orderId = this.order!!.id,
+        orderId = this.order.id,
         quantity = this.quantity,
     )
 }
 
-fun OrderItem.toEntity(): OrderItemEntity {
+fun OrderItem.toEntity(orderId: String): OrderItemEntity {
     return OrderItemEntity(
         identifier = this.id,
         itemId = this.itemId,
         quantity = this.quantity,
         name = this.name,
         price = this.price,
-        order = this.orderId?.let { OrderEntity.from(it) },
+        order = OrderEntity.from(orderId),
     )
 }

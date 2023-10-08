@@ -17,7 +17,7 @@ class Order(
 
             val orderAmount: Int = calculateOrderAmount(orderItemList)
             val deliveryFee: Int = calculateDeliveryFee(orderAmount)
-            val paymentAmount = orderAmount + deliveryFee
+            val paymentAmount: Int = orderAmount + deliveryFee
 
             return Order(
                 orderAmount = orderAmount,

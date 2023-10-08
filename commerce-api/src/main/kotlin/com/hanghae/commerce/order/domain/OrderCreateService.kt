@@ -5,16 +5,15 @@ import com.hanghae.commerce.order.application.OrderWriter
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderCreateService(
     private val eventPublisher: ApplicationEventPublisher,
     private val orderWriter: OrderWriter,
-    private val stockManager: StockManager,
 ) {
-    fun create(orderCreateCommand: OrderCreateCommand): String {
-        verifyStockRemains(orderCreateCommand.orderItemList)
 
+    fun create(orderCreateCommand: OrderCreateCommand): String {
         val order: Order = Order.from(orderCreateCommand)
 
         val createdOrder = orderWriter.write(order)
@@ -30,7 +29,5 @@ class OrderCreateService(
         eventPublisher.publishEvent(OrderCreateEvent.from(order))
     }
 
-    private fun verifyStockRemains(orderLines: List<OrderItem>) {
-        stockManager.verifyStockRemains(orderLines)
-    }
+
 }

@@ -1,6 +1,7 @@
 package com.hanghae.commerce.order.application
 
 import com.hanghae.commerce.item.application.ItemReader
+import com.hanghae.commerce.item.application.StockManager
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.order.domain.OrderCreateService
 import com.hanghae.commerce.order.domain.OrderItem
@@ -8,32 +9,31 @@ import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderCreateFacade(
     private val orderCreateService: OrderCreateService,
     private val itemReader: ItemReader,
+    private val stockManager: StockManager,
 ) {
-
-    @Transactional
     fun create(request: OrderCreateRequest): OrderCreateResponse {
+        val orderItems = orderItemsRequestToDomain(request)
+
+        stockManager.verifyStockRemains(orderItems)
+
         return OrderCreateResponse(
             orderCreateService.create(
-                OrderCreateCommand(
-                    mapOrderItems(request),
-                ),
+                OrderCreateCommand(orderItems),
             ),
         )
     }
 
-    private fun mapOrderItems(request: OrderCreateRequest) =
+    private fun orderItemsRequestToDomain(request: OrderCreateRequest) =
         findItems(request.itemList)
             .map { item ->
                 OrderItem(
                     itemId = item.id,
                     name = item.name,
-                    orderId = null,
                     price = item.price,
                     quantity = request.itemList.findLast { it.id == item.id }!!.quantity,
                 )

@@ -5,8 +5,8 @@ import com.hanghae.commerce.common.IdentifierConstants
 class OrderItem(
     val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
     val itemId: String,
+    var orderId: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
     val name: String,
-    val orderId: String? = null,
     val price: Int,
     val quantity: Int,
 ) {

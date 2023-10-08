@@ -148,7 +148,6 @@ class OrderCreateServiceIT(
                 OrderItem(
                     id = "velit",
                     itemId = itemId,
-                    orderId = null,
                     price = price,
                     name = "Marta Stokes",
                     quantity = quantityPerRequest,
