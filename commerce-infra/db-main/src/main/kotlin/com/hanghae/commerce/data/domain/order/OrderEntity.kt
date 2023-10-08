@@ -4,7 +4,7 @@ import com.hanghae.commerce.data.common.PrimaryKeyEntity
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 class OrderEntity(
     @Transient
     private val identifier: String,
@@ -21,13 +21,8 @@ class OrderEntity(
     @Column(nullable = false)
     val deliveryFee: Int = 0,
 
-    @OneToMany(
-        mappedBy = "order",
-        fetch = FetchType.LAZY,
-        cascade = [CascadeType.PERSIST, CascadeType.REMOVE],
-        orphanRemoval = true,
-    ) val orderItemList: List<OrderItemEntity> = listOf(),
 ) : PrimaryKeyEntity(identifier) {
+
     companion object {
         fun from(id: String): OrderEntity {
             return OrderEntity(

@@ -23,6 +23,6 @@ class OrderItemEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
-    val order: OrderEntity? = null,
+    val order: OrderEntity,
 
 ) : PrimaryKeyEntity(identifier)
