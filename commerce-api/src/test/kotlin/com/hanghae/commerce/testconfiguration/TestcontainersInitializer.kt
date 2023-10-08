@@ -1,24 +1,26 @@
-package com.hanghae.commerce.testconfiguration;
+package com.hanghae.commerce.testconfiguration
 
-import com.redis.testcontainers.RedisContainer;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.testcontainers.utility.DockerImageName;
+import com.redis.testcontainers.RedisContainer
+import org.springframework.boot.test.util.TestPropertyValues
+import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.ConfigurableApplicationContext
+import org.testcontainers.utility.DockerImageName
 
-public class TestcontainersInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+class TestcontainersInitializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-    private static final RedisContainer REDIS_CONTAINER = new RedisContainer(DockerImageName.parse("redis:7.0.8-alpine")).withExposedPorts(6379);
-
-    static {
-        REDIS_CONTAINER.start();
+    override fun initialize(ctx: ConfigurableApplicationContext) {
+        TestPropertyValues.of(
+            "spring.redis.host=" + REDIS_CONTAINER.host,
+            "spring.redis.port=" + REDIS_CONTAINER.getMappedPort(6379)
+        ).applyTo(ctx.environment)
     }
 
-    @Override
-    public void initialize(ConfigurableApplicationContext ctx) {
-        TestPropertyValues.of(
-            "spring.redis.host=" + REDIS_CONTAINER.getHost(),
-            "spring.redis.port=" + REDIS_CONTAINER.getMappedPort(6379)
-        ).applyTo(ctx.getEnvironment());
+    companion object {
+        private val REDIS_CONTAINER: RedisContainer =
+            RedisContainer(DockerImageName.parse("redis:7.0.8-alpine")).withExposedPorts(6379)
+
+        init {
+            REDIS_CONTAINER.start()
+        }
     }
 }
