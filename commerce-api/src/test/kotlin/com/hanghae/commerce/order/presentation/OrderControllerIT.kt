@@ -1,11 +1,14 @@
 package com.hanghae.commerce.order.presentation
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.hanghae.commerce.common.IdentifierConstants
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.testconfiguration.IntegrationTest
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,8 +36,8 @@ class OrderControllerIT(
     @Test
     fun `주문 생성`() {
         // given
-        persistItem("1", "상품1", 10000, 100)
-        persistItem("2", "상품2", 20000, 100)
+        persistItem("1", "상품1", 10000, 10)
+        persistItem("2", "상품2", 20000, 10)
 
         // when
         val request = OrderCreateRequest(
@@ -61,9 +64,19 @@ class OrderControllerIT(
         // then
         result.andExpect(status().isOk())
             .andExpect(jsonPath("$.orderId").isString)
+
+        val item1 = itemRepository.findById("1")
+        val item2 = itemRepository.findById("2")
+        assertThat(item1!!.stock).isEqualTo(9)
+        assertThat(item2!!.stock).isEqualTo(8)
     }
 
-    private fun persistItem(id: String, name: String, price: Int, stock: Long) {
+    private fun persistItem(
+        id: String,
+        name: String,
+        price: Int,
+        stock: Long,
+    ) {
         itemRepository.save(
             Item.of(
                 id,
