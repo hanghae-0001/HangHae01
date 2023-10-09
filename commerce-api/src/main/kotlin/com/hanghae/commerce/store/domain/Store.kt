@@ -1,13 +1,18 @@
 package com.hanghae.commerce.store.domain
 
-class Store (
+class Store(
+    val id: String,
     val name: String,
-    val userId: Long,
-    var id: Long? = null,
-){
+    val userId: String,
+) {
+    init {
+        if (name.isBlank()) {
+            throw IllegalArgumentException("이름은 비어 있을 수 없습니다")
+        }
+    }
     companion object {
-        fun of(name: String, userId: Long): Store {
-            return Store(name, userId)
+        fun of(id: String, name: String, userId: String): Store {
+            return Store(id, name, userId)
         }
     }
 }

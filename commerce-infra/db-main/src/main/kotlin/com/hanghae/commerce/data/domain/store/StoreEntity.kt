@@ -1,19 +1,23 @@
 package com.hanghae.commerce.data.domain.store
 
+import com.hanghae.commerce.data.common.PrimaryKeyEntity
+import com.hanghae.commerce.store.domain.Store
 import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.Table
 
 @Entity
-class StoreEntity (
-    val name: String,
-    val userId: Long,
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
-){
-
-
+@Table(name = "store")
+data class StoreEntity(
+    @Transient
+    private val identifier: String,
+    private val name: String,
+    private val userId: String,
+) : PrimaryKeyEntity(identifier) {
+    fun toDomain(): Store {
+        return Store(
+            id = this.identifier,
+            name = this.name,
+            userId = this.userId,
+        )
+    }
 }

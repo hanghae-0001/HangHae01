@@ -4,6 +4,5 @@ import org.springframework.stereotype.Component
 
 @Component
 class StoreReader(
-    private val storeRepository: StoreRepository
-) {
-}
+    private val storeRepository: StoreRepository,
+)

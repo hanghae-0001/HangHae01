@@ -1,7 +1,5 @@
 package com.hanghae.commerce.store.domain
 
-import org.springframework.stereotype.Repository
-
-@Repository
 interface StoreRepository {
+    fun save(store: Store): Store
 }
