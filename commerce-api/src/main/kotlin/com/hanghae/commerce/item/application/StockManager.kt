@@ -5,6 +5,7 @@ import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.order.domain.OrderItem
 import com.hanghae.commerce.order.exception.SoldOutException
 import org.springframework.stereotype.Component
+import java.util.concurrent.TimeUnit
 
 @Component
 class StockManager(
@@ -12,7 +13,12 @@ class StockManager(
     private val itemWriter: ItemWriter,
 ) {
 
-    @DistributedLock(key = "#orderItem.itemId")
+    @DistributedLock(
+        key = "#orderItem.itemId",
+        timeUnit = TimeUnit.SECONDS,
+        waitTime = 10,
+        leaseTime = 60,
+    )
     fun verifyStockRemains(orderItem: OrderItem) {
         val item: Item = itemReader.read(orderItem.itemId) ?: throw IllegalArgumentException()
         checkStockAndUpdateQuantity(item, orderItem)

@@ -1,30 +1,36 @@
 package com.hanghae.commerce.order.application
 
-import com.hanghae.commerce.item.application.ItemWriter
 import com.hanghae.commerce.item.domain.Item
-import com.hanghae.commerce.order.domain.OrderCreateService
+import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderItem
+import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
+import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
 
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
 class OrderCreateFacadeTest(
-    @Autowired var itemWriter: ItemWriter,
-    @Autowired var sut: OrderCreateService,
+    @Autowired var orderRepository: OrderRepository,
+    @Autowired var itemRepository: ItemRepository,
+    @Autowired var sut: OrderCreateFacade,
 ) {
 
     @Nested
     @DisplayName("When: 25,000원짜리 상품 재고가 5개 일 때,")
     internal inner class when_stock_size_is_5 {
 
-        lateinit var item: Item
+        private lateinit var item: Item
 
         @BeforeEach
         fun setUp() {
@@ -34,30 +40,28 @@ class OrderCreateFacadeTest(
                 price = 25000,
                 stock = 5L,
             )
-            itemWriter.write(item)
+            itemRepository.save(item)
         }
 
         @AfterEach
         fun tearDown() {
-            itemWriter.deleteAll()
+            itemRepository.deleteAll()
         }
 
         @Test
-        @DisplayName("Then: 6개 주문하면, OutOfStockException 발생한다.")
+        @DisplayName("Then: 6개 주문하면, SoldOutException 발생한다.")
         fun tc1() {
             // when
             assertThatThrownBy {
                 sut.create(
-                    orderCreateCommandFixture(
+                    orderCreateRequest(
                         itemId = item.id,
-                        price = 20_000,
                         quantityPerRequest = 6,
                     ),
                 )
 
                 // then
-            }.isInstanceOf(SoldOutException::class.java)
-                .hasMessage("주문한 상품량이 재고량보다 큽니다.")
+            }.isInstanceOf(SoldOutException::class.java).hasMessage("재고가 부족합니다.")
         }
 
         @Test
@@ -66,16 +70,14 @@ class OrderCreateFacadeTest(
             // when
             assertThatThrownBy {
                 sut.create(
-                    orderCreateCommandFixture(
+                    orderCreateRequest(
                         itemId = "NOT_EXIST_ITEM_ID",
-                        price = 20_000,
                         quantityPerRequest = 7,
                     ),
                 )
 
                 // then
-            }.isInstanceOf(IllegalArgumentException::class.java)
-                .hasMessage("존재하지 않는 상품입니다.")
+            }.isInstanceOf(IllegalArgumentException::class.java).hasMessage("존재하지 않는 상품입니다.")
         }
     }
 
@@ -83,19 +85,129 @@ class OrderCreateFacadeTest(
     @DisplayName("When: 상품 재고가 1000개 일 때,")
     internal inner class when_stock_size_is_1000 {
 
+        private lateinit var item: Item
+
+        @BeforeEach
+        fun setUp() {
+            item = Item.of(
+                id = "1",
+                name = "Item Fixture",
+                price = 25000,
+                stock = 1000L,
+            )
+            itemRepository.save(item)
+        }
+
+        @AfterEach
+        fun tearDown() {
+            itemRepository.deleteAll()
+        }
+
         @Test
         @DisplayName("Then: 요청 300개가 동시에 3개씩 주문하면, 남는 재고는 100개이다.")
         fun tc1() {
+            executeOrderInMultiThread(
+                300,
+            ) {
+                sut.create(
+                    orderCreateRequest(
+                        itemId = item.id,
+                        quantityPerRequest = 3,
+                    ),
+                )
+            }
+            Thread.sleep(2000)
+
+            // then
+            val remainStock: Long = itemRepository.findById(item.id)!!.stock
+            assertThat(remainStock).isEqualTo(100L)
         }
 
         @Test
         @DisplayName("Then: 요청 200개가 동시에 5개씩 주문하면, 남는 재고는 0개이다.")
         fun tc2() {
+            // when
+            executeOrderInMultiThread(
+                threadCount = 200,
+            ) {
+                sut.create(
+                    orderCreateRequest(
+                        itemId = item.id,
+                        quantityPerRequest = 5,
+                    ),
+                )
+            }
+            Thread.sleep(2000)
+
+            // then
+            val remainStock: Long = itemRepository.findById(item.id)!!.stock
+            assertThat(remainStock).isEqualTo(0L)
         }
 
         @Test
-        @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 OutOfStockException 발생한다.")
+        @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 SoldOutException 발생한다.")
         fun tc3() {
+            // when
+            val futures = executableFutures<Order>(
+                threadCount = 300,
+            ) {
+                sut.create(
+                    orderCreateRequest(
+                        itemId = item.id,
+                        quantityPerRequest = 4,
+                    ),
+                )
+            }
+
+            val results: MutableList<Order> = mutableListOf()
+            val soldOutExceptions: MutableList<SoldOutException?> = mutableListOf()
+            for (future in futures) {
+                try {
+                    results.add(future.get())
+                } catch (e: InterruptedException) {
+                    soldOutExceptions.add(e.cause as SoldOutException?)
+                } catch (e: ExecutionException) {
+                    soldOutExceptions.add(e.cause as SoldOutException?)
+                }
+            }
+            Thread.sleep(1000)
+
+            // then
+            assertThat(results).hasSize(250)
+            assertThat(soldOutExceptions).hasSize(50)
+            assertThat(soldOutExceptions.map { it!!.message }.toList()).containsOnly("주문한 상품량이 재고량보다 큽니다.")
+        }
+
+        @Throws(InterruptedException::class)
+        private fun executeOrderInMultiThread(
+            threadCount: Int,
+            runnable: Runnable,
+        ) {
+            val executorService = Executors.newFixedThreadPool(32)
+            val latch = CountDownLatch(threadCount)
+
+            for (i in 0 until threadCount) {
+                try {
+                    executorService.submit(runnable)
+                } finally {
+                    latch.countDown()
+                }
+            }
+            latch.await()
+        }
+
+        private fun <T> executableFutures(
+            threadCount: Int,
+            runnable: Runnable,
+        ): List<Future<T>> {
+            val executorService = Executors.newFixedThreadPool(32)
+            val futures: MutableList<Future<T>> = ArrayList()
+
+            for (i in 0 until threadCount) {
+                futures.add(executorService.submit(runnable) as Future<T>)
+            }
+
+            return futures
         }
     }
 
@@ -114,15 +226,6 @@ class OrderCreateFacadeTest(
     }
 
     @Nested
-    @DisplayName("When: 주문요청 시 장바구니에 등록된 상품이 없다면,")
-    internal inner class when_cart_item_is_empty {
-        @Test
-        @DisplayName("Then: EmptyCartException 발생한다.")
-        fun tc1() {
-        }
-    }
-
-    @Nested
     @DisplayName("When: 주문이 정상적으로 완료되면,")
     internal inner class when_create_success {
         @Test
@@ -136,25 +239,22 @@ class OrderCreateFacadeTest(
         }
     }
 
-    private fun orderCreateCommandFixture(
+    private fun orderCreateRequest(
         itemId: String,
-        price: Int,
         quantityPerRequest: Int,
-    ): OrderCreateCommand {
-        return OrderCreateCommand(
-            listOf(
-                OrderItem(
-                    id = "velit",
-                    itemId = itemId,
-                    price = price,
-                    name = "Marta Stokes",
+    ): OrderCreateRequest {
+        return OrderCreateRequest(
+            userId = "1",
+            itemList = listOf(
+                OrderCreateRequest.Item(
+                    id = itemId,
                     quantity = quantityPerRequest,
                 ),
             ),
         )
     }
 
-    private fun orderCreateCommandFixture(vararg orderItems: OrderItem): OrderCreateCommand {
+    private fun orderCreateRequest(vararg orderItems: OrderItem): OrderCreateCommand {
         return OrderCreateCommand(orderItems.toList())
     }
 }

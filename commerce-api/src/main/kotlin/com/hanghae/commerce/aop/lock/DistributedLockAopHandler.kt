@@ -5,6 +5,7 @@ import com.hanghae.commerce.aop.common.CustomSpringELParser
 import com.hanghae.commerce.lock.Lock
 import com.hanghae.commerce.lock.LockConstants
 import com.hanghae.commerce.lock.LockRepository
+import mu.KotlinLogging
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
@@ -18,7 +19,8 @@ class DistributedLockAopHandler(
     private val lockRepository: LockRepository,
     private val aopForTransaction: AopForTransaction,
 ) {
-    //        val logger= KotlinLogging.logger {}
+    val logger = KotlinLogging.logger {}
+
     @Around("@annotation(com.hanghae.commerce.aop.lock.DistributedLock)")
     @Throws(Throwable::class)
     fun handle(joinPoint: ProceedingJoinPoint): Any? {
@@ -26,10 +28,9 @@ class DistributedLockAopHandler(
 
         val key = parseKeyFromJointPoint(joinPoint)
         val lock: Lock = lockRepository.get(key)
+
         try {
-            if (!availableLock(lock, distributedLock)) {
-                return false
-            }
+            lock.lock(distributedLock.leaseTime, distributedLock.timeUnit)
             return aopForTransaction.proceed(joinPoint)
         } catch (e: InterruptedException) {
             throw InterruptedException()
@@ -37,7 +38,7 @@ class DistributedLockAopHandler(
             try {
                 lock.unlock()
             } catch (e: IllegalMonitorStateException) {
-//                logger.info("Redisson Lock Already UnLock ${method.getName()} ${key}")
+                logger.info("Lock already release [${resolveSignature(joinPoint).method.name} $key]")
             }
         }
     }
