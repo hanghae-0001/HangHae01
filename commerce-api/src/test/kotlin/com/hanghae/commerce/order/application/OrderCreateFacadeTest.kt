@@ -2,10 +2,8 @@ package com.hanghae.commerce.order.application
 
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
-import com.hanghae.commerce.order.domain.OrderItem
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.OrderStatus
-import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
@@ -19,11 +17,15 @@ import java.util.concurrent.*
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
-class OrderCreateFacadeTest(
-    @Autowired var orderRepository: OrderRepository,
-    @Autowired var itemRepository: ItemRepository,
-    @Autowired var sut: OrderCreateFacade,
-) {
+class OrderCreateFacadeTest {
+    @Autowired
+    private lateinit var orderRepository: OrderRepository
+
+    @Autowired
+    private lateinit var itemRepository: ItemRepository
+
+    @Autowired
+    private lateinit var sut: OrderCreateFacade
 
     @Nested
     @DisplayName("When: 25,000원짜리 상품 재고가 5개 일 때,")
@@ -296,9 +298,5 @@ class OrderCreateFacadeTest(
                 ),
             ),
         )
-    }
-
-    private fun orderCreateRequest(vararg orderItems: OrderItem): OrderCreateCommand {
-        return OrderCreateCommand(orderItems.toList())
     }
 }

@@ -45,9 +45,9 @@ class UserRepositoryTest(
 
         // then
         Assertions.assertThat(savedUser!!.name).isEqualTo("sangmin")
-        Assertions.assertThat(savedUser!!.age).isEqualTo(20)
-        Assertions.assertThat(savedUser!!.email).isEqualTo("hanghae001@gmail.com")
-        Assertions.assertThat(savedUser!!.address).isEqualTo("seoul")
-        Assertions.assertThat(savedUser!!.userType).isEqualTo(UserType.CUSTOMER)
+        Assertions.assertThat(savedUser.age).isEqualTo(20)
+        Assertions.assertThat(savedUser.email).isEqualTo("hanghae001@gmail.com")
+        Assertions.assertThat(savedUser.address).isEqualTo("seoul")
+        Assertions.assertThat(savedUser.userType).isEqualTo(UserType.CUSTOMER)
     }
 }
