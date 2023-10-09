@@ -19,7 +19,7 @@ class StoreCreateService(
 ) {
 
     @Transactional
-    fun createStore(request: CreateStoreRequest):  CreateStoreResponse{
+    fun createStore(request: CreateStoreRequest): CreateStoreResponse {
         val user = userReader.findById(request.userId) ?: throw IllegalArgumentException()
 
         if (!user.userType.equals(UserType.SELLER)) {

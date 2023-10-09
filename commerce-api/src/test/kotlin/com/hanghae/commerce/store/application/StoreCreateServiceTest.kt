@@ -14,7 +14,7 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 
 @IntegrationTest
-class StoreCreateServiceTest (
+class StoreCreateServiceTest(
     @Autowired
     private val storeCreateService: StoreCreateService,
     @Autowired
@@ -23,7 +23,7 @@ class StoreCreateServiceTest (
     private val userReader: UserReader,
     @Autowired
     private val userWriter: UserWriter,
-){
+) {
     @AfterEach
     fun tearDown() {
         userWriter.allDelete()
@@ -39,7 +39,7 @@ class StoreCreateServiceTest (
             age = 20,
             email = "hanghae@naver.com",
             address = "seoul",
-            UserType.SELLER
+            UserType.SELLER,
         )
 
         userWriter.save(user)
@@ -68,7 +68,7 @@ class StoreCreateServiceTest (
             age = 20,
             email = "hanghae@naver.com",
             address = "seoul",
-            UserType.SELLER
+            UserType.SELLER,
         )
 
         userWriter.save(user)
@@ -103,7 +103,7 @@ class StoreCreateServiceTest (
             age = 20,
             email = "hanghae@naver.com",
             address = "seoul",
-            UserType.CUSTOMER
+            UserType.CUSTOMER,
         )
 
         userWriter.save(user)

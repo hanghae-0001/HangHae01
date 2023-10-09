@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
 @IntegrationTest
-class StoreReadServiceTest (
+class StoreReadServiceTest(
     @Autowired
     private val storeReadService: StoreReadService,
     @Autowired
@@ -20,7 +20,7 @@ class StoreReadServiceTest (
     @Autowired
     private val userWriter: UserWriter,
 
-){
+) {
 
     @AfterEach
     fun tearDown() {
@@ -30,7 +30,6 @@ class StoreReadServiceTest (
 
     @Test
     fun getStoresByUserId() {
-
         val user = userWriter.save(
             User(
                 id = "1",
@@ -39,23 +38,23 @@ class StoreReadServiceTest (
                 email = "hanghae@gmail.com",
                 address = "seoul",
                 userType = UserType.SELLER,
-            )
+            ),
         )
 
         storeWriter.save(
             Store(
                 id = "1",
                 name = "상점1",
-                "1"
-            )
+                "1",
+            ),
         )
 
         storeWriter.save(
             Store(
                 id = "2",
                 name = "상점2",
-                "1"
-            )
+                "1",
+            ),
         )
         val results = storeReadService.getStoresByUserId(user.id)
 
@@ -70,7 +69,6 @@ class StoreReadServiceTest (
 
     @Test
     fun getStore() {
-
         userWriter.save(
             User(
                 id = "1",
@@ -79,15 +77,15 @@ class StoreReadServiceTest (
                 email = "hanghae@gmail.com",
                 address = "seoul",
                 userType = UserType.SELLER,
-            )
+            ),
         )
 
         val store = storeWriter.save(
             Store(
                 id = "1",
                 name = "상점1",
-                "1"
-            )
+                "1",
+            ),
         )
 
         val result = storeReadService.getStore(store.id)

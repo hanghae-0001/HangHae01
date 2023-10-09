@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class StoreReadService (
+class StoreReadService(
     private val storeReader: StoreReader,
     private val userReader: UserReader,
-){
+) {
     @Transactional(readOnly = true)
     fun getStoresByUserId(userId: String): List<GetStoresByUserIdResponse> {
         val user = userReader.findById(userId) ?: throw IllegalArgumentException()
