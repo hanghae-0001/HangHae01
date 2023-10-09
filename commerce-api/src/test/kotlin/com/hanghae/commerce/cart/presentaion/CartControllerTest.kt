@@ -1,19 +1,20 @@
 package com.hanghae.commerce.cart.presentaion
 
 import com.hanghae.commerce.testconfiguration.IntegrationTest
+import jakarta.servlet.ServletException
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.servlet.MockMvc
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Nested
-import org.springframework.http.HttpStatus
 
 @IntegrationTest
 @DisplayName("장바구니 API 테스트")
@@ -82,15 +83,18 @@ class CartControllerTest(
         @Test
         @DisplayName("유저 정보를 기입하지 않으면 에러가 발생한다.")
         fun inputInvalidUserId() {
-            mockMvc.perform(
-                post("/carts/add-item")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(
-                        "{\n" +
-                            "    \"itemId\": \"item_id1\"\n" +
-                            "}",
-                    ),
-            ).andExpect(status().is4xxClientError)
+
+            assertThatThrownBy {
+                mockMvc.perform(
+                    post("/carts/add-item")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                            "{\n" +
+                                "    \"itemId\": \"item_id11\"\n" +
+                                "}",
+                        ),
+                )
+            }.isInstanceOf(ServletException::class.java)
         }
     }
 }

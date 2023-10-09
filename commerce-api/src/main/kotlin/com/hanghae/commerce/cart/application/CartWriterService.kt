@@ -14,7 +14,8 @@ class CartWriterService(
 ) {
 
     fun addCartItem(request: AddCartItemRequest): CartItem? {
-        val cart = cartReader.readByUserId(request.userId) ?: cartWriter.add(request.userId)
+        if (request.userId == null) throw IllegalArgumentException("존재하지 않는 user입니다.")
+        val cart = cartReader.readByUserId(request.userId!!) ?: cartWriter.add(request.userId)
         return cartItemWriter.addCartItem(CartItem(cartId = cart?.id!!, itemId = request.itemId))
     }
 }
