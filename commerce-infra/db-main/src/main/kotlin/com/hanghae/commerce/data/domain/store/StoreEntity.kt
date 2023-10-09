@@ -15,7 +15,7 @@ data class StoreEntity(
 ) : PrimaryKeyEntity(identifier) {
     fun toDomain(): Store {
         return Store(
-            id = this.identifier,
+            id = this.id,
             name = this.name,
             userId = this.userId,
         )
