@@ -9,3 +9,4 @@ spring:
     import:
       - logging.yml
       - db-main.yml
+      - redis-main.yml

@@ -1,18 +1,15 @@
 package com.hanghae.commerce.order.domain
 
-import com.hanghae.commerce.item.application.StockManager
 import com.hanghae.commerce.order.application.OrderWriter
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class OrderCreateService(
     private val eventPublisher: ApplicationEventPublisher,
     private val orderWriter: OrderWriter,
 ) {
-
     fun create(orderCreateCommand: OrderCreateCommand): String {
         val order: Order = Order.from(orderCreateCommand)
 
@@ -28,6 +25,4 @@ class OrderCreateService(
     private fun publishOrderCreatedEvent(order: Order) {
         eventPublisher.publishEvent(OrderCreateEvent.from(order))
     }
-
-
 }

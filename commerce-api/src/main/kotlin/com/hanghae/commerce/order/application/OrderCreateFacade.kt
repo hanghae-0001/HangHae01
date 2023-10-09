@@ -19,13 +19,19 @@ class OrderCreateFacade(
     fun create(request: OrderCreateRequest): OrderCreateResponse {
         val orderItems = orderItemsRequestToDomain(request)
 
-        stockManager.verifyStockRemains(orderItems)
+        verifyStockRemains(orderItems)
 
         return OrderCreateResponse(
             orderCreateService.create(
                 OrderCreateCommand(orderItems),
             ),
         )
+    }
+
+    private fun verifyStockRemains(orderItems: List<OrderItem>) {
+        orderItems.forEach {
+            stockManager.verifyStockRemains(it)
+        }
     }
 
     private fun orderItemsRequestToDomain(request: OrderCreateRequest) =

@@ -11,4 +11,8 @@ class ItemReader(
     fun read(idList: List<String>): List<Item> {
         return itemRepository.findByIdIn(idList)
     }
+
+    fun read(id: String): Item? {
+        return itemRepository.findById(id)
+    }
 }

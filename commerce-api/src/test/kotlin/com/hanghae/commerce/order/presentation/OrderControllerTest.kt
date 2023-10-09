@@ -1,13 +1,11 @@
 package com.hanghae.commerce.order.presentation
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.hanghae.commerce.common.IdentifierConstants
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
@@ -21,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @IntegrationTest
-class OrderControllerIT(
+class OrderControllerTest(
     @Autowired var orderRepository: OrderRepository,
     @Autowired var itemRepository: ItemRepository,
     @Autowired var objectMapper: ObjectMapper,

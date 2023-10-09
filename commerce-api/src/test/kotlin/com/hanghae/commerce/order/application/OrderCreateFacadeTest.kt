@@ -15,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
-class OrderCreateServiceIT(
+class OrderCreateFacadeTest(
     @Autowired var itemWriter: ItemWriter,
-//    @Autowired
-//    var itemStockCountService: ItemStockCountService,
     @Autowired var sut: OrderCreateService,
 ) {
 

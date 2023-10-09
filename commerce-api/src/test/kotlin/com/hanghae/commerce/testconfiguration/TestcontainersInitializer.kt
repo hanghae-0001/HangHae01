@@ -7,11 +7,10 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.testcontainers.utility.DockerImageName
 
 class TestcontainersInitializer : ApplicationContextInitializer<ConfigurableApplicationContext> {
-
     override fun initialize(ctx: ConfigurableApplicationContext) {
         TestPropertyValues.of(
             "spring.redis.host=" + REDIS_CONTAINER.host,
-            "spring.redis.port=" + REDIS_CONTAINER.getMappedPort(6379)
+            "spring.redis.port=" + REDIS_CONTAINER.getMappedPort(6379),
         ).applyTo(ctx.environment)
     }
 
