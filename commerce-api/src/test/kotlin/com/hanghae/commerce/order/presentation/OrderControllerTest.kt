@@ -5,6 +5,7 @@ import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
+import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.AfterEach
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@EnableTestcontainers
 @IntegrationTest
 class OrderControllerTest(
     @Autowired var orderRepository: OrderRepository,

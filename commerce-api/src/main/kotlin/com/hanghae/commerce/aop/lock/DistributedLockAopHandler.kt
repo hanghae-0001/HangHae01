@@ -21,7 +21,7 @@ class DistributedLockAopHandler(
     //        val logger= KotlinLogging.logger {}
     @Around("@annotation(com.hanghae.commerce.aop.lock.DistributedLock)")
     @Throws(Throwable::class)
-    fun lock(joinPoint: ProceedingJoinPoint): Any {
+    fun handle(joinPoint: ProceedingJoinPoint): Any? {
         val distributedLock: DistributedLock = resolveDistributedLock(joinPoint)
 
         val key = parseKeyFromJointPoint(joinPoint)
