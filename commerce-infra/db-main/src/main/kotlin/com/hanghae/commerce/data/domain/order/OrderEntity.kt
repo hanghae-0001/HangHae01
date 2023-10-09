@@ -1,6 +1,7 @@
 package com.hanghae.commerce.data.domain.order
 
 import com.hanghae.commerce.data.common.PrimaryKeyEntity
+import com.hanghae.commerce.order.domain.OrderStatus
 import jakarta.persistence.*
 
 @Entity
@@ -21,6 +22,9 @@ class OrderEntity(
     @Column(nullable = false)
     val deliveryFee: Int = 0,
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    val status: OrderStatus = OrderStatus.PAYMENT_WAIT,
 ) : PrimaryKeyEntity(identifier) {
 
     companion object {

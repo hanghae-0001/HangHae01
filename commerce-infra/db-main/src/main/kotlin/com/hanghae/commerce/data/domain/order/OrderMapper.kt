@@ -11,6 +11,7 @@ fun OrderEntity.toDomain(orderItemList: List<OrderItem>): Order {
         paymentAmount = this.paymentAmount,
         deliveryFee = this.deliveryFee,
         orderItemList = orderItemList,
+        status = this.status,
     )
 }
 
@@ -21,6 +22,7 @@ fun Order.toEntity(): OrderEntity {
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
         deliveryFee = this.deliveryFee,
+        status = this.status,
     )
     return orderEntity
 }

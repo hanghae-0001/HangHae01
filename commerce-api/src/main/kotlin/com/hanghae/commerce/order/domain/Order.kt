@@ -9,6 +9,7 @@ class Order(
     val discountAmount: Int,
     val paymentAmount: Int,
     val deliveryFee: Int,
+    val status: OrderStatus,
     val orderItemList: List<OrderItem>,
 ) {
     companion object {
@@ -24,6 +25,7 @@ class Order(
                 discountAmount = 0,
                 paymentAmount = paymentAmount,
                 deliveryFee = deliveryFee,
+                status = OrderStatus.PAYMENT_WAIT,
                 orderItemList = orderItemList,
             )
         }
