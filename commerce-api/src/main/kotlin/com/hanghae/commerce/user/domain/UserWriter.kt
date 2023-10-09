@@ -9,4 +9,8 @@ class UserWriter(
     fun save(user: User): User {
         return userRepository.save(user)
     }
+
+    fun allDelete() {
+        return userRepository.allDelete()
+    }
 }

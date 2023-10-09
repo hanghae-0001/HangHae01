@@ -11,4 +11,12 @@ class StoreEntityRepository(
     override fun save(store: Store): Store {
         return jpaStoreRepository.save(store.toEntity()).toDomain()
     }
+
+    override fun countSameStoreName(name: String): Int {
+        return jpaStoreRepository.countSameStoreName(name)
+    }
+
+    override fun allDelete() {
+        jpaStoreRepository.deleteAllInBatch()
+    }
 }
