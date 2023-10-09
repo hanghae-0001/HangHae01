@@ -3,7 +3,6 @@ package com.hanghae.commerce.order.application
 import com.hanghae.commerce.event.EventPublisher
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
-import com.hanghae.commerce.order.domain.OrderCreateEvent
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.order.exception.SoldOutException
@@ -293,22 +292,6 @@ class OrderCreateFacadeTest {
             assertThat(savedOrder).isNotNull
             assertThat(savedOrder!!.status).isEqualTo(OrderStatus.PAYMENT_WAIT)
         }
-
-//        @Test
-//        @DisplayName("Then: 주문 완료 이벤트를 발행한다.")
-//        fun tc3() {
-//            // when
-//            sut.create(
-//                orderCreateRequest(
-//                    itemId = item.id,
-//                    quantityPerRequest = 1,
-//                ),
-//            )
-//
-//            // then
-//            verify(eventPublisher, times(1))
-//                .publish(isA(OrderCreateEvent::class.java))
-//        }
     }
 
     private fun orderCreateRequest(
