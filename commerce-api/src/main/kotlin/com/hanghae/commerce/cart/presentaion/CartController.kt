@@ -23,11 +23,9 @@ class CartController(
      */
     @GetMapping("/users/{userId}")
     fun getCartByUserId(@PathVariable userId: Long): List<GetCartItemsResponse> {
-        var list: List<GetCartItemsResponse> = mutableListOf()
-        cartReaderService.getCartItemsByUserId(userId)?.let {
-            list = GetCartItemsResponse.of(it)
+        return cartReaderService.getCartItemsByUserId(userId).let {
+            GetCartItemsResponse.of(it)
         }
-        return list
     }
 
     @PostMapping("/add-item")

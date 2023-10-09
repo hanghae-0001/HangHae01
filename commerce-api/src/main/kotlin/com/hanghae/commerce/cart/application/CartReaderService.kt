@@ -11,8 +11,8 @@ class CartReaderService(
     private val userReader: UserReader,
 ) {
 
-    fun getCartItemsByUserId(userId: Long): List<CartItem>? {
-        val cart = cartReader.readByUserId(userId) ?: throw IllegalArgumentException()
+    fun getCartItemsByUserId(userId: Long): List<CartItem> {
+        val cart = cartReader.readByUserId(userId) ?: return mutableListOf<CartItem>()
         return cart.id.let { cartItemReader.readByCartId(it) }
     }
 }
