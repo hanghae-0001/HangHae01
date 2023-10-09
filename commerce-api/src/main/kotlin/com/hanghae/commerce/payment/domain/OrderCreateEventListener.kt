@@ -15,7 +15,6 @@ class OrderCreateEventListener(
 
     @EventListener
     fun sendPush(event: OrderCreateEvent) {
-        logger.info { "raise payment : ${objectMapper.writeValueAsString(event)}" }
-//        paymentService.payment()
+        paymentService.payment(event.order)
     }
 }

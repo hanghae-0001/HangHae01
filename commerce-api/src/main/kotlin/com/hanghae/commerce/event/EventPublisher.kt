@@ -1,3 +1,5 @@
 package com.hanghae.commerce.event
 
-interface EventPublisher
+interface EventPublisher {
+    fun publish(event: Event)
+}

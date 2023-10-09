@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component
 class CommerceEventPublisher(
     private val eventPublisher: ApplicationEventPublisher,
 ) : EventPublisher {
-
-    fun publish(event: Event) {
+    override fun publish(event: Event) {
         eventPublisher.publishEvent(event)
     }
 }
