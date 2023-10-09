@@ -7,11 +7,13 @@ import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
+import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
+import java.util.concurrent.Callable
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
@@ -148,7 +150,7 @@ class OrderCreateFacadeTest(
         @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 SoldOutException 발생한다.")
         fun tc3() {
             // when
-            val futures = executableFutures<Order>(
+            val futures = executableFutures<OrderCreateResponse>(
                 threadCount = 300,
             ) {
                 sut.create(
@@ -159,7 +161,7 @@ class OrderCreateFacadeTest(
                 )
             }
 
-            val results: MutableList<Order> = mutableListOf()
+            val results: MutableList<OrderCreateResponse> = mutableListOf()
             val soldOutExceptions: MutableList<SoldOutException?> = mutableListOf()
             for (future in futures) {
                 try {
@@ -170,12 +172,26 @@ class OrderCreateFacadeTest(
                     soldOutExceptions.add(e.cause as SoldOutException?)
                 }
             }
-            Thread.sleep(1000)
+            Thread.sleep(2000)
 
             // then
             assertThat(results).hasSize(250)
             assertThat(soldOutExceptions).hasSize(50)
-            assertThat(soldOutExceptions.map { it!!.message }.toList()).containsOnly("주문한 상품량이 재고량보다 큽니다.")
+            assertThat(soldOutExceptions.map { it!!.message }.toList()).containsOnly("재고가 부족합니다.")
+        }
+
+        private fun <T> executableFutures(
+            threadCount: Int,
+            callable: Callable<T>,
+        ): List<Future<T>> {
+            val executorService = Executors.newFixedThreadPool(32)
+            val futures: MutableList<Future<T>> = mutableListOf()
+
+            for (i in 0 until threadCount) {
+                futures.add(executorService.submit(callable) as Future<T>)
+            }
+
+            return futures
         }
 
         @Throws(InterruptedException::class)
@@ -194,20 +210,6 @@ class OrderCreateFacadeTest(
                 }
             }
             latch.await()
-        }
-
-        private fun <T> executableFutures(
-            threadCount: Int,
-            runnable: Runnable,
-        ): List<Future<T>> {
-            val executorService = Executors.newFixedThreadPool(32)
-            val futures: MutableList<Future<T>> = ArrayList()
-
-            for (i in 0 until threadCount) {
-                futures.add(executorService.submit(runnable) as Future<T>)
-            }
-
-            return futures
         }
     }
 

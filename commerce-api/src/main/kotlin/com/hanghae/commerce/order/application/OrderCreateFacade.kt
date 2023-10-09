@@ -8,7 +8,6 @@ import com.hanghae.commerce.order.domain.OrderItem
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
-import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,10 +16,7 @@ class OrderCreateFacade(
     private val itemReader: ItemReader,
     private val stockManager: StockManager,
 ) {
-
-    val logger = KotlinLogging.logger {}
     fun create(request: OrderCreateRequest): OrderCreateResponse {
-        logger.info { "OrderCreateFacade.create()" }
         val orderItems = orderItemsRequestToDomain(request)
 
         verifyStockRemains(orderItems)
