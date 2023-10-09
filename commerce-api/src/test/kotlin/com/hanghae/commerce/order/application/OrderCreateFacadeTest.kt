@@ -4,6 +4,7 @@ import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderItem
 import com.hanghae.commerce.order.domain.OrderRepository
+import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
@@ -13,11 +14,7 @@ import com.hanghae.commerce.testconfiguration.IntegrationTest
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.concurrent.Callable
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
+import java.util.concurrent.*
 
 @IntegrationTest
 @EnableTestcontainers
@@ -248,6 +245,7 @@ class OrderCreateFacadeTest(
         fun tearDown() {
             itemRepository.deleteAll()
         }
+
         @Test
         @DisplayName("Then: 주문이 생성된다.")
         fun tc1() {
@@ -281,6 +279,7 @@ class OrderCreateFacadeTest(
             // then
             val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
             assertThat(savedOrder).isNotNull
+            assertThat(savedOrder!!.status).isEqualTo(OrderStatus.PAYMENT_WAIT)
         }
     }
 
