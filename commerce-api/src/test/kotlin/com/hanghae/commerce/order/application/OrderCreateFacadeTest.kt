@@ -230,14 +230,57 @@ class OrderCreateFacadeTest(
     @Nested
     @DisplayName("When: 주문이 정상적으로 완료되면,")
     internal inner class when_create_success {
+
+        private lateinit var item: Item
+
+        @BeforeEach
+        fun setUp() {
+            item = Item.of(
+                id = "1",
+                name = "Item Fixture",
+                price = 25000,
+                stock = 1000L,
+            )
+            itemRepository.save(item)
+        }
+
+        @AfterEach
+        fun tearDown() {
+            itemRepository.deleteAll()
+        }
         @Test
         @DisplayName("Then: 주문이 생성된다.")
         fun tc1() {
+            // when
+            val orderCreateResponse = sut.create(
+                orderCreateRequest(
+                    itemId = item.id,
+                    quantityPerRequest = 1,
+                ),
+            )
+
+            // then
+            val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
+            assertThat(savedOrder).isNotNull
+            assertThat(savedOrder!!.orderAmount).isEqualTo(item.price * 1)
+            assertThat(savedOrder.deliveryFee).isEqualTo(2500)
+            assertThat(savedOrder.paymentAmount).isEqualTo(savedOrder.orderAmount + savedOrder.deliveryFee)
+            assertThat(savedOrder.orderItemList).isNotEmpty
         }
 
         @Test
         @DisplayName("Then: 생성된 주문은 '결제 대기' 상태이다.")
         fun tc2() {
+            val orderCreateResponse = sut.create(
+                orderCreateRequest(
+                    itemId = item.id,
+                    quantityPerRequest = 1,
+                ),
+            )
+
+            // then
+            val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
+            assertThat(savedOrder).isNotNull
         }
     }
 
