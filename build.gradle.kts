@@ -89,7 +89,7 @@ subprojects {
             includeTags("integration")
         }
         extensions.configure(JacocoTaskExtension::class) {
-            setDestinationFile(file("build/jacoco/jacoco-unit.exec"))
+            setDestinationFile(file("build/jacoco/jacoco-integration.exec"))
         }
         testLogging {
             events("passed", "skipped", "failed")
