@@ -21,7 +21,7 @@ class CartItemEntity(
     companion object {
         fun from(cartItem: CartItem): CartItemEntity {
             return CartItemEntity(
-                identifier = UUID.randomUUID().toString(),
+                identifier = cartItem.id ?: UUID.randomUUID().toString(),
                 itemId = cartItem.itemId,
                 quantity = cartItem.quantity,
                 cartId = cartItem.cartId,

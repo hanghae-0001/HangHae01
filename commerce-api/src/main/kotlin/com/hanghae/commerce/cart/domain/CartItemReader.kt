@@ -18,4 +18,8 @@ class CartItemReader(
             )
         }
     }
+
+    fun readByCartIdAndItemId(cartId: String, itemId: String): CartItem? {
+        return cartItemRepository.readByCartIdAndItemId(cartId, itemId)
+    }
 }

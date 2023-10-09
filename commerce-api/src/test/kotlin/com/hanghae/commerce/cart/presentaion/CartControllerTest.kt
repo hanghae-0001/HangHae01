@@ -83,18 +83,15 @@ class CartControllerTest(
         @Test
         @DisplayName("유저 정보를 기입하지 않으면 에러가 발생한다.")
         fun inputInvalidUserId() {
-
-            assertThatThrownBy {
-                mockMvc.perform(
-                    post("/carts/add-item")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(
-                            "{\n" +
-                                "    \"itemId\": \"item_id11\"\n" +
-                                "}",
-                        ),
-                )
-            }.isInstanceOf(ServletException::class.java)
+            mockMvc.perform(
+                post("/carts/add-item")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(
+                        "{\n" +
+                            "    \"itemId\": \"item_id11\"\n" +
+                            "}",
+                    ),
+            ).andExpect(status().is4xxClientError)
         }
     }
 }

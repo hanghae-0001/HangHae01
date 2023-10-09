@@ -4,7 +4,10 @@ import com.hanghae.commerce.cart.application.CartReaderService
 import com.hanghae.commerce.cart.application.CartWriterService
 import com.hanghae.commerce.cart.presentaion.dto.AddCartItemRequest
 import com.hanghae.commerce.cart.presentaion.dto.GetCartItemsResponse
+import com.hanghae.commerce.cart.presentaion.dto.UpdateCartItemRequest
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -29,8 +32,21 @@ class CartController(
     }
 
     @PostMapping("/add-item")
-    fun addCartItem(@RequestBody addCartItemRequest: AddCartItemRequest): GetCartItemsResponse? {
+    fun addCartItem(
+        @RequestBody @Valid
+        addCartItemRequest: AddCartItemRequest,
+    ): GetCartItemsResponse? {
         return cartWriterService.addCartItem(addCartItemRequest)?.let {
+            GetCartItemsResponse.of(it)
+        }
+    }
+
+    @PatchMapping("/cart-item")
+    fun updateCartItemQuantity(
+        @RequestBody @Valid
+        updateCartItemRequest: UpdateCartItemRequest,
+    ): GetCartItemsResponse? {
+        return cartWriterService.updateCartItemQuantity(updateCartItemRequest)?.let {
             GetCartItemsResponse.of(it)
         }
     }

@@ -10,4 +10,8 @@ class CartItemWriter(
     fun addCartItem(cartItem: CartItem): CartItem? {
         return cartItemRepository.add(cartItem)
     }
+
+    fun updateCartItem(cartItem: CartItem): CartItem? {
+        return cartItemRepository.save(cartItem)
+    }
 }
