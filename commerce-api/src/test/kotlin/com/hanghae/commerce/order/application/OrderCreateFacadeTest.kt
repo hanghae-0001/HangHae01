@@ -1,11 +1,11 @@
 package com.hanghae.commerce.order.application
 
+import com.hanghae.commerce.event.CommerceEventPublisher
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
-import com.hanghae.commerce.order.domain.OrderItem
+import com.hanghae.commerce.order.domain.OrderCreateEvent
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.OrderStatus
-import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
@@ -13,17 +13,28 @@ import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import java.util.concurrent.*
 
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
-class OrderCreateFacadeTest(
-    @Autowired var orderRepository: OrderRepository,
-    @Autowired var itemRepository: ItemRepository,
-    @Autowired var sut: OrderCreateFacade,
-) {
+class OrderCreateFacadeTest {
+
+    @MockBean
+    private lateinit var eventPublisher: CommerceEventPublisher
+
+    @Autowired
+    private lateinit var orderRepository: OrderRepository
+
+    @Autowired
+    private lateinit var itemRepository: ItemRepository
+
+    @Autowired
+    private lateinit var sut: OrderCreateFacade
 
     @Nested
     @DisplayName("When: 25,000원짜리 상품 재고가 5개 일 때,")
@@ -269,6 +280,7 @@ class OrderCreateFacadeTest(
         @Test
         @DisplayName("Then: 생성된 주문은 '결제 대기' 상태이다.")
         fun tc2() {
+            // when
             val orderCreateResponse = sut.create(
                 orderCreateRequest(
                     itemId = item.id,
@@ -280,6 +292,22 @@ class OrderCreateFacadeTest(
             val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
             assertThat(savedOrder).isNotNull
             assertThat(savedOrder!!.status).isEqualTo(OrderStatus.PAYMENT_WAIT)
+        }
+
+        @Test
+        @DisplayName("Then: 주문 완료 이벤트를 발행한다.")
+        fun tc3() {
+            // when
+            sut.create(
+                orderCreateRequest(
+                    itemId = item.id,
+                    quantityPerRequest = 1,
+                ),
+            )
+
+            // then
+            verify(eventPublisher, times(1))
+                .publish(isA(OrderCreateEvent::class.java))
         }
     }
 
@@ -296,9 +324,5 @@ class OrderCreateFacadeTest(
                 ),
             ),
         )
-    }
-
-    private fun orderCreateRequest(vararg orderItems: OrderItem): OrderCreateCommand {
-        return OrderCreateCommand(orderItems.toList())
     }
 }
