@@ -3,8 +3,10 @@ package com.hanghae.commerce.user.application
 import com.hanghae.commerce.user.domain.User
 import com.hanghae.commerce.user.domain.UserType
 import com.hanghae.commerce.user.domain.UserWriter
-import com.hanghae.commerce.user.presentation.dto.*
+import com.hanghae.commerce.user.presentation.dto.CreateSellerRequest
+import com.hanghae.commerce.user.presentation.dto.CreateSellerResponse
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class SellerWriterService(
@@ -12,8 +14,9 @@ class SellerWriterService(
 ) {
 
     fun createSeller(request: CreateSellerRequest): CreateSellerResponse {
-        val savedUserId = userWriter.save(
-            User.of(
+        val savedUser = userWriter.save(
+            User(
+                id = UUID.randomUUID().toString(),
                 name = request.name,
                 age = request.age,
                 email = request.email,
@@ -22,6 +25,6 @@ class SellerWriterService(
             ),
         )
 
-        return CreateSellerResponse(id = savedUserId)
+        return CreateSellerResponse(id = savedUser.id)
     }
 }
