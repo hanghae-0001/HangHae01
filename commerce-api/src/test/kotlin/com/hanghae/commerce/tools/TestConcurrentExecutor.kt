@@ -1,12 +1,12 @@
 package com.hanghae.commerce.tools
 
-import org.springframework.boot.test.context.TestComponent
+import org.springframework.stereotype.Component
 import java.util.concurrent.Callable
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-@TestComponent
+@Component
 class TestConcurrentExecutor {
 
     @Throws(InterruptedException::class)
