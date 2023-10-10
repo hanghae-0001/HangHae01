@@ -6,6 +6,7 @@ import com.hanghae.commerce.order.domain.OrderItem
 fun OrderEntity.toDomain(orderItemList: List<OrderItem>): Order {
     return Order(
         id = this.id,
+        userId = this.userId!!,
         orderAmount = this.orderAmount,
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
@@ -16,15 +17,15 @@ fun OrderEntity.toDomain(orderItemList: List<OrderItem>): Order {
 }
 
 fun Order.toEntity(): OrderEntity {
-    val orderEntity = OrderEntity(
+    return OrderEntity(
         identifier = this.id,
+        userId = this.userId,
         orderAmount = this.orderAmount,
         discountAmount = this.discountAmount,
         paymentAmount = this.paymentAmount,
         deliveryFee = this.deliveryFee,
         status = this.status,
     )
-    return orderEntity
 }
 
 fun OrderItemEntity.toDomain(): OrderItem {

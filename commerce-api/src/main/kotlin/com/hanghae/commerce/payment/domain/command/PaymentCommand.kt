@@ -1,7 +1,9 @@
 package com.hanghae.commerce.payment.domain.command
 
+import com.hanghae.commerce.order.domain.Order
+
 class PaymentCommand(
-    val orderId: String,
+    val order: Order,
     val payInfo: PayInfo,
 ) {
     data class PayInfo(

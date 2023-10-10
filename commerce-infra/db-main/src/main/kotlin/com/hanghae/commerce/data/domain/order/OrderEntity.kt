@@ -7,8 +7,10 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "orders")
 class OrderEntity(
-    @Transient
-    private val identifier: String,
+    @Transient private val identifier: String,
+
+    @Column(nullable = false)
+    val userId: String? = null,
 
     @Column(nullable = false)
     val orderAmount: Int = 0,

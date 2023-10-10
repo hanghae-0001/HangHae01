@@ -5,6 +5,7 @@ import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 
 class Order(
     val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
+    val userId: String,
     val orderAmount: Int,
     val discountAmount: Int,
     val paymentAmount: Int,
@@ -21,6 +22,7 @@ class Order(
             val paymentAmount: Int = orderAmount + deliveryFee
 
             return Order(
+                userId = orderCreateCommand.userId,
                 orderAmount = orderAmount,
                 discountAmount = 0,
                 paymentAmount = paymentAmount,

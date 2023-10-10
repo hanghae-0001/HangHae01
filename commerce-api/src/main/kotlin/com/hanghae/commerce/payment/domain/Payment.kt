@@ -6,5 +6,5 @@ class Payment(
     val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
     val orderId: String,
     val paymentAmount: Int,
-    val status: PaymentStatus,
+    val status: PaymentStatus = PaymentStatus.READY,
 )

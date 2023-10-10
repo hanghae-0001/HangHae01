@@ -23,7 +23,10 @@ class OrderCreateFacade(
 
         return OrderCreateResponse(
             orderCreateService.create(
-                OrderCreateCommand(orderItems),
+                OrderCreateCommand(
+                    request.userId,
+                    orderItems,
+                ),
             ),
         )
     }
