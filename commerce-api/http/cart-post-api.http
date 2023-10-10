@@ -1,0 +1,8 @@
+POST localhost:9001/carts/add-item
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "itemId": "1"
+}
+
