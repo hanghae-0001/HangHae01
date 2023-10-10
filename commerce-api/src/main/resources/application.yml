@@ -10,3 +10,22 @@ spring:
       - logging.yml
       - db-main.yml
       - redis-main.yml
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      payment:
+        slidingWindowSize: 100
+        failureRateThreshold: 50
+        waitDurationInOpenState: 60s
+  ratelimiter:
+    instances:
+      payment:
+        limitForPeriod: 10
+        limitRefreshPeriod: 3s
+        timeoutDuration: 1s
+#  retry:
+#    instances:
+#      myService:
+#        maxRetryAttempts: 3
+#        waitDuration: 1s
