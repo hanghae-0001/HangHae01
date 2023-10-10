@@ -10,9 +10,13 @@ class Order(
     val discountAmount: Int,
     val paymentAmount: Int,
     val deliveryFee: Int,
-    val status: OrderStatus,
+    var status: OrderStatus,
     val orderItemList: List<OrderItem>,
 ) {
+    fun completePayment() {
+        this.status = OrderStatus.DELIVERY_PREPARE
+    }
+
     companion object {
         fun from(orderCreateCommand: OrderCreateCommand): Order {
             val orderItemList = orderCreateCommand.orderItemList

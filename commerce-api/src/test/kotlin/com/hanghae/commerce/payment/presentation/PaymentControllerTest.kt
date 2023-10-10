@@ -41,18 +41,7 @@ class PaymentControllerTest {
     @Test
     fun payment() {
         // given
-        val order = orderWriter.write(
-            Order(
-                id = "testOrderId",
-                userId = "testUserId",
-                orderAmount = 30000,
-                discountAmount = 0,
-                paymentAmount = 32500,
-                deliveryFee = 2500,
-                status = OrderStatus.PAYMENT_WAIT,
-                orderItemList = listOf(),
-            ),
-        )
+        val order = persistOrder()
 
         // when
         val request = PaymentRequest(
@@ -70,5 +59,20 @@ class PaymentControllerTest {
         // then
         result.andExpect(status().isOk())
             .andExpect(jsonPath("$.paymentId").isString)
+    }
+
+    private fun persistOrder(): Order {
+        return orderWriter.write(
+            Order(
+                id = "testOrderId",
+                userId = "testUserId",
+                orderAmount = 30000,
+                discountAmount = 0,
+                paymentAmount = 32500,
+                deliveryFee = 2500,
+                status = OrderStatus.PAYMENT_WAIT,
+                orderItemList = listOf(),
+            ),
+        )
     }
 }
