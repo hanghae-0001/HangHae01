@@ -1,9 +1,7 @@
 package com.hanghae.commerce.cart.presentaion
 
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import jakarta.servlet.ServletException
 import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested

@@ -43,7 +43,7 @@ class CartWriterServiceTest(
         @Test
         @DisplayName("새로운 상품을 추가하면 추가된다.")
         fun addNewItem() {
-            val request = AddCartItemRequest(itemId = "item_id2", userId = 1)
+            val request = AddCartItemRequest(itemId = "item_id3", userId = 1)
             cartWriterService.addCartItem(request)
 
             Assertions.assertThat(cartReaderService.getCartItemsByUserId(1)?.size).isEqualTo(cartSize?.plus(1))
