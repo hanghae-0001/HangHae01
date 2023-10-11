@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class ItemWriter(
     private val itemRepository: ItemRepository,
 ) {
-    fun write(item: Item) {
-        itemRepository.save(item)
+    fun save(item: Item): Item {
+        return itemRepository.save(item)
     }
 
     fun deleteAll() {
