@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class StockManager(
-    private val itemReader: itemReader,
+    private val itemReader: ItemReader,
     private val itemWriter: ItemWriter,
 //    private val lockHandler: LockHandler,
 ) {

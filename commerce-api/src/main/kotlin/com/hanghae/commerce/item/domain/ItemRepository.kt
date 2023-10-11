@@ -13,4 +13,6 @@ interface ItemRepository {
     fun deleteById(id: String)
 
     fun deleteAll(): Unit
+
+    fun findByStoreId(storeId: String): List<Item>
 }
