@@ -9,8 +9,8 @@ class UserReaderService(
     private val userReader: UserReader,
 ) {
 
-    fun getUserById(userId: Long): GetUserResponse {
-        val user = userReader.read(userId) ?: throw IllegalArgumentException()
+    fun getUserById(userId: String): GetUserResponse {
+        val user = userReader.findById(userId) ?: throw IllegalArgumentException()
         return GetUserResponse.of(user)
     }
 }
