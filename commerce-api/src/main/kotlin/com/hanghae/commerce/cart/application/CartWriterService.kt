@@ -27,7 +27,7 @@ class CartWriterService(
         return cartItemWriter.updateCartItem(cartItem)
     }
 
-    private fun validateUserId(userId: Long) {
+    private fun validateUserId(userId: Long?) {
         if (userId == null) {
             throw IllegalArgumentException("존재하지 않는 user입니다.")
         }
