@@ -8,7 +8,7 @@ import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.payment.domain.command.PaymentCommand
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import com.hanghae.commerce.tools.TestConcurrentExecutor
-import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -40,12 +40,7 @@ class PaymentServiceTest {
             val order = persistOrder("testOrderId", OrderStatus.PAYMENT_WAIT)
 
             // when
-            val paymentId = sut.payment(
-                PaymentCommand(
-                    order = order,
-                    payInfo = PaymentCommand.PayInfo("card"),
-                ),
-            )
+            val paymentId = executePayment(order)
 
             // then
             val payedOrder = orderReader.read(order.id)
@@ -61,7 +56,8 @@ class PaymentServiceTest {
         @DisplayName("Then: 3초당 10개 이상이면, throw TooManyRequest ")
         fun tc1() {
             // given
-            val orderList: List<Order> = (1..11).map {
+            val requestCount = 12
+            val orderList: List<Order> = (1..requestCount).map {
                 persistOrder("testOrderId_$it", OrderStatus.PAYMENT_WAIT)
             }
 
@@ -70,12 +66,7 @@ class PaymentServiceTest {
             val tooManyRequestExList: MutableList<Throwable> = mutableListOf()
             for (order in orderList) {
                 try {
-                    val paymentId = sut.payment(
-                        PaymentCommand(
-                            order = order,
-                            payInfo = PaymentCommand.PayInfo("card"),
-                        ),
-                    )
+                    val paymentId = executePayment(order)
                     paymentCompleteList.add(paymentId)
                 } catch (e: TooManyRequest) {
                     tooManyRequestExList.add(e)
@@ -84,8 +75,17 @@ class PaymentServiceTest {
 
             // then
             assertThat(paymentCompleteList).hasSize(10)
-            assertThat(tooManyRequestExList).hasSize(1)
+            assertThat(tooManyRequestExList).hasSize(2)
         }
+    }
+
+    private fun executePayment(alreadyPayedOrder: Order): String {
+        return sut.payment(
+            PaymentCommand(
+                order = alreadyPayedOrder,
+                payInfo = PaymentCommand.PayInfo("card"),
+            ),
+        )
     }
 
     private fun persistOrder(
