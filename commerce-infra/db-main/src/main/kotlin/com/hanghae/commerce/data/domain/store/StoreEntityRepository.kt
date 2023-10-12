@@ -26,7 +26,6 @@ class StoreEntityRepository(
     }
 
     override fun findStoresByUserId(userId: String): List<Store> {
-        val ㅇㅇ = jpaStoreRepository.findStoresByUserId(userId).get(0)
         return jpaStoreRepository.findStoresByUserId(userId).map { storeEntity -> storeEntity.toDomain() }
     }
 }

@@ -9,14 +9,14 @@ class FavoriteItemEntityRepository(
     private val jpaFavoriteItemRepository: JpaFavoriteItemRepository,
 ) : FavoriteItemRepository {
     override fun add(favoriteItem: FavoriteItem): FavoriteItem? {
-        return jpaFavoriteItemRepository.save(FavoriteItemEntity.from(favoriteItem))?.let {
-            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId!!)
+        return jpaFavoriteItemRepository.save(FavoriteItemEntity.from(favoriteItem)).let {
+            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId)
         }
     }
 
     override fun readByUserId(userId: Long): List<FavoriteItem> {
         return jpaFavoriteItemRepository.findByUserId(userId).map {
-            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId!!)
+            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId)
         }
     }
 
@@ -26,7 +26,7 @@ class FavoriteItemEntityRepository(
 
     override fun readByUserIdAndItemId(userId: Long, itemId: String): FavoriteItem? {
         return jpaFavoriteItemRepository.findByUserIdAndItemId(userId, itemId)?.let {
-            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId!!)
+            FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId)
         }
     }
 }
