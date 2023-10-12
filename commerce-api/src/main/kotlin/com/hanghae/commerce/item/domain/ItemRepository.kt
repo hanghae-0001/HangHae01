@@ -14,5 +14,5 @@ interface ItemRepository {
 
     fun deleteAll(): Unit
 
-    fun findByStoreId(storeId: String): List<Item>
+    fun findAllByStoreId(storeId: String): List<Item>
 }

@@ -13,6 +13,6 @@ class ItemReader(
     }
 
     fun getItemsByStoreId(storeId: String): List<Item> {
-        return itemRepository.findByStoreId(storeId)
+        return itemRepository.findAllByStoreId(storeId)
     }
 }
