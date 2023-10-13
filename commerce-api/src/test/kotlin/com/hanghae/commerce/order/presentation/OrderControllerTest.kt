@@ -7,7 +7,7 @@ import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,12 +21,18 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @EnableTestcontainers
 @IntegrationTest
-class OrderControllerTest(
-    @Autowired var orderRepository: OrderRepository,
-    @Autowired var itemRepository: ItemRepository,
-    @Autowired var objectMapper: ObjectMapper,
-    @Autowired var mvc: MockMvc,
-) {
+class OrderControllerTest {
+    @Autowired
+    private lateinit var orderRepository: OrderRepository
+
+    @Autowired
+    private lateinit var itemRepository: ItemRepository
+
+    @Autowired
+    private lateinit var objectMapper: ObjectMapper
+
+    @Autowired
+    private lateinit var mvc: MockMvc
 
     @AfterEach
     fun teardown() {

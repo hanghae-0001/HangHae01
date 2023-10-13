@@ -15,6 +15,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+logging:
+  level:
+    org.testcontainers: debug
+#    org.hibernate.SQL: debug
 
 #  sql:
 #    init:

@@ -5,13 +5,18 @@ import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 
 class Order(
     val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
+    val userId: String,
     val orderAmount: Int,
     val discountAmount: Int,
     val paymentAmount: Int,
     val deliveryFee: Int,
-    val status: OrderStatus,
+    var status: OrderStatus,
     val orderItemList: List<OrderItem>,
 ) {
+    fun completePayment() {
+        this.status = OrderStatus.DELIVERY_PREPARE
+    }
+
     companion object {
         fun from(orderCreateCommand: OrderCreateCommand): Order {
             val orderItemList = orderCreateCommand.orderItemList
@@ -21,6 +26,7 @@ class Order(
             val paymentAmount: Int = orderAmount + deliveryFee
 
             return Order(
+                userId = orderCreateCommand.userId,
                 orderAmount = orderAmount,
                 discountAmount = 0,
                 paymentAmount = paymentAmount,

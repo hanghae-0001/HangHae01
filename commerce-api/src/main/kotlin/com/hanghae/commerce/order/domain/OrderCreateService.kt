@@ -1,13 +1,13 @@
 package com.hanghae.commerce.order.domain
 
+import com.hanghae.commerce.event.EventPublisher
 import com.hanghae.commerce.order.application.OrderWriter
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 @Service
 class OrderCreateService(
-    private val eventPublisher: ApplicationEventPublisher,
+    private val eventPublisher: EventPublisher,
     private val orderWriter: OrderWriter,
 ) {
     fun create(orderCreateCommand: OrderCreateCommand): String {
@@ -15,14 +15,11 @@ class OrderCreateService(
 
         val createdOrder = orderWriter.write(order)
 
-        // publishOrderCreatedEvent(createdOrder)
-        // -> 알림
-        // -> 결제 -> 배송
-
+        publishOrderCreatedEvent(createdOrder)
         return createdOrder.id
     }
 
     private fun publishOrderCreatedEvent(order: Order) {
-        eventPublisher.publishEvent(OrderCreateEvent.from(order))
+        eventPublisher.publish(OrderCreateEvent(order))
     }
 }

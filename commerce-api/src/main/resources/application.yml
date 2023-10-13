@@ -10,3 +10,25 @@ spring:
       - logging.yml
       - db-main.yml
       - redis-main.yml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
+  health:
+    circuit-breakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      payment:
+        registerHealthIndicator: true
+        slidingWindowSize: 10 # 10개의 요청을 sliding window로 관리
+        slidingWindowType: COUNT_BASED # COUNT_BASED, TIME_BASED
+        permittedNumberOfCallsInHalfOpenState: 10 # Half-Open 상태에서 10개의 요청을 허용
+        recordExceptions:
+          - java.lang.IllegalStateException
+        waitDurationInOpenState: 20s # Open 상태 동안 5000ms 간 모든 요청을 차단
+        failureRateThreshold: 50 # 50% 이상 실패하면 Open 상태로 변경

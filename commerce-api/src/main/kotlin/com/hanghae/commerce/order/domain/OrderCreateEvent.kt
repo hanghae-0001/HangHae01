@@ -1,14 +1,7 @@
 package com.hanghae.commerce.order.domain
 
-import org.springframework.context.ApplicationEvent
+import com.hanghae.commerce.event.Event
 
-class OrderCreateEvent private constructor(
+data class OrderCreateEvent(
     val order: Order,
-) : ApplicationEvent(order) {
-
-    companion object {
-        fun from(order: Order): OrderCreateEvent {
-            return OrderCreateEvent(order)
-        }
-    }
-}
+) : Event

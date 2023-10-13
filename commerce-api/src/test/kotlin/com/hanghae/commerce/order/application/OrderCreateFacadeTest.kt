@@ -9,6 +9,7 @@ import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
+import com.hanghae.commerce.tools.TestConcurrentExecutor
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,6 +19,10 @@ import java.util.concurrent.*
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
 class OrderCreateFacadeTest {
+
+    @Autowired
+    private lateinit var testConcurrentExecutor: TestConcurrentExecutor
+
     @Autowired
     private lateinit var orderRepository: OrderRepository
 
@@ -107,7 +112,7 @@ class OrderCreateFacadeTest {
         @Test
         @DisplayName("Then: 요청 300개가 동시에 3개씩 주문하면, 남는 재고는 100개이다.")
         fun tc1() {
-            executeOrderInMultiThread(
+            testConcurrentExecutor.executeOrderInMultiThread(
                 300,
             ) {
                 sut.create(
@@ -128,7 +133,7 @@ class OrderCreateFacadeTest {
         @DisplayName("Then: 요청 200개가 동시에 5개씩 주문하면, 남는 재고는 0개이다.")
         fun tc2() {
             // when
-            executeOrderInMultiThread(
+            testConcurrentExecutor.executeOrderInMultiThread(
                 threadCount = 200,
             ) {
                 sut.create(
@@ -149,7 +154,7 @@ class OrderCreateFacadeTest {
         @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 SoldOutException 발생한다.")
         fun tc3() {
             // when
-            val futures = executableFutures<OrderCreateResponse>(
+            val futures = testConcurrentExecutor.executableFutures<OrderCreateResponse>(
                 threadCount = 300,
             ) {
                 sut.create(
@@ -177,38 +182,6 @@ class OrderCreateFacadeTest {
             assertThat(results).hasSize(250)
             assertThat(soldOutExceptions).hasSize(50)
             assertThat(soldOutExceptions.map { it!!.message }.toList()).containsOnly("재고가 부족합니다.")
-        }
-
-        private fun <T> executableFutures(
-            threadCount: Int,
-            callable: Callable<T>,
-        ): List<Future<T>> {
-            val executorService = Executors.newFixedThreadPool(32)
-            val futures: MutableList<Future<T>> = mutableListOf()
-
-            for (i in 0 until threadCount) {
-                futures.add(executorService.submit(callable) as Future<T>)
-            }
-
-            return futures
-        }
-
-        @Throws(InterruptedException::class)
-        private fun executeOrderInMultiThread(
-            threadCount: Int,
-            runnable: Runnable,
-        ) {
-            val executorService = Executors.newFixedThreadPool(32)
-            val latch = CountDownLatch(threadCount)
-
-            for (i in 0 until threadCount) {
-                try {
-                    executorService.submit(runnable)
-                } finally {
-                    latch.countDown()
-                }
-            }
-            latch.await()
         }
     }
 
@@ -271,6 +244,7 @@ class OrderCreateFacadeTest {
         @Test
         @DisplayName("Then: 생성된 주문은 '결제 대기' 상태이다.")
         fun tc2() {
+            // when
             val orderCreateResponse = sut.create(
                 orderCreateRequest(
                     itemId = item.id,
