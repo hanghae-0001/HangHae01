@@ -1,6 +1,7 @@
 package com.hanghae.commerce.item.application
 
 import com.hanghae.commerce.item.domain.Item
+import com.hanghae.commerce.item.domain.ItemWriter
 import com.hanghae.commerce.item.presentaion.dto.CreateItemRequest
 import com.hanghae.commerce.item.presentaion.dto.CreateItemResponse
 import org.springframework.stereotype.Service

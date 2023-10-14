@@ -1,4 +1,4 @@
-package com.hanghae.commerce.item.application
+package com.hanghae.commerce.item.domain
 
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
@@ -12,7 +12,7 @@ class ItemWriter(
         return itemRepository.save(item)
     }
 
-    fun deleteAll() {
+    fun allDelete() {
         itemRepository.deleteAll()
     }
 }

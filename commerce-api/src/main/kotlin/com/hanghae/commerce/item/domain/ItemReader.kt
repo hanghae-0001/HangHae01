@@ -1,4 +1,4 @@
-package com.hanghae.commerce.item.application
+package com.hanghae.commerce.item.domain
 
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
@@ -14,5 +14,9 @@ class ItemReader(
 
     fun getItemsByStoreId(storeId: String): List<Item> {
         return itemRepository.findAllByStoreId(storeId)
+    }
+
+    fun getItemByItemId(itemId: String): Item? {
+        return itemRepository.findById(itemId)
     }
 }

@@ -1,5 +1,7 @@
 package com.hanghae.commerce.item.application
 
+import com.hanghae.commerce.item.domain.ItemReader
+import com.hanghae.commerce.item.domain.ItemWriter
 import org.springframework.stereotype.Component
 
 @Component
