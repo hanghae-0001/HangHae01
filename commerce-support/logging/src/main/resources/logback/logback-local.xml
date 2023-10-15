@@ -11,7 +11,7 @@
 
     <logger name="org.springframework" level="WARN"/>
     <logger name="com.hanghae" level="DEBUG"/>
-8
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

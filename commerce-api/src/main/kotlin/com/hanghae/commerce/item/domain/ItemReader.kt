@@ -12,7 +12,7 @@ class ItemReader(
         return itemRepository.findByIdIn(idList)
     }
 
-    fun getItemsByStoreId(storeId: String): List<Item> {
+   fun getItemsByStoreId(storeId: String): List<Item> {
         return itemRepository.findAllByStoreId(storeId)
     }
 

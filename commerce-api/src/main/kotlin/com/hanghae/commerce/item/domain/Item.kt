@@ -1,7 +1,9 @@
 package com.hanghae.commerce.item.domain
 
+import com.hanghae.commerce.common.IdentifierConstants
+
 class Item(
-    val id: String,
+    val id: String = IdentifierConstants.NOT_YET_PERSISTED_ID,
     var name: String,
     var price: Int,
     var stock: Long,

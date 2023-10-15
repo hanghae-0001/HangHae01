@@ -8,6 +8,14 @@ fun Item.toEntity(): ItemEntity {
         name = this.name,
         price = this.price,
         stock = this.stock,
-        storeId = this.storeId,
+    )
+}
+
+fun ItemEntity.toDomain(): Item {
+    return Item(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        stock = this.stock,
     )
 }
