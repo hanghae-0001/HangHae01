@@ -8,6 +8,7 @@ fun Item.toEntity(): ItemEntity {
         name = this.name,
         price = this.price,
         stock = this.stock,
+        storeId = this.storeId,
     )
 }
 
@@ -17,5 +18,6 @@ fun ItemEntity.toDomain(): Item {
         name = this.name,
         price = this.price,
         stock = this.stock,
+        storeId = this.storeId,
     )
 }

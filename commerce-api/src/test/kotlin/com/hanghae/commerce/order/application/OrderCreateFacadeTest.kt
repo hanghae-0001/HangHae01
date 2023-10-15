@@ -45,6 +45,7 @@ class OrderCreateFacadeTest {
                 name = "Item Fixture",
                 price = 25000,
                 stock = 5L,
+                storeId = "1",
             )
             itemRepository.save(item)
         }
@@ -100,6 +101,7 @@ class OrderCreateFacadeTest {
                 name = "Item Fixture",
                 price = 25000,
                 stock = 1000L,
+                storeId = "1",
             )
             itemRepository.save(item)
         }
@@ -212,6 +214,7 @@ class OrderCreateFacadeTest {
                 name = "Item Fixture",
                 price = 25000,
                 stock = 1000L,
+                storeId = "1",
             )
             itemRepository.save(item)
         }
