@@ -20,4 +20,6 @@ class ItemEntity(
 
     @Column(nullable = false)
     var stock: Long,
+
+    var storeId: String,
 ) : PrimaryKeyEntity(identifier)

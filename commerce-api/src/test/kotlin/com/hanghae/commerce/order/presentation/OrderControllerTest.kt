@@ -42,8 +42,8 @@ class OrderControllerTest {
     @Test
     fun `주문 생성`() {
         // given
-        persistItem("1", "상품1", 10000, 10)
-        persistItem("2", "상품2", 20000, 10)
+        persistItem("1", "상품1", 10000, 10, "1")
+        persistItem("2", "상품2", 20000, 10, "1")
 
         // when
         val request = OrderCreateRequest(
@@ -82,6 +82,7 @@ class OrderControllerTest {
         name: String,
         price: Int,
         stock: Long,
+        storeId: String,
     ) {
         itemRepository.save(
             Item.of(
@@ -89,6 +90,7 @@ class OrderControllerTest {
                 name,
                 price,
                 stock,
+                storeId,
             ),
         )
     }

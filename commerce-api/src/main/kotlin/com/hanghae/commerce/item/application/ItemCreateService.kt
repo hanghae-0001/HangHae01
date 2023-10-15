@@ -15,7 +15,6 @@ class ItemCreateService(
 
     @Transactional
     fun createItem(request: CreateItemRequest): CreateItemResponse {
-
         val item = Item.of(
             id = UUID.randomUUID().toString(),
             name = request.name,

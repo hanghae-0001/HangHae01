@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 class ItemController(
-     private val itemCreateService: ItemCreateService,
-     private val itemReadService: ItemReadService
+    private val itemCreateService: ItemCreateService,
+    private val itemReadService: ItemReadService,
 ) {
 
     @PostMapping("/item")

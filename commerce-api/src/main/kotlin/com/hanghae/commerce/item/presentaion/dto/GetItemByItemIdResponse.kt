@@ -2,7 +2,7 @@ package com.hanghae.commerce.item.presentaion.dto
 
 import com.hanghae.commerce.item.domain.Item
 
-data class GetItemByItemIdResponse (
+data class GetItemByItemIdResponse(
     val id: String,
     val name: String,
     val price: Int,

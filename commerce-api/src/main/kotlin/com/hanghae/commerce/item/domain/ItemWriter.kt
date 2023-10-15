@@ -1,7 +1,5 @@
 package com.hanghae.commerce.item.domain
 
-import com.hanghae.commerce.item.domain.Item
-import com.hanghae.commerce.item.domain.ItemRepository
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,7 +1,5 @@
 package com.hanghae.commerce.item.domain
 
-import com.hanghae.commerce.item.domain.Item
-import com.hanghae.commerce.item.domain.ItemRepository
 import org.springframework.stereotype.Component
 
 @Component
@@ -12,7 +10,7 @@ class ItemReader(
         return itemRepository.findByIdIn(idList)
     }
 
-   fun getItemsByStoreId(storeId: String): List<Item> {
+    fun getItemsByStoreId(storeId: String): List<Item> {
         return itemRepository.findAllByStoreId(storeId)
     }
 

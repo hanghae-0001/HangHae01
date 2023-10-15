@@ -37,7 +37,6 @@ class ItemReadServiceTest(
 
     @Test
     fun getItemsByStoreId() {
-
         // given
         val user = User(
             id = "1",
@@ -79,7 +78,6 @@ class ItemReadServiceTest(
 
     @Test
     fun getItemByItemId() {
-
         // given
         val user = User(
             id = "1",

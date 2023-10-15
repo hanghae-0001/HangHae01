@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class ItemCreateServiceTest(
     @Autowired
     private val itemCreateService: ItemCreateService,
-){
+) {
 
     @Test
     fun createItem() {
@@ -18,7 +18,7 @@ class ItemCreateServiceTest(
             name = "아이템",
             price = 200,
             stock = 20,
-            storeId = "1"
+            storeId = "1",
         )
 
         val response = itemCreateService.createItem(request)
