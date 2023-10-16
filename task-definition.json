@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:856195448505:task-definition/hanghae-task:8",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:856195448505:task-definition/hanghae-task:9",
     "containerDefinitions": [
         {
             "name": "hanghae",
@@ -32,7 +32,7 @@
     "family": "hanghae-task",
     "executionRoleArn": "arn:aws:iam::856195448505:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 8,
+    "revision": 9,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -75,7 +75,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-10-16T10:28:42.216Z",
+    "registeredAt": "2023-10-16T10:42:23.167Z",
     "registeredBy": "arn:aws:iam::856195448505:root",
     "tags": []
 }
