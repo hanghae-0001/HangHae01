@@ -7,6 +7,7 @@ plugins {
     kotlin("plugin.jpa") apply false
     id("org.springframework.boot") apply false
     id("io.spring.dependency-management") apply false
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
     id("jacoco")
 }
 
@@ -43,6 +44,7 @@ subprojects {
     apply(plugin = "org.springframework.boot")
     apply(plugin = "io.spring.dependency-management")
     apply(plugin = "jacoco")
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     tasks.getByName("bootJar") {
         enabled = false
@@ -73,7 +75,7 @@ subprojects {
             excludeTags("integration")
         }
         extensions.configure(JacocoTaskExtension::class) {
-            destinationFile = file("build/jacoco/jacoco-unit.exec")
+            setDestinationFile(file("build/jacoco/jacoco-unit.exec"))
         }
         testLogging {
             events("passed", "skipped", "failed")
@@ -87,7 +89,7 @@ subprojects {
             includeTags("integration")
         }
         extensions.configure(JacocoTaskExtension::class) {
-            destinationFile = file("build/jacoco/jacoco-integration.exec")
+            setDestinationFile(file("build/jacoco/jacoco-integration.exec"))
         }
         testLogging {
             events("passed", "skipped", "failed")
