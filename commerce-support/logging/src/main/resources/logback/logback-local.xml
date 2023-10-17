@@ -9,8 +9,9 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="com.hanghae" level="DEBUG"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="org.springframework.data" level="DEBUG"/>
+    <logger name="com.hanghae.commerce" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
