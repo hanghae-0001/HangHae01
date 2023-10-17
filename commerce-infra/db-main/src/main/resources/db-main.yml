@@ -23,10 +23,6 @@ spring:
   jpa:
     show-sql: true
 
-logging:
-  level:
-    org.springframework.data: debug
-
 ---
 spring:
   config:
