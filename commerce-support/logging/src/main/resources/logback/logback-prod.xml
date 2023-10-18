@@ -12,7 +12,7 @@
     <layout>
         <pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</pattern>
     </layout>
-    <logGroupName>${Log_Group_Name:prod}</logGroupName>
+    <logGroupName>hanghae-task/error-group</logGroupName>
     <logStreamUuidPrefix>error-</logStreamUuidPrefix>
     <logRegion>ap-northeast-2</logRegion>
     <maxBatchLogEvents>50</maxBatchLogEvents>
