@@ -2,7 +2,7 @@
 <configuration>
 <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
-        <Pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</Pattern>
+        <pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</pattern>
     </layout>
 </appender>
 <appender name="ASYNC_AWS_ERROR_LOGS" class="ca.pjer.logback.AwsLogsAppender">
@@ -12,7 +12,6 @@
     <layout>
         <pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</pattern>
     </layout>
-    <!-- prod 용 로그 그룹명 -->
     <logGroupName>${Log_Group_Name:prod}</logGroupName>
     <logStreamUuidPrefix>error-</logStreamUuidPrefix>
     <logRegion>ap-northeast-2</logRegion>
@@ -20,9 +19,6 @@
     <maxFlushTimeMillis>30000</maxFlushTimeMillis>
     <maxBlockTimeMillis>5000</maxBlockTimeMillis>
     <retentionTimeDays>0</retentionTimeDays>
-    <encoder>
-        <charset>utf8</charset>
-    </encoder>
 </appender>
 
 <root level="INFO">
