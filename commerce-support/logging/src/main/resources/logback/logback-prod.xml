@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-<appender name="ASYNC_AWS_LOGS" class="ca.pjer.logback.AwsLogsAppender">
+<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+        <Pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</Pattern>
+    </layout>
+</appender>
+<appender name="ASYNC_AWS_ERROR_LOGS" class="ca.pjer.logback.AwsLogsAppender">
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>ERROR</level>
     </filter>
@@ -15,12 +20,15 @@
     <maxFlushTimeMillis>30000</maxFlushTimeMillis>
     <maxBlockTimeMillis>5000</maxBlockTimeMillis>
     <retentionTimeDays>0</retentionTimeDays>
+    <encoder>
+        <charset>utf8</charset>
+    </encoder>
 </appender>
 
-<logger name="org.springframework" level="INFO" />
-<logger name="com.hanghae.commerce" level="INFO"/>
 <root level="INFO">
-    <appender-ref ref="ASYNC_AWS_LOGS" />
+    <appender-ref ref="ASYNC_AWS_ERROR_LOGS" />
 </root>
-
+<logger name="com.hanghae.commerce" level="INFO">
+    <appender-ref ref="CONSOLE" />
+</logger>
 </configuration>
