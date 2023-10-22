@@ -14,17 +14,17 @@ class FavoriteItemEntityRepository(
         }
     }
 
-    override fun readByUserId(userId: Long): List<FavoriteItem> {
+    override fun readByUserId(userId: String): List<FavoriteItem> {
         return jpaFavoriteItemRepository.findByUserId(userId).map {
             FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId)
         }
     }
 
-    override fun deleteByUserIdAndItemId(userId: Long, itemId: String) {
+    override fun deleteByUserIdAndItemId(userId: String, itemId: String) {
         TODO("Not yet implemented")
     }
 
-    override fun readByUserIdAndItemId(userId: Long, itemId: String): FavoriteItem? {
+    override fun readByUserIdAndItemId(userId: String, itemId: String): FavoriteItem? {
         return jpaFavoriteItemRepository.findByUserIdAndItemId(userId, itemId)?.let {
             FavoriteItem(id = it.identifier, itemId = it.itemId, userId = it.userId)
         }

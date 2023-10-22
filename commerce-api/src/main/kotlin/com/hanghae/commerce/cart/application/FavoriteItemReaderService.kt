@@ -11,11 +11,11 @@ class FavoriteItemReaderService(
     private val userReader: UserReader,
 ) {
 
-    fun getFavoriteItemsByUserId(userId: Long): List<FavoriteItem> {
+    fun getFavoriteItemsByUserId(userId: String): List<FavoriteItem> {
         return favoriteItemReader.readByUserId(userId)
     }
 
-    fun getFavoriteItemsByUserIdAndItemId(userId: Long, itemId: String): FavoriteItem? {
+    fun getFavoriteItemsByUserIdAndItemId(userId: String, itemId: String): FavoriteItem? {
         return favoriteItemReader.readByUserIdAndItemId(userId, itemId)
     }
 }

@@ -18,7 +18,7 @@ class FavoriteItemController(
      * 유저의 즐겨찾기 목록을 조회한다.
      */
     @GetMapping("/users/{userId}")
-    fun getCartByUserId(@PathVariable userId: Long): List<GetFavoriteItemResponse> {
+    fun getCartByUserId(@PathVariable userId: String): List<GetFavoriteItemResponse> {
         return favoriteItemReaderService.getFavoriteItemsByUserId(userId).let {
             GetFavoriteItemResponse.of(it)
         }

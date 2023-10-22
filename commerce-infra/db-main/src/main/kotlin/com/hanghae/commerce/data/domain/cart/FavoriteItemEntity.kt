@@ -14,7 +14,7 @@ class FavoriteItemEntity(
 
     @Column(name = "item_id") val itemId: String, // 상품 id
 
-    @Column(name = "user_id") val userId: Long, // user id
+    @Column(name = "user_id") val userId: String, // user id
 ) {
 
     companion object {
@@ -22,7 +22,7 @@ class FavoriteItemEntity(
             return FavoriteItemEntity(
                 identifier = favoriteItem.id ?: UUID.randomUUID().toString(),
                 itemId = favoriteItem.itemId,
-                userId = favoriteItem.userId!!,
+                userId = favoriteItem.userId,
             )
         }
     }

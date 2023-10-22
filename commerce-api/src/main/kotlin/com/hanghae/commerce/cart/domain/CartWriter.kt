@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 class CartWriter(
     private val cartRepository: CartRepository,
 ) {
-    fun add(userId: Long): Cart? {
+    fun add(userId: String): Cart {
         return cartRepository.add(userId)
     }
 }

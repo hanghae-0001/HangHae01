@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component
 class FavoriteItemReader(
     private val favoriteItemRepository: FavoriteItemRepository,
 ) {
-    fun readByUserId(userId: Long): List<FavoriteItem> {
+    fun readByUserId(userId: String): List<FavoriteItem> {
         return favoriteItemRepository.readByUserId(userId)
     }
 
-    fun readByUserIdAndItemId(userId: Long, itemId: String): FavoriteItem? {
+    fun readByUserIdAndItemId(userId: String, itemId: String): FavoriteItem? {
         return favoriteItemRepository.readByUserIdAndItemId(userId, itemId)
     }
 }

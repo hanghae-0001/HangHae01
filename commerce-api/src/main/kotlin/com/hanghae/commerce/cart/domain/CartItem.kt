@@ -3,9 +3,10 @@ package com.hanghae.commerce.cart.domain
 class CartItem(
     val cartId: String,
     val itemId: String,
+    var id: String? = null,
+    var userId: String = "",
     var quantity: Int = 0,
 ) {
-    var id: String? = null
 
     init {
         if (cartId.isBlank()) {
@@ -16,8 +17,16 @@ class CartItem(
         }
     }
 
-    constructor(id: String, cartId: String, itemId: String, quantity: Int) : this(cartId, itemId) {
-        this.id = id
+    constructor(id: String, itemId: String, quantity: Int, cartId: String) : this(cartId, itemId) {
         this.quantity = quantity
+        this.id = id
+    }
+
+    constructor(cartId: String, userId: String, itemId: String) : this(cartId, itemId) {
+        this.userId = userId
+    }
+
+    constructor(userId: String, itemId: String) : this(userId, itemId, id = "") {
+        this.userId = userId
     }
 }

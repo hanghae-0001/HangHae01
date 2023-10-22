@@ -11,7 +11,7 @@ class CartEntityRepository(
 ) : CartRepository {
 
     @Transactional(readOnly = true)
-    override fun readByUserId(userId: Long): Cart? {
+    override fun readByUserId(userId: String): Cart? {
         return jpaCartRepository.findByUserId(userId)?.let {
             Cart(
                 id = it.identifier,
@@ -21,7 +21,7 @@ class CartEntityRepository(
     }
 
     @Transactional
-    override fun add(userId: Long): Cart? {
+    override fun add(userId: String): Cart {
         val cartEntity = jpaCartRepository.save(CartEntity.from(userId))
         return Cart(id = cartEntity.identifier, userId = cartEntity.userId)
     }

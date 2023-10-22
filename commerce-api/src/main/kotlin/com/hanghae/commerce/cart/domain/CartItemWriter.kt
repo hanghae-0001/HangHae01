@@ -7,7 +7,7 @@ class CartItemWriter(
     private val cartItemRepository: CartItemRepository,
 ) {
 
-    fun addCartItem(cartItem: CartItem): CartItem? {
+    fun addCartItem(cartItem: CartItem): CartItem {
         return cartItemRepository.add(cartItem)
     }
 

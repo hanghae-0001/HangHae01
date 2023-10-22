@@ -13,7 +13,7 @@ class FavoriteItemWriterService(
 ) {
 
     fun addFavoriteItem(request: AddFavoriteItemRequest): FavoriteItem? {
-        favoriteItemReader.readByUserIdAndItemId(request.userId!!, request.itemId)?.let { throw IllegalArgumentException("이미 즐겨찾기한 상품입니다!") }
+        favoriteItemReader.readByUserIdAndItemId(request.userId, request.itemId)?.let { throw IllegalArgumentException("이미 즐겨찾기한 상품입니다!") }
         return favoriteItemWriter.addItem(FavoriteItem(itemId = request.itemId, userId = request.userId))
     }
 }

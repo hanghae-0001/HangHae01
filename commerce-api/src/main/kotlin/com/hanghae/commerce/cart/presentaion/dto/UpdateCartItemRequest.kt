@@ -8,8 +8,8 @@ class UpdateCartItemRequest(
     @field:NotBlank(message = "수정할 아이템을 입력해야 합니다.")
     val itemId: String,
 
-    @field:NotNull(message = "userId가 없습니다.")
-    val userId: Long ? = null,
+    @field:NotBlank(message = "userId가 없습니다.")
+    val userId: String,
 
     @field:NotNull(message = "수량이 없습니다.")
     @field:Min(1, message = "수량은 1 이상이어야 합니다.")

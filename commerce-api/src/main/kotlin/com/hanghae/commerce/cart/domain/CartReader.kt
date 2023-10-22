@@ -7,7 +7,7 @@ class CartReader(
     private val cartRepository: CartRepository,
 ) {
 
-    fun readByUserId(userId: Long): Cart? {
+    fun readByUserId(userId: String): Cart? {
         return cartRepository.readByUserId(userId)
     }
 }
