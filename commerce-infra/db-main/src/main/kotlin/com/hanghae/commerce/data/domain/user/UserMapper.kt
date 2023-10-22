@@ -10,5 +10,7 @@ fun User.toEntity(): UserEntity {
         email = this.email,
         address = this.address,
         userType = this.userType,
+        account = this.account,
+        password = this.password,
     )
 }

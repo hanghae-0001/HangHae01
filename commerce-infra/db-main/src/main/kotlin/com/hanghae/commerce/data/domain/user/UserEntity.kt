@@ -11,8 +11,12 @@ import kotlin.jvm.Transient
 class UserEntity(
     @Transient
     val identifier: String,
-    val name: String,
-    val age: Int,
+    @Column(nullable = false, scale = 20, unique = true)
+    val account: String,
+    @Column(nullable = false)
+    var password: String,
+    var name: String,
+    var age: Int,
     val email: String,
     val address: String,
     @Enumerated(EnumType.STRING)
@@ -21,6 +25,8 @@ class UserEntity(
     fun toDomain(): User {
         return User(
             id = this.id,
+            account = this.account,
+            password = this.password,
             name = this.name,
             age = this.age,
             email = this.email,
