@@ -3,9 +3,21 @@ package com.hanghae.commerce.data.domain.item
 import com.hanghae.commerce.item.domain.Item
 
 fun Item.toEntity(): ItemEntity {
-    TODO("Not yet implemented")
+    return ItemEntity(
+        identifier = this.id,
+        name = this.name,
+        price = this.price,
+        stock = this.stock,
+        storeId = this.storeId,
+    )
 }
 
 fun ItemEntity.toDomain(): Item {
-    TODO("Not yet implemented")
+    return Item(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        stock = this.stock,
+        storeId = this.storeId,
+    )
 }

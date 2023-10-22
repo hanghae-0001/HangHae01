@@ -14,11 +14,10 @@ abstract class PrimaryKeyEntity(id: String) : Persistable<String> {
     @Id
     @Column(columnDefinition = "varchar(36)")
     private val id: String =
-//        UlidCreator.getMonotonicUlid().toUuid().toString()
         if (id == IdentifierConstants.NOT_YET_PERSISTED_ID) UlidCreator.getMonotonicUlid().toUuid().toString() else id
 
     @Transient
-    private var _isNew = true
+    private var _isNew = if (id == IdentifierConstants.NOT_YET_PERSISTED_ID) true else false
 
     override fun getId(): String = id
 

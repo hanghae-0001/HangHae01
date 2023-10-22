@@ -21,11 +21,7 @@ spring:
     username: root
     password: 1234qwer
   jpa:
-    show-sql: false
-
-logging:
-  level:
-    org.springframework.data: debug
+    show-sql: true
 
 ---
 spring:

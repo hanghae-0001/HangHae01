@@ -8,13 +8,18 @@ import jakarta.persistence.Transient
 
 @Entity
 @Table(name = "item")
-class ItemEntity protected constructor(
+class ItemEntity(
     @Transient
-    private val id: String,
+    private val identifier: String,
 
     @Column(nullable = false)
-    private var name: String,
+    var name: String,
 
     @Column(nullable = false)
-    private var price: Int,
-) : PrimaryKeyEntity(id)
+    var price: Int,
+
+    @Column(nullable = false)
+    var stock: Long,
+
+    var storeId: String,
+) : PrimaryKeyEntity(identifier)

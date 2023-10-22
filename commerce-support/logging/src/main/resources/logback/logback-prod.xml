@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</pattern>
+    </layout>
+</appender>
+<appender name="ASYNC_AWS_ERROR_LOGS" class="ca.pjer.logback.AwsLogsAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>ERROR</level>
+    </filter>
+    <layout>
+        <pattern>%d{yyyyMMdd'T'HHmmss} %thread %level %logger{15} %msg%n</pattern>
+    </layout>
+    <logGroupName>hanghae-task/error-group</logGroupName>
+    <logStreamUuidPrefix>error-</logStreamUuidPrefix>
+    <logRegion>ap-northeast-2</logRegion>
+    <maxBatchLogEvents>50</maxBatchLogEvents>
+    <maxFlushTimeMillis>30000</maxFlushTimeMillis>
+    <maxBlockTimeMillis>5000</maxBlockTimeMillis>
+    <retentionTimeDays>0</retentionTimeDays>
+</appender>
+
+<root level="INFO">
+    <appender-ref ref="ASYNC_AWS_ERROR_LOGS" />
+</root>
+<logger name="com.hanghae.commerce" level="INFO">
+    <appender-ref ref="CONSOLE" />
+</logger>
+</configuration>

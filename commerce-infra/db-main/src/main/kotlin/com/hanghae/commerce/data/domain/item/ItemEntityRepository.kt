@@ -33,4 +33,8 @@ class ItemEntityRepository(
     override fun deleteAll() {
         jpaItemRepository.deleteAll()
     }
+
+    override fun findAllByStoreId(storeId: String): List<Item> {
+        return jpaItemRepository.findAllByStoreId(storeId).map { it.toDomain() }
+    }
 }
