@@ -20,8 +20,9 @@ class ItemCreateServiceTest(
             stock = 20,
             storeId = "1",
         )
+        val userId = "1"
 
-        val response = itemCreateService.createItem(request)
+        val response = itemCreateService.createItem(userId, request)
 
         Assertions.assertThat(response.name).isEqualTo("아이템")
         Assertions.assertThat(response.price).isEqualTo(200)

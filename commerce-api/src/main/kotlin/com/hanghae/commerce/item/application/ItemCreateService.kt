@@ -14,13 +14,14 @@ class ItemCreateService(
 ) {
 
     @Transactional
-    fun createItem(request: CreateItemRequest): CreateItemResponse {
+    fun createItem(userId: String, request: CreateItemRequest): CreateItemResponse {
         val item = Item.of(
             id = UUID.randomUUID().toString(),
             name = request.name,
             price = request.price,
             stock = request.stock,
             storeId = request.storeId,
+            userId = userId
         )
 
         val savedItem = itemWriter.save(item)

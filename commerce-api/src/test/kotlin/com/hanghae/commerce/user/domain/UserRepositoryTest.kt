@@ -15,11 +15,13 @@ class UserRepositoryTest(
         // given
         val user = User(
             id = "1",
+            account = "id",
+            password = "123",
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.CUSTOMER,
+            userType = UserType.CUSTOMER,
         )
 
         // when
@@ -38,12 +40,14 @@ class UserRepositoryTest(
     fun findById() {
         // given
         val user = User(
-            id = "2",
+            id = "1",
+            account = "id",
+            password = "123",
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.CUSTOMER,
+            userType = UserType.CUSTOMER,
         )
         val savedUser = userRepository.save(user)
 
@@ -51,7 +55,7 @@ class UserRepositoryTest(
         val foundUser = userRepository.findById(savedUser.id)!!
 
         // then
-        Assertions.assertThat(foundUser.id).isEqualTo("2")
+        Assertions.assertThat(foundUser.id).isEqualTo("1")
         Assertions.assertThat(foundUser.name).isEqualTo("sangmin")
         Assertions.assertThat(foundUser.age).isEqualTo(20)
         Assertions.assertThat(foundUser.email).isEqualTo("hanghae001@gmail.com")

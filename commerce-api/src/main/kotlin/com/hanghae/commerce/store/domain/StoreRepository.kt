@@ -6,4 +6,5 @@ interface StoreRepository {
     fun allDelete()
     fun findStoreById(id: String): Store?
     fun findStoresByUserId(userId: String): List<Store>
+    fun findStore(userId: String, storeId: String): Store?
 }

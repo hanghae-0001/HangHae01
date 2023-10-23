@@ -37,4 +37,12 @@ class ItemEntityRepository(
     override fun findAllByStoreId(storeId: String): List<Item> {
         return jpaItemRepository.findAllByStoreId(storeId).map { it.toDomain() }
     }
+
+    override fun findAllItems(userId: String, storeId: String): List<Item> {
+        return jpaItemRepository.findAllItems(userId, storeId).map { it.toDomain() }
+    }
+
+    override fun findItem(userId: String, itemId: String): Item? {
+        return jpaItemRepository.findItem(userId, itemId)?.toDomain()
+    }
 }

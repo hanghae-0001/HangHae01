@@ -18,4 +18,8 @@ class StoreReader(
     fun findStoreById(id: String): Store? {
         return storeRepository.findStoreById(id)
     }
+
+    fun findStore(userId: String, storeId: String): Store? {
+        return storeRepository.findStore(userId, storeId)
+    }
 }

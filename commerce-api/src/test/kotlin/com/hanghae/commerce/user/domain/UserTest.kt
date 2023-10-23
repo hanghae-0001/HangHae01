@@ -12,6 +12,8 @@ class UserTest {
     fun createUser() {
         val user = User(
             id = "1",
+            account = "id",
+            password = "123",
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
@@ -32,6 +34,8 @@ class UserTest {
         Assertions.assertThatThrownBy {
             User(
                 id = "1",
+                account = "id",
+                password = "123",
                 name = "",
                 age = 20,
                 email = "hanghae001@gmail.com",
@@ -49,6 +53,8 @@ class UserTest {
         Assertions.assertThatThrownBy {
             User(
                 id = "1",
+                account = "id",
+                password = "123",
                 name = "sangmin",
                 age = 20,
                 email = "",
@@ -66,6 +72,8 @@ class UserTest {
         Assertions.assertThatThrownBy {
             User(
                 id = "1",
+                account = "id",
+                password = "123",
                 name = "sangmin",
                 age = 20,
                 email = "hanghae001@gmail.com",

@@ -35,11 +35,13 @@ class StoreCreateServiceTest(
         // given
         val user = User(
             id = "user1",
-            name = "user1",
+            account = "id",
+            password = "123",
+            name = "sangmin",
             age = 20,
-            email = "hanghae@naver.com",
+            email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.SELLER,
+            userType = UserType.SELLER,
         )
 
         userWriter.save(user)
@@ -48,11 +50,10 @@ class StoreCreateServiceTest(
 
         val request = CreateStoreRequest(
             name = "store1",
-            userId = foundUser.id,
         )
 
         // when
-        val createStore = storeCreateService.createStore(request)
+        val createStore = storeCreateService.createStore(foundUser.id, request)
 
         // then
         Assertions.assertThat(createStore.name).isEqualTo("store1")
@@ -63,12 +64,14 @@ class StoreCreateServiceTest(
     fun createStoreWithDuplicatedStoreName() {
         // given
         val user = User(
-            id = "user1",
-            name = "user1",
+            id = "1",
+            account = "id",
+            password = "123",
+            name = "sangmin",
             age = 20,
-            email = "hanghae@naver.com",
+            email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.SELLER,
+            userType = UserType.SELLER,
         )
 
         userWriter.save(user)
@@ -77,18 +80,16 @@ class StoreCreateServiceTest(
 
         val request1 = CreateStoreRequest(
             name = "store1",
-            userId = foundUser.id,
         )
 
-        storeCreateService.createStore(request1)
+        storeCreateService.createStore(foundUser.id, request1)
 
         val request2 = CreateStoreRequest(
             name = "store1",
-            userId = foundUser.id,
         )
 
         assertThrows<IllegalArgumentException> {
-            storeCreateService.createStore(request2)
+            storeCreateService.createStore(foundUser.id, request2)
         }.apply {
             Assertions.assertThat(message).isEqualTo("상점이름이 중복됩니다.")
         }
@@ -98,12 +99,14 @@ class StoreCreateServiceTest(
     fun createStoreWithNotSeller() {
         // given
         val user = User(
-            id = "user1",
-            name = "user1",
+            id = "1",
+            account = "id",
+            password = "123",
+            name = "sangmin",
             age = 20,
-            email = "hanghae@naver.com",
+            email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.CUSTOMER,
+            userType = UserType.CUSTOMER,
         )
 
         userWriter.save(user)
@@ -112,12 +115,11 @@ class StoreCreateServiceTest(
 
         val request = CreateStoreRequest(
             name = "store1",
-            userId = foundUser.id,
         )
 
         // when
         assertThrows<IllegalArgumentException> {
-            storeCreateService.createStore(request)
+            storeCreateService.createStore(foundUser.id, request)
         }.apply {
             Assertions.assertThat(message).isEqualTo("해당 유저는 판매자가 아닙니다.")
         }

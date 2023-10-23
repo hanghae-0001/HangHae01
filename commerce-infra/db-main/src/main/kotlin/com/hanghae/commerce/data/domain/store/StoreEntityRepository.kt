@@ -28,4 +28,8 @@ class StoreEntityRepository(
     override fun findStoresByUserId(userId: String): List<Store> {
         return jpaStoreRepository.findStoresByUserId(userId).map { storeEntity -> storeEntity.toDomain() }
     }
+
+    override fun findStore(userId: String, storeId: String): Store? {
+        return jpaStoreRepository.findStore(userId, storeId)?.toDomain()
+    }
 }

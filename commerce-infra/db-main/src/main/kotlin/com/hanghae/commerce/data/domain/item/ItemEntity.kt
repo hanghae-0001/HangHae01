@@ -22,4 +22,5 @@ class ItemEntity(
     var stock: Long,
 
     var storeId: String,
+    var userId: String,
 ) : PrimaryKeyEntity(identifier)
