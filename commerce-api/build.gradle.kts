@@ -18,5 +18,6 @@ dependencies {
     testRuntimeOnly("com.h2database:h2")
     testImplementation("org.testcontainers:testcontainers:1.17.6")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
+    testImplementation("io.mockk:mockk:1.12.5")
     testImplementation("com.redis.testcontainers:testcontainers-redis-junit-jupiter:1.4.6")
 }
