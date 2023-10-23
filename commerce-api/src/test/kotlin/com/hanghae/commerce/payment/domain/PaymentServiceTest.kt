@@ -1,7 +1,7 @@
 package com.hanghae.commerce.payment.domain
 
-import com.hanghae.commerce.order.application.OrderReader
-import com.hanghae.commerce.order.application.OrderWriter
+import com.hanghae.commerce.order.domain.OrderReader
+import com.hanghae.commerce.order.domain.OrderWriter
 import com.hanghae.commerce.order.domain.Order
 import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.payment.domain.command.PaymentCommand

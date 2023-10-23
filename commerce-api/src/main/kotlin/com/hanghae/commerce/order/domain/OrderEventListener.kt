@@ -1,7 +1,5 @@
 package com.hanghae.commerce.order.domain
 
-import com.hanghae.commerce.order.application.OrderReader
-import com.hanghae.commerce.order.application.OrderWriter
 import com.hanghae.commerce.payment.domain.PaymentCompletedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component

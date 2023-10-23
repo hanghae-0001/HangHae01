@@ -1,7 +1,5 @@
-package com.hanghae.commerce.order.application
+package com.hanghae.commerce.order.domain
 
-import com.hanghae.commerce.order.domain.Order
-import com.hanghae.commerce.order.domain.OrderRepository
 import org.springframework.stereotype.Component
 
 @Component

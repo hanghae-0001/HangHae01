@@ -3,7 +3,7 @@ package com.hanghae.commerce.claim.application
 import com.hanghae.commerce.claim.domain.OrderCancelService
 import com.hanghae.commerce.claim.domain.OrderCancelValidator
 import com.hanghae.commerce.claim.domain.command.OrderCancelCommand
-import com.hanghae.commerce.order.application.OrderReader
+import com.hanghae.commerce.order.domain.OrderReader
 import org.springframework.stereotype.Component
 
 @Component

@@ -1,7 +1,7 @@
 package com.hanghae.commerce.payment.presentation
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.hanghae.commerce.order.application.OrderWriter
+import com.hanghae.commerce.order.domain.OrderWriter
 import com.hanghae.commerce.order.domain.Order
 import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.payment.domain.BankAccount

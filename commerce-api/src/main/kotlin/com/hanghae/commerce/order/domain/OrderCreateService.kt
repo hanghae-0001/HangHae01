@@ -1,7 +1,6 @@
 package com.hanghae.commerce.order.domain
 
 import com.hanghae.commerce.event.EventPublisher
-import com.hanghae.commerce.order.application.OrderWriter
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import org.springframework.stereotype.Service
 

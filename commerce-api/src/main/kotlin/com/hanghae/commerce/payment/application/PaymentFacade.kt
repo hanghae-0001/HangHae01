@@ -1,6 +1,6 @@
 package com.hanghae.commerce.payment.application
 
-import com.hanghae.commerce.order.application.OrderReader
+import com.hanghae.commerce.order.domain.OrderReader
 import com.hanghae.commerce.payment.domain.PaymentService
 import com.hanghae.commerce.payment.domain.command.PaymentCommand
 import com.hanghae.commerce.payment.presentation.dto.PaymentRequest
