@@ -17,7 +17,7 @@ class PaymentFacade(
             paymentService.payment(
                 PaymentCommand(
                     order = orderReader.read(paymentRequest.orderId),
-                    payInfo = paymentRequest.payInfo,
+                    bankAccount = paymentRequest.bankAccount,
                 ),
             ),
         )

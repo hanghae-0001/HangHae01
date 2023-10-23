@@ -6,7 +6,6 @@ import com.hanghae.commerce.order.domain.Order
 import com.hanghae.commerce.order.domain.OrderStatus
 import com.hanghae.commerce.payment.domain.command.PaymentCommand
 import com.hanghae.commerce.testconfiguration.IntegrationTest
-import com.hanghae.commerce.tools.TestConcurrentExecutor
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -16,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired
 @IntegrationTest
 @DisplayName("Given: payment()")
 class PaymentServiceTest {
-
-    @Autowired
-    private lateinit var testConcurrentExecutor: TestConcurrentExecutor
 
     @Autowired
     private lateinit var orderReader: OrderReader
@@ -82,7 +78,11 @@ class PaymentServiceTest {
         return sut.payment(
             PaymentCommand(
                 order = alreadyPayedOrder,
-                payInfo = PaymentCommand.PayInfo("card"),
+                bankAccount = BankAccount(
+                    bankName = "국민은행",
+                    accountNumber = "1234567890",
+                    accountHolder = "홍길동",
+                ),
             ),
         )
     }

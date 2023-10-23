@@ -1,8 +1,8 @@
 package com.hanghae.commerce.payment.presentation.dto
 
-import com.hanghae.commerce.payment.domain.command.PaymentCommand
+import com.hanghae.commerce.payment.domain.BankAccount
 
 data class PaymentRequest(
     val orderId: String,
-    val payInfo: PaymentCommand.PayInfo,
+    val bankAccount: BankAccount,
 )
