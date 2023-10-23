@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
 @Component
-class StockManager(
+class ItemStockService(
     private val itemReader: ItemReader,
     private val itemWriter: ItemWriter,
 ) {
@@ -34,6 +34,18 @@ class StockManager(
             throw SoldOutException("재고가 부족합니다.")
         }
         item.stock -= orderItem.quantity
+        itemWriter.save(item)
+    }
+
+    @DistributedLock(
+        key = "#orderItem.itemId",
+        timeUnit = TimeUnit.SECONDS,
+        waitTime = 10,
+        leaseTime = 60,
+    )
+    fun restore(orderItem: OrderItem) {
+        val item: Item = itemReader.getItemByItemId(orderItem.itemId) ?: throw IllegalArgumentException()
+        item.stock += orderItem.quantity
         itemWriter.save(item)
     }
 }

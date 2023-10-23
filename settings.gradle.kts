@@ -5,6 +5,7 @@ include(
     "commerce-support:logging",
     "commerce-support:monitoring",
     "commerce-infra:db-main",
+    "commerce-infra:external-api",
     "commerce-infra:redis-main",
 )
 

@@ -17,6 +17,14 @@ class Order(
         this.status = OrderStatus.DELIVERY_PREPARE
     }
 
+    fun cancel() {
+        this.status = OrderStatus.ORDER_CANCEL
+    }
+
+    fun isPaymentWait(): Boolean {
+        return this.status == OrderStatus.PAYMENT_WAIT
+    }
+
     companion object {
         fun from(orderCreateCommand: OrderCreateCommand): Order {
             val orderItemList = orderCreateCommand.orderItemList

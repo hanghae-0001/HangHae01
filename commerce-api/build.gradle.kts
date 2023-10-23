@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":commerce-support:monitoring"))
     runtimeOnly(project(":commerce-infra:db-main"))
     runtimeOnly(project(":commerce-infra:redis-main"))
+    runtimeOnly(project(":commerce-infra:external-api"))
 
     compileOnly("org.springframework:spring-tx")
     implementation("org.springframework.boot:spring-boot-starter-web")
