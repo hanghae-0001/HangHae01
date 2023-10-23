@@ -5,5 +5,5 @@ data class OrderCancelCommand(
     val orderId: String,
     val userId: String,
     val reason: String,
-    val bankAccount: BankAccount?,
+    val bankAccount: BankAccount? = null,
 )

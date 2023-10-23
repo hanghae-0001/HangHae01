@@ -25,6 +25,9 @@ class OrderEntity(
     val deliveryFee: Int = 0,
 
     @Column(nullable = false)
+    val cancelReason: String? = null,
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     val status: OrderStatus = OrderStatus.PAYMENT_WAIT,
 ) : PrimaryKeyEntity(identifier) {

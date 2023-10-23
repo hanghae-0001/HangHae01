@@ -10,6 +10,7 @@ class Order(
     val discountAmount: Int,
     val paymentAmount: Int,
     val deliveryFee: Int,
+    var cancelReason: String? = null,
     var status: OrderStatus,
     val orderItemList: List<OrderItem>,
 ) {
@@ -17,8 +18,9 @@ class Order(
         this.status = OrderStatus.DELIVERY_PREPARE
     }
 
-    fun cancel() {
+    fun cancel(reason: String) {
         this.status = OrderStatus.ORDER_CANCEL
+        this.cancelReason = reason
     }
 
     fun isPaymentWait(): Boolean {

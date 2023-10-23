@@ -12,7 +12,7 @@ class OrderCancelService(
     private val eventPublisher: CommerceEventPublisher,
 ) {
     fun cancel(command: OrderCancelCommand, order: Order) {
-        order.cancel()
+        order.cancel(command.reason)
         orderWriter.write(order)
         eventPublisher.publish(
             OrderCancelCompletedEvent(
