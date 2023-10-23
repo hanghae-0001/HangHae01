@@ -2,7 +2,6 @@ package com.hanghae.commerce.payment.domain
 
 import com.hanghae.commerce.event.CommerceEventPublisher
 import com.hanghae.commerce.order.domain.Order
-import com.hanghae.commerce.payment.application.PaymentWriter
 import com.hanghae.commerce.payment.domain.command.PaymentCommand
 import com.hanghae.commerce.payment.domain.command.PaymentRefundCommand
 import com.hanghae.commerce.payment.infra.PgApiCaller

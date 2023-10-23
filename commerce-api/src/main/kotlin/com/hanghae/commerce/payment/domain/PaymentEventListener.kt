@@ -2,7 +2,6 @@ package com.hanghae.commerce.payment.domain
 
 import com.hanghae.commerce.claim.domain.OrderCancelCompletedEvent
 import com.hanghae.commerce.order.domain.OrderReader
-import com.hanghae.commerce.payment.application.PaymentReader
 import com.hanghae.commerce.payment.domain.command.PaymentRefundCommand
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
