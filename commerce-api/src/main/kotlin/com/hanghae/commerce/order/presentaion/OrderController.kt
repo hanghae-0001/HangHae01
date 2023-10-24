@@ -1,8 +1,9 @@
 package com.hanghae.commerce.order.presentaion
 
 import com.hanghae.commerce.order.application.OrderFacade
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
+import com.hanghae.commerce.order.presentaion.dto.OrderRequest
+import com.hanghae.commerce.order.presentaion.dto.OrderResponse
+import com.hanghae.commerce.order.presentaion.dto.toCommand
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -15,11 +16,15 @@ class OrderController(
     private val orderFacade: OrderFacade,
 ) {
     @PostMapping("")
-    fun create(
-        @RequestBody request: OrderCreateRequest,
-    ): ResponseEntity<OrderCreateResponse> {
+    fun order(
+        @RequestBody request: OrderRequest,
+    ): ResponseEntity<OrderResponse> {
         return ResponseEntity.ok(
-            orderFacade.create(request),
+            OrderResponse(
+                orderFacade.order(
+                    request.toCommand(),
+                ),
+            ),
         )
     }
 }

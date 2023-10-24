@@ -24,7 +24,7 @@ class OrderEntity(
     @Column(nullable = false)
     val deliveryFee: Int = 0,
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     val cancelReason: String? = null,
 
     @Column(nullable = false)

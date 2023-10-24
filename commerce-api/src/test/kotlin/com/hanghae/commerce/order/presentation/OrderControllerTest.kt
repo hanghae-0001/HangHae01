@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderRepository
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
+import com.hanghae.commerce.order.presentaion.dto.OrderRequest
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import org.assertj.core.api.Assertions.assertThat
@@ -46,14 +46,14 @@ class OrderControllerTest {
         persistItem("2", "상품2", 20000, 10, "1")
 
         // when
-        val request = OrderCreateRequest(
+        val request = OrderRequest(
             userId = "1",
             itemList = listOf(
-                OrderCreateRequest.Item(
+                OrderRequest.Item(
                     id = "1",
                     quantity = 1,
                 ),
-                OrderCreateRequest.Item(
+                OrderRequest.Item(
                     id = "2",
                     quantity = 2,
                 ),

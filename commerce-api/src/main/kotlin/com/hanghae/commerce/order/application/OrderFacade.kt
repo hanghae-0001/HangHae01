@@ -1,58 +1,23 @@
 package com.hanghae.commerce.order.application
 
 import com.hanghae.commerce.item.application.ItemStockService
-import com.hanghae.commerce.item.domain.Item
-import com.hanghae.commerce.item.domain.ItemReader
 import com.hanghae.commerce.order.domain.OrderService
-import com.hanghae.commerce.order.domain.OrderItem
-import com.hanghae.commerce.order.domain.command.OrderCreateCommand
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
+import com.hanghae.commerce.order.domain.command.OrderCommand
 import org.springframework.stereotype.Service
 
 @Service
 class OrderFacade(
     private val orderService: OrderService,
-    private val itemReader: ItemReader,
     private val itemStockService: ItemStockService,
 ) {
-    fun create(request: OrderCreateRequest): OrderCreateResponse {
-        val orderItems = orderItemsRequestToDomain(request)
-
-        verifyStockRemains(orderItems)
-
-        return OrderCreateResponse(
-            orderService.create(
-                OrderCreateCommand(
-                    request.userId,
-                    orderItems,
-                ),
-            ),
-        )
+    fun order(command: OrderCommand): String {
+        verifyStockRemains(command.orderItemList)
+        return orderService.create(command)
     }
 
-    private fun verifyStockRemains(orderItems: List<OrderItem>) {
+    private fun verifyStockRemains(orderItems: List<OrderCommand.OrderItem>) {
         orderItems.forEach {
             itemStockService.verifyStockRemains(it)
         }
-    }
-
-    private fun orderItemsRequestToDomain(request: OrderCreateRequest): List<OrderItem> {
-        return findItems(request.itemList).map { item ->
-            OrderItem(
-                itemId = item.id,
-                name = item.name,
-                price = item.price,
-                quantity = request.itemList.findLast { it.id == item.id }!!.quantity,
-            )
-        }
-    }
-
-    private fun findItems(requestOrderItemList: List<OrderCreateRequest.Item>): List<Item> {
-        val itemList = itemReader.read(requestOrderItemList.map { it.id })
-        if (itemList.size < requestOrderItemList.size) {
-            throw IllegalArgumentException("존재하지 않는 상품입니다.")
-        }
-        return itemList
     }
 }

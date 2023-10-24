@@ -5,6 +5,7 @@ import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemReader
 import com.hanghae.commerce.item.domain.ItemWriter
 import com.hanghae.commerce.order.domain.OrderItem
+import com.hanghae.commerce.order.domain.command.OrderCommand
 import com.hanghae.commerce.order.exception.SoldOutException
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
@@ -16,24 +17,24 @@ class ItemStockService(
 ) {
 
     @DistributedLock(
-        key = "#orderItem.itemId",
+        key = "#orderItemCommand.itemId",
         timeUnit = TimeUnit.SECONDS,
         waitTime = 10,
         leaseTime = 60,
     )
-    fun verifyStockRemains(orderItem: OrderItem) {
-        val item: Item = itemReader.getItemByItemId(orderItem.itemId) ?: throw IllegalArgumentException()
-        checkStockAndUpdateQuantity(item, orderItem)
+    fun verifyStockRemains(orderItemCommand: OrderCommand.OrderItem) {
+        val item: Item = itemReader.getItemByItemId(orderItemCommand.itemId) ?: throw IllegalArgumentException("존재하지 않는 상품입니다.")
+        checkStockAndUpdateQuantity(item, orderItemCommand.quantity)
     }
 
     private fun checkStockAndUpdateQuantity(
         item: Item,
-        orderItem: OrderItem,
+        orderItemQuantity: Int,
     ) {
-        if (item.stock - orderItem.quantity < 0) {
+        if (item.stock - orderItemQuantity < 0) {
             throw SoldOutException("재고가 부족합니다.")
         }
-        item.stock -= orderItem.quantity
+        item.stock -= orderItemQuantity
         itemWriter.save(item)
     }
 
