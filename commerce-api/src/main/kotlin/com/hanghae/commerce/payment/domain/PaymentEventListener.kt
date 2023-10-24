@@ -14,14 +14,11 @@ class PaymentEventListener(
 ) {
     @EventListener
     fun onOrderCanceled(event: OrderCancelCompletedEvent) {
-        val order = orderReader.read(event.orderId)
         val payment = paymentReader.readByOrderId(event.orderId)
+        payment ?: return
+        payment.cancel()
 
-        if (order.isPaymentWait()) {
-            payment.cancel()
-            return
-        }
-
+        val order = orderReader.read(event.orderId)
         paymentService.refund(
             command = PaymentRefundCommand(
                 orderId = order.id,
