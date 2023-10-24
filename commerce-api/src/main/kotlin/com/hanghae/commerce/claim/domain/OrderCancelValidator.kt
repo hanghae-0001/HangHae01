@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 class OrderCancelValidator(
     private val bankAccountValidator: BankAccountValidator,
 ) {
-    fun validate(command: BankAccount?, order: Order) {
+    fun validate(command: BankAccount?) {
         validateRefundableBankAccount(command)
     }
 
@@ -17,9 +17,6 @@ class OrderCancelValidator(
         if (command == null) {
             return
         }
-
-        require(bankAccountValidator.validate(command)) {
-            "Invalid bank account"
-        }
+        require(bankAccountValidator.validate(command)) { "Invalid bank account" }
     }
 }

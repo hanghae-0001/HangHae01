@@ -14,7 +14,7 @@ class OrderCancelFacade(
 ) {
     fun cancel(command: OrderCancelCommand) {
         val order = orderReader.read(command.orderId)
-        orderCancelValidator.validate(command.bankAccount, order)
+        orderCancelValidator.validate(command.bankAccount)
         orderCancelService.cancel(command, order)
     }
 }
