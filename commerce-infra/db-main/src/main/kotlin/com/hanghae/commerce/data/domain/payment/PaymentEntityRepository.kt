@@ -17,6 +17,10 @@ class PaymentEntityRepository(
         return jpaPaymentRepository.findById(id).orElse(null)?.toDomain()
     }
 
+    override fun findByOrderId(orderId: String): Payment? {
+        return jpaPaymentRepository.findByOrderId(orderId)?.toDomain()
+    }
+
     override fun deleteAll() {
         jpaPaymentRepository.deleteAll()
     }
