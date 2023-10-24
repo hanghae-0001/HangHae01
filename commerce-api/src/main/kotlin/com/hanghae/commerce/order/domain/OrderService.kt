@@ -5,7 +5,7 @@ import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import org.springframework.stereotype.Service
 
 @Service
-class OrderCreateService(
+class OrderService(
     private val eventPublisher: EventPublisher,
     private val orderWriter: OrderWriter,
 ) {
@@ -19,6 +19,6 @@ class OrderCreateService(
     }
 
     private fun publishOrderCreatedEvent(order: Order) {
-        eventPublisher.publish(OrderCreateEvent(order))
+        eventPublisher.publish(OrderedEvent(order))
     }
 }

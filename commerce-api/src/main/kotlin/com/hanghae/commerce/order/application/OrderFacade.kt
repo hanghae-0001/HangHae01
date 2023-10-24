@@ -3,7 +3,7 @@ package com.hanghae.commerce.order.application
 import com.hanghae.commerce.item.application.ItemStockService
 import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemReader
-import com.hanghae.commerce.order.domain.OrderCreateService
+import com.hanghae.commerce.order.domain.OrderService
 import com.hanghae.commerce.order.domain.OrderItem
 import com.hanghae.commerce.order.domain.command.OrderCreateCommand
 import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
@@ -11,8 +11,8 @@ import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import org.springframework.stereotype.Service
 
 @Service
-class OrderCreateFacade(
-    private val orderCreateService: OrderCreateService,
+class OrderFacade(
+    private val orderService: OrderService,
     private val itemReader: ItemReader,
     private val itemStockService: ItemStockService,
 ) {
@@ -22,7 +22,7 @@ class OrderCreateFacade(
         verifyStockRemains(orderItems)
 
         return OrderCreateResponse(
-            orderCreateService.create(
+            orderService.create(
                 OrderCreateCommand(
                     request.userId,
                     orderItems,

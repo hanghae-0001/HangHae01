@@ -1,6 +1,5 @@
 package com.hanghae.commerce.claim.domain
 
-import com.hanghae.commerce.order.domain.Order
 import com.hanghae.commerce.payment.domain.BankAccount
 import com.hanghae.commerce.payment.domain.BankAccountValidator
 import org.springframework.stereotype.Component

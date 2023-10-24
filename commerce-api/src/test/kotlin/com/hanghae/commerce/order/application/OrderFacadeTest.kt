@@ -18,7 +18,7 @@ import java.util.concurrent.*
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
-class OrderCreateFacadeTest {
+class OrderFacadeTest {
 
     @Autowired
     private lateinit var testConcurrentExecutor: TestConcurrentExecutor
@@ -30,7 +30,7 @@ class OrderCreateFacadeTest {
     private lateinit var itemRepository: ItemRepository
 
     @Autowired
-    private lateinit var sut: OrderCreateFacade
+    private lateinit var sut: OrderFacade
 
     @Nested
     @DisplayName("When: 25,000원짜리 상품 재고가 5개 일 때,")
