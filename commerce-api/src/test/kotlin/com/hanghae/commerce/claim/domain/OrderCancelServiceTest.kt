@@ -30,7 +30,7 @@ class OrderCancelServiceTest {
     private lateinit var sut: OrderCancelService
 
     @Nested
-    @DisplayName("When: 주문 취소가 성공하면, ")
+    @DisplayName("When: 주문 취소가 성공하면")
     inner class Context1 {
 
         val testOrderId = "testOrderId"
@@ -64,7 +64,7 @@ class OrderCancelServiceTest {
         }
 
         @Test
-        @DisplayName("Then: 저장소에 저장한다.")
+        @DisplayName("Then: 변경사항을 저장소에 저장한다.")
         fun tc3() {
             // when
             sut.cancel(command, order)

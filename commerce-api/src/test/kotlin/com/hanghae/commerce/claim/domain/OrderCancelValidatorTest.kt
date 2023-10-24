@@ -22,7 +22,7 @@ class OrderCancelValidatorTest {
     private lateinit var sut: OrderCancelValidator
 
     @Nested
-    @DisplayName("When: 환불시 환불 전용 계좌를 입력했다면,")
+    @DisplayName("When: 환불시 환불 전용 계좌를 입력했을 때")
     inner class Context1 {
         @Test
         @DisplayName("Then: 계좌의 유효성을 검증한다.")

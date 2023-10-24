@@ -51,7 +51,7 @@ class ClaimControllerTest {
         val itemId = "testItemId"
         val orderId = "testOrderId"
         val item = persistItem(itemId, "상품1", 10000, 10, "1")
-        val order = persistOrder(userId, orderId, item)
+        persistOrder(userId, orderId, item)
 
         // when
         val request = OrderCancelRequest(

@@ -18,8 +18,8 @@ class PaymentService(
     @CircuitBreaker(name = "payment", fallbackMethod = "circuitBreakerFallback")
     fun payment(
         command: PaymentCommand,
+        order: Order,
     ): String {
-        val order = command.order
         if (!order.isPaymentWait()) {
             throw IllegalStateException("이미 결제가 완료된 주문입니다.")
         }

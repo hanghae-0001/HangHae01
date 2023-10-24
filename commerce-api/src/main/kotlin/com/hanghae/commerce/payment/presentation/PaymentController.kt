@@ -1,6 +1,7 @@
 package com.hanghae.commerce.payment.presentation
 
 import com.hanghae.commerce.payment.application.PaymentFacade
+import com.hanghae.commerce.payment.domain.command.PaymentCommand
 import com.hanghae.commerce.payment.presentation.dto.PaymentRequest
 import com.hanghae.commerce.payment.presentation.dto.PaymentResponse
 import jakarta.validation.Valid
@@ -22,7 +23,14 @@ class PaymentController(
         paymentRequest: PaymentRequest,
     ): ResponseEntity<PaymentResponse> {
         return ResponseEntity.ok(
-            paymentFacade.payment(paymentRequest),
+            PaymentResponse(
+                paymentFacade.payment(
+                    PaymentCommand(
+                        paymentRequest.orderId,
+                        paymentRequest.bankAccount,
+                    ),
+                ),
+            ),
         )
     }
 }

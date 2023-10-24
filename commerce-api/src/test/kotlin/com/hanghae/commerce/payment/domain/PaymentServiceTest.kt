@@ -76,14 +76,15 @@ class PaymentServiceTest {
 
     private fun executePayment(alreadyPayedOrder: Order): String {
         return sut.payment(
-            PaymentCommand(
-                order = alreadyPayedOrder,
+            command = PaymentCommand(
+                orderId = alreadyPayedOrder.id,
                 bankAccount = BankAccount(
                     bankName = "국민은행",
                     accountNumber = "1234567890",
                     accountHolder = "홍길동",
                 ),
             ),
+            order = alreadyPayedOrder,
         )
     }
 
