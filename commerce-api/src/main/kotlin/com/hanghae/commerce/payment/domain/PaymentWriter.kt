@@ -1,7 +1,5 @@
-package com.hanghae.commerce.payment.application
+package com.hanghae.commerce.payment.domain
 
-import com.hanghae.commerce.payment.domain.Payment
-import com.hanghae.commerce.payment.domain.PaymentRepository
 import org.springframework.stereotype.Component
 
 @Component
