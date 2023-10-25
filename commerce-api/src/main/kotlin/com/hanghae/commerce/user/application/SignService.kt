@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class SignService (
+class SignService(
     private val userReader: UserReader,
     private val userWriter: UserWriter,
     private val tokenProvider: TokenProvider,
-    private val encoder: PasswordEncoder
-){
+    private val encoder: PasswordEncoder,
+) {
     @Transactional
     fun registerUser(request: SignUpRequest): SignUpResponse {
         val countUserByAccount = userReader.countUserByAccount(request.account)

@@ -21,7 +21,7 @@ class ItemCreateService(
             price = request.price,
             stock = request.stock,
             storeId = request.storeId,
-            userId = userId
+            userId = userId,
         )
 
         val savedItem = itemWriter.save(item)

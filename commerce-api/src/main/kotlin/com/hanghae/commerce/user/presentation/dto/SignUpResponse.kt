@@ -11,7 +11,7 @@ data class SignUpResponse(
     val email: String,
     val address: String,
     val userType: UserType,
-){
+) {
     companion object {
         fun from(user: User) = SignUpResponse(
             id = user.id,

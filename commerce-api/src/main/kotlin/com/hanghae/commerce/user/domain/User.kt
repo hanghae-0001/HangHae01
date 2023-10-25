@@ -27,7 +27,7 @@ class User(
     }
 
     companion object {
-        fun from(request: SignUpRequest, encoder: PasswordEncoder) =  User (
+        fun from(request: SignUpRequest, encoder: PasswordEncoder) = User(
             account = request.account,
             password = encoder.encode(request.password),
             name = request.name,

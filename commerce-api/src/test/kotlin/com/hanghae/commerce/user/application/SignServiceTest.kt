@@ -40,8 +40,8 @@ class SignServiceTest @Autowired constructor(
     @Test
     fun `아이디는 중복될 수 없다`() {
         // given
-        userWriter.save(User("1", "colabear754","1234","colabear",20,"colabear754@email.com", "seoul", UserType.CUSTOMER))
-        val request = SignUpRequest("colabear754","1234","colabear",20,"colabear754@email.com", "seoul", UserType.CUSTOMER)
+        userWriter.save(User("1", "colabear754", "1234", "colabear", 20, "colabear754@email.com", "seoul", UserType.CUSTOMER))
+        val request = SignUpRequest("colabear754", "1234", "colabear", 20, "colabear754@email.com", "seoul", UserType.CUSTOMER)
         // when
         // then
         Assertions.assertThrows(IllegalArgumentException::class.java) {
@@ -52,7 +52,7 @@ class SignServiceTest @Autowired constructor(
     @Test
     fun 로그인() {
         // given
-        userWriter.save(User("1", "colabear754","1234","colabear",20,"colabear754@email.com", "seoul", UserType.CUSTOMER))
+        userWriter.save(User("1", "colabear754", "1234", "colabear", 20, "colabear754@email.com", "seoul", UserType.CUSTOMER))
         // when
         val response = signService.signIn(SignInRequest("colabear754", "1234"))
         // then
@@ -63,7 +63,7 @@ class SignServiceTest @Autowired constructor(
     @Test
     fun 로그인실패() {
         // given
-        userWriter.save(User("1", "colabear754","1234","colabear",20,"colabear754@email.com", "seoul", UserType.CUSTOMER))
+        userWriter.save(User("1", "colabear754", "1234", "colabear", 20, "colabear754@email.com", "seoul", UserType.CUSTOMER))
         // when
         // then
         Assertions.assertThrows(IllegalArgumentException::class.java) {

@@ -2,7 +2,7 @@ package com.hanghae.commerce.user.presentation.dto
 
 import com.hanghae.commerce.user.domain.UserType
 
-data class SignUpRequest (
+data class SignUpRequest(
     val account: String,
     var password: String,
     val name: String,
