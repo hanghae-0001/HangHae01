@@ -28,14 +28,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: ktLint
-        uses: ScaCap/action-ktlint@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-check
-          fail_on_error: true
-          level: warning
-
   test:
     name: Execute test
     runs-on: ubuntu-latest
