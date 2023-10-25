@@ -1,6 +1,6 @@
 package com.hanghae.commerce.order.presentaion.dto
 
-data class OrderCreateRequest(
+data class OrderRequest(
     val userId: String,
     val itemList: List<Item>,
 ) {

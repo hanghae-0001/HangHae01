@@ -4,21 +4,21 @@ import com.hanghae.commerce.item.domain.Item
 import com.hanghae.commerce.item.domain.ItemRepository
 import com.hanghae.commerce.order.domain.OrderRepository
 import com.hanghae.commerce.order.domain.OrderStatus
+import com.hanghae.commerce.order.domain.command.OrderCommand
 import com.hanghae.commerce.order.exception.SoldOutException
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateRequest
-import com.hanghae.commerce.order.presentaion.dto.OrderCreateResponse
 import com.hanghae.commerce.testconfiguration.EnableTestcontainers
 import com.hanghae.commerce.testconfiguration.IntegrationTest
 import com.hanghae.commerce.tools.TestConcurrentExecutor
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
-import java.util.concurrent.*
+import java.util.concurrent.ExecutionException
 
 @IntegrationTest
 @EnableTestcontainers
 @DisplayName("Given: orderCreate()")
-class OrderCreateFacadeTest {
+class OrderFacadeTest {
 
     @Autowired
     private lateinit var testConcurrentExecutor: TestConcurrentExecutor
@@ -30,11 +30,11 @@ class OrderCreateFacadeTest {
     private lateinit var itemRepository: ItemRepository
 
     @Autowired
-    private lateinit var sut: OrderCreateFacade
+    private lateinit var sut: OrderFacade
 
     @Nested
     @DisplayName("When: 25,000원짜리 상품 재고가 5개 일 때,")
-    internal inner class when_stock_size_is_5 {
+    internal inner class Context1 {
 
         private lateinit var item: Item
 
@@ -60,11 +60,8 @@ class OrderCreateFacadeTest {
         fun tc1() {
             // when
             assertThatThrownBy {
-                sut.create(
-                    orderCreateRequest(
-                        itemId = item.id,
-                        quantityPerRequest = 6,
-                    ),
+                sut.order(
+                    createOrderCommand(item.id, 6),
                 )
 
                 // then
@@ -76,11 +73,8 @@ class OrderCreateFacadeTest {
         fun tc2() {
             // when
             assertThatThrownBy {
-                sut.create(
-                    orderCreateRequest(
-                        itemId = "NOT_EXIST_ITEM_ID",
-                        quantityPerRequest = 7,
-                    ),
+                sut.order(
+                    createOrderCommand("NOT_EXIST_ITEM_ID", 7),
                 )
 
                 // then
@@ -90,7 +84,7 @@ class OrderCreateFacadeTest {
 
     @Nested
     @DisplayName("When: 상품 재고가 1000개 일 때,")
-    internal inner class when_stock_size_is_1000 {
+    internal inner class Context2 {
 
         private lateinit var item: Item
 
@@ -117,11 +111,8 @@ class OrderCreateFacadeTest {
             testConcurrentExecutor.executeOrderInMultiThread(
                 300,
             ) {
-                sut.create(
-                    orderCreateRequest(
-                        itemId = item.id,
-                        quantityPerRequest = 3,
-                    ),
+                sut.order(
+                    createOrderCommand(item.id, 3),
                 )
             }
             Thread.sleep(2000)
@@ -138,11 +129,8 @@ class OrderCreateFacadeTest {
             testConcurrentExecutor.executeOrderInMultiThread(
                 threadCount = 200,
             ) {
-                sut.create(
-                    orderCreateRequest(
-                        itemId = item.id,
-                        quantityPerRequest = 5,
-                    ),
+                sut.order(
+                    createOrderCommand(item.id, 5),
                 )
             }
             Thread.sleep(2000)
@@ -156,18 +144,15 @@ class OrderCreateFacadeTest {
         @DisplayName("Then: 요청 300개가 동시에 4개씩 주문하면, 요청 50개는 SoldOutException 발생한다.")
         fun tc3() {
             // when
-            val futures = testConcurrentExecutor.executableFutures<OrderCreateResponse>(
+            val futures = testConcurrentExecutor.executableFutures<String>(
                 threadCount = 300,
             ) {
-                sut.create(
-                    orderCreateRequest(
-                        itemId = item.id,
-                        quantityPerRequest = 4,
-                    ),
+                sut.order(
+                    createOrderCommand(item.id, 4),
                 )
             }
 
-            val results: MutableList<OrderCreateResponse> = mutableListOf()
+            val results: MutableList<String> = mutableListOf()
             val soldOutExceptions: MutableList<SoldOutException?> = mutableListOf()
             for (future in futures) {
                 try {
@@ -189,7 +174,7 @@ class OrderCreateFacadeTest {
 
     @Nested
     @DisplayName("When: 주문 요청 시 배송정보가 전달되지 않는다면,")
-    internal inner class when_requesting_an_order_delivery_information_is_not_provided {
+    internal inner class Context3 {
         @Test
         @DisplayName("Then: 미리 등록된 주소로 배송이 진행된다.")
         fun tc1() {
@@ -203,7 +188,7 @@ class OrderCreateFacadeTest {
 
     @Nested
     @DisplayName("When: 주문이 정상적으로 완료되면,")
-    internal inner class when_create_success {
+    internal inner class Context4 {
 
         private lateinit var item: Item
 
@@ -228,15 +213,12 @@ class OrderCreateFacadeTest {
         @DisplayName("Then: 주문이 생성된다.")
         fun tc1() {
             // when
-            val orderCreateResponse = sut.create(
-                orderCreateRequest(
-                    itemId = item.id,
-                    quantityPerRequest = 1,
-                ),
+            val orderId = sut.order(
+                createOrderCommand(item.id, 1),
             )
 
             // then
-            val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
+            val savedOrder = orderRepository.findById(orderId)
             assertThat(savedOrder).isNotNull
             assertThat(savedOrder!!.orderAmount).isEqualTo(item.price * 1)
             assertThat(savedOrder.deliveryFee).isEqualTo(2500)
@@ -248,32 +230,24 @@ class OrderCreateFacadeTest {
         @DisplayName("Then: 생성된 주문은 '결제 대기' 상태이다.")
         fun tc2() {
             // when
-            val orderCreateResponse = sut.create(
-                orderCreateRequest(
-                    itemId = item.id,
-                    quantityPerRequest = 1,
-                ),
+            val orderId = sut.order(
+                createOrderCommand(item.id, 1),
             )
 
             // then
-            val savedOrder = orderRepository.findById(orderCreateResponse.orderId)
+            val savedOrder = orderRepository.findById(orderId)
             assertThat(savedOrder).isNotNull
             assertThat(savedOrder!!.status).isEqualTo(OrderStatus.PAYMENT_WAIT)
         }
     }
 
-    private fun orderCreateRequest(
-        itemId: String,
-        quantityPerRequest: Int,
-    ): OrderCreateRequest {
-        return OrderCreateRequest(
-            userId = "1",
-            itemList = listOf(
-                OrderCreateRequest.Item(
-                    id = itemId,
-                    quantity = quantityPerRequest,
-                ),
+    private fun createOrderCommand(itemId: String, quantity: Int) = OrderCommand(
+        userId = "testUserId",
+        orderItemList = listOf(
+            OrderCommand.OrderItem(
+                itemId = itemId,
+                quantity = quantity,
             ),
-        )
-    }
+        ),
+    )
 }
