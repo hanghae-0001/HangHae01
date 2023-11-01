@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  hanghae-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/amd64
+    environment:
+      - ACTIVE_PROFILE=local-container
+    ports:
+      - "9001:9001"
+    depends_on:
+      - hanghae-mysql
+      - hanghae-redis
+
+  hanghae-mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234qwer
+      - MYSQL_DATABASE=hanghae
+    ports:
+      - "3309:3306"
+
+  hanghae-redis:
+    image: redis:latest
+    ports:
+      - "6400:6379"

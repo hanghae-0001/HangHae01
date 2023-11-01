@@ -27,6 +27,19 @@ spring:
 spring:
   config:
     activate:
+      on-profile: local-container
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://hanghae-mysql/hanghae?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234qwer
+  jpa:
+    show-sql: true
+
+---
+spring:
+  config:
+    activate:
       on-profile: develop
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

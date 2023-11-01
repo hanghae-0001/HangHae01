@@ -3,5 +3,3 @@ spring:
   config:
     activate:
       on-profile: local
-    import:
-      - logging.yml
