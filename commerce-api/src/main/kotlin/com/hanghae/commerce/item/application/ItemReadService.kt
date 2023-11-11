@@ -12,15 +12,15 @@ class ItemReadService(
 ) {
 
     @Transactional(readOnly = true)
-    fun getItemsByStoreId(storeId: String): List<GetItemsByStoreIdResponse> {
-        val items = itemReader.getItemsByStoreId(storeId)
+    fun getItems(userId: String, storeId: String): List<GetItemsByStoreIdResponse> {
+        val items = itemReader.getItems(userId, storeId)
 
         return GetItemsByStoreIdResponse.listOf(items)
     }
 
     @Transactional(readOnly = true)
-    fun getItemByItemId(itemId: String): GetItemByItemIdResponse {
-        val item = itemReader.getItemByItemId(itemId) ?: throw IllegalArgumentException()
+    fun getItem(userId: String, itemId: String): GetItemByItemIdResponse {
+        val item = itemReader.getItem(userId, itemId) ?: throw IllegalArgumentException()
 
         return GetItemByItemIdResponse.of(item)
     }

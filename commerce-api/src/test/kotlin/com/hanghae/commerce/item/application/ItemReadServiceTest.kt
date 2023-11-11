@@ -36,15 +36,17 @@ class ItemReadServiceTest(
     }
 
     @Test
-    fun getItemsByStoreId() {
+    fun getItems() {
         // given
         val user = User(
             id = "1",
+            account = "id",
+            password = "123",
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.CUSTOMER,
+            userType = UserType.CUSTOMER,
         )
 
         val savedUser = userRepository.save(user)
@@ -52,15 +54,15 @@ class ItemReadServiceTest(
         val store = Store.of(id = "1", name = "store1", savedUser.id)
 
         val savedStore = storeRepository.save(store)
-        val item1 = Item.of("1", "item1", 100, 10, savedStore.id)
-        val item2 = Item.of("2", "item2", 200, 20, savedStore.id)
-        val item3 = Item.of("3", "item3", 300, 30, savedStore.id)
+        val item1 = Item.of("1", "item1", 100, 10, savedStore.id, savedUser.id)
+        val item2 = Item.of("2", "item2", 200, 20, savedStore.id, savedUser.id)
+        val item3 = Item.of("3", "item3", 300, 30, savedStore.id, savedUser.id)
         itemWriter.save(item1)
         itemWriter.save(item2)
         itemWriter.save(item3)
 
         // when
-        val items = itemReadService.getItemsByStoreId(savedStore.id)
+        val items = itemReadService.getItems(savedUser.id, savedStore.id)
 
         // then
         Assertions.assertThat(items).hasSize(3)
@@ -77,15 +79,17 @@ class ItemReadServiceTest(
     }
 
     @Test
-    fun getItemByItemId() {
+    fun getItem() {
         // given
         val user = User(
             id = "1",
+            account = "id",
+            password = "123",
             name = "sangmin",
             age = 20,
             email = "hanghae001@gmail.com",
             address = "seoul",
-            UserType.CUSTOMER,
+            userType = UserType.CUSTOMER,
         )
 
         val savedUser = userRepository.save(user)
@@ -93,11 +97,11 @@ class ItemReadServiceTest(
         val store = Store.of(id = "1", name = "store1", savedUser.id)
 
         val savedStore = storeRepository.save(store)
-        val item = Item.of("1", "item1", 100, 10, savedStore.id)
-        itemWriter.save(item)
+        val item = Item.of("1", "item1", 100, 10, savedStore.id, savedUser.id)
+        val savedItem = itemWriter.save(item)
 
         // when
-        val result = itemReadService.getItemByItemId("1")
+        val result = itemReadService.getItem(savedUser.id, savedItem.id)
 
         // then
         Assertions.assertThat(result.id).isEqualTo("1")

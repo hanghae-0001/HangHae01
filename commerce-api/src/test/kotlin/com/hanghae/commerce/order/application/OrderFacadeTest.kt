@@ -46,6 +46,7 @@ class OrderFacadeTest {
                 price = 25000,
                 stock = 5L,
                 storeId = "1",
+                userId = "1",
             )
             itemRepository.save(item)
         }
@@ -96,6 +97,7 @@ class OrderFacadeTest {
                 price = 25000,
                 stock = 1000L,
                 storeId = "1",
+                userId = "1",
             )
             itemRepository.save(item)
         }
@@ -200,6 +202,7 @@ class OrderFacadeTest {
                 price = 25000,
                 stock = 1000L,
                 storeId = "1",
+                userId = "1",
             )
             itemRepository.save(item)
         }

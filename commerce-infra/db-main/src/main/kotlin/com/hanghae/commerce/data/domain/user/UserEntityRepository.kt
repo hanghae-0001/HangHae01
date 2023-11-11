@@ -21,4 +21,12 @@ class UserEntityRepository(
     override fun allDelete() {
         jpaUserRepository.deleteAllInBatch()
     }
+
+    override fun countUserByAccount(account: String): Integer {
+        return jpaUserRepository.countUserByAccount(account)
+    }
+
+    override fun findByAccount(account: String): User? {
+        return jpaUserRepository.findByAccount(account)?.toDomain()
+    }
 }

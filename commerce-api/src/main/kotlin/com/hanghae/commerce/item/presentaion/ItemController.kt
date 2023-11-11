@@ -6,6 +6,8 @@ import com.hanghae.commerce.item.presentaion.dto.CreateItemRequest
 import com.hanghae.commerce.item.presentaion.dto.CreateItemResponse
 import com.hanghae.commerce.item.presentaion.dto.GetItemByItemIdResponse
 import com.hanghae.commerce.item.presentaion.dto.GetItemsByStoreIdResponse
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.User
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,17 +17,17 @@ class ItemController(
 ) {
 
     @PostMapping("/item")
-    fun createStore(@RequestBody request: CreateItemRequest): CreateItemResponse {
-        return itemCreateService.createItem(request)
+    fun createStore(@AuthenticationPrincipal user: User, @RequestBody request: CreateItemRequest): CreateItemResponse {
+        return itemCreateService.createItem(user.username, request)
     }
 
     @GetMapping("/items/{storeId}")
-    fun getItems(@PathVariable storeId: String): List<GetItemsByStoreIdResponse> {
-        return itemReadService.getItemsByStoreId(storeId)
+    fun getItems(@AuthenticationPrincipal user: User, @PathVariable storeId: String): List<GetItemsByStoreIdResponse> {
+        return itemReadService.getItems(user.username, storeId)
     }
 
     @GetMapping("/item/{itemId}")
-    fun getItem(@PathVariable itemId: String): GetItemByItemIdResponse {
-        return itemReadService.getItemByItemId(itemId)
+    fun getItem(@AuthenticationPrincipal user: User, @PathVariable itemId: String): GetItemByItemIdResponse {
+        return itemReadService.getItem(user.username, itemId)
     }
 }

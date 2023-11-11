@@ -20,8 +20,8 @@ class StoreReadService(
     }
 
     @Transactional(readOnly = true)
-    fun getStore(storeId: String): GetStoreResponse {
-        val store = storeReader.findStoreById(storeId) ?: throw IllegalArgumentException()
+    fun getStore(userId: String, storeId: String): GetStoreResponse {
+        val store = storeReader.findStore(userId, storeId) ?: throw IllegalArgumentException()
         return GetStoreResponse.of(store)
     }
 }

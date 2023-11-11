@@ -33,9 +33,11 @@ class StoreReadServiceTest(
         val user = userWriter.save(
             User(
                 id = "1",
+                account = "id",
+                password = "123",
                 name = "sangmin",
                 age = 20,
-                email = "hanghae@gmail.com",
+                email = "hanghae001@gmail.com",
                 address = "seoul",
                 userType = UserType.SELLER,
             ),
@@ -69,12 +71,14 @@ class StoreReadServiceTest(
 
     @Test
     fun getStore() {
-        userWriter.save(
+        val user = userWriter.save(
             User(
                 id = "1",
+                account = "id",
+                password = "123",
                 name = "sangmin",
                 age = 20,
-                email = "hanghae@gmail.com",
+                email = "hanghae001@gmail.com",
                 address = "seoul",
                 userType = UserType.SELLER,
             ),
@@ -88,7 +92,7 @@ class StoreReadServiceTest(
             ),
         )
 
-        val result = storeReadService.getStore(store.id)
+        val result = storeReadService.getStore(user.id, store.id)
 
         Assertions.assertThat(result.id).isEqualTo("1")
         Assertions.assertThat(result.name).isEqualTo("상점1")

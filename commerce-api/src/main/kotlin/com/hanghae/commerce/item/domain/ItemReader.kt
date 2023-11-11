@@ -17,4 +17,12 @@ class ItemReader(
     fun getItemByItemId(itemId: String): Item? {
         return itemRepository.findById(itemId)
     }
+
+    fun getItems(userId: String, storeId: String): List<Item> {
+        return itemRepository.findAllItems(userId, storeId)
+    }
+
+    fun getItem(userId: String, itemId: String): Item? {
+        return itemRepository.findItem(userId, itemId)
+    }
 }

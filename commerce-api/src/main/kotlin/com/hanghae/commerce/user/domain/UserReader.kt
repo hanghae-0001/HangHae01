@@ -9,4 +9,12 @@ class UserReader(
     fun findById(id: String): User? {
         return userRepository.findById(id)
     }
+
+    fun countUserByAccount(account: String): Integer {
+        return userRepository.countUserByAccount(account)
+    }
+
+    fun findByAccount(account: String): User? {
+        return userRepository.findByAccount(account)
+    }
 }

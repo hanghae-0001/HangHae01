@@ -8,6 +8,7 @@ class Item(
     var price: Int,
     var stock: Long,
     var storeId: String,
+    var userId: String,
 ) {
     companion object {
 
@@ -17,6 +18,7 @@ class Item(
             price: Int,
             stock: Long,
             storeId: String,
+            userId: String,
         ): Item {
             return Item(
                 id = id,
@@ -24,6 +26,7 @@ class Item(
                 price = price,
                 stock = stock,
                 storeId = storeId,
+                userId = userId,
             )
         }
     }

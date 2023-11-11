@@ -9,4 +9,7 @@ interface JpaStoreRepository : JpaRepository<StoreEntity, String> {
 
     @Query("select s from StoreEntity s where s.userId = :userId")
     fun findStoresByUserId(userId: String): List<StoreEntity>
+
+    @Query("select s from StoreEntity s where s.userId = :userId and s.id = :storeId")
+    fun findStore(userId: String, storeId: String): StoreEntity?
 }
